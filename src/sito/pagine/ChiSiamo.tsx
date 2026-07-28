@@ -1,7 +1,8 @@
 import { Illustrazione } from '../componenti/Illustrazione'
+import { Recensioni } from '../componenti/Recensioni'
 import { Ico, Intestazione, LinkBottone, Sezione } from '../componenti/base'
 import { AZIENDA } from '../dati/azienda'
-import { TAPPE, VALORI } from '../dati/contenuti'
+import { MOTIVI, PROCESSO, TAPPE, VALORI } from '../dati/contenuti'
 import { useRivela } from '../lib/hook'
 import { briciole, useSeo } from '../lib/seo'
 
@@ -127,6 +128,66 @@ export function ChiSiamo() {
           </LinkBottone>
         </div>
       </Sezione>
+      {/* ── Perché sceglierci ── */}
+      <Sezione tinta>
+        <Intestazione
+          occhiello="Perché Io Riparo"
+          titolo={
+            <>
+              Motivi concreti,
+              <br />
+              zero promesse generiche.
+            </>
+          }
+        />
+        <div className="why-grid">
+          {MOTIVI.map((m) => (
+            <article className="why reveal" key={m.titolo}>
+              <Ico nome={m.icona} />
+              <div>
+                <h3>{m.titolo}</h3>
+                <p>{m.testo}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Sezione>
+
+      {/* ── Processo ── */}
+      <Sezione>
+        <Intestazione
+          occhiello="Come lavoriamo · 4 passaggi"
+          titolo={
+            <>
+              Dal primo contatto al ritiro,
+              <br />
+              sempre sotto controllo.
+            </>
+          }
+        />
+        <div className="flow">
+          {PROCESSO.map((p, i) => (
+            <article className="flow__item reveal" key={p.titolo}>
+              <span className="flow__n">{String(i + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{p.titolo}</h3>
+                <p>{p.testo}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Sezione>
+
+      {/* ── Recensioni ── */}
+      <Sezione tinta>
+        <Intestazione
+          occhiello="Recensioni · Google"
+          titolo="4,9 su 5 da 214 clienti."
+          testo="Le opinioni pubblicate sul nostro profilo Google Business, senza filtri."
+        />
+        <Recensioni />
+      </Sezione>
+
     </div>
   )
 }
