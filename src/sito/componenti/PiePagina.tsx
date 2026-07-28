@@ -47,7 +47,7 @@ export function PiePagina({ onPreferenzeCookie }: { onPreferenzeCookie: () => vo
       <div className="wrap">
         <div className="ftr__grid">
           <div>
-            <Marchio altezza={84} senzaLink />
+            <Marchio altezza={100} senzaLink />
             <p className="muted" style={{ fontSize: '.88rem', maxWidth: '34ch', marginTop: 16 }}>
               Centro di assistenza tecnica per smartphone, computer, reti e videosorveglianza.
               {' '}
