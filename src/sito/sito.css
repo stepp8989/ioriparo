@@ -22,7 +22,7 @@
   --fog:#f1f4f9;
   --shadow: 0 24px 60px -28px rgba(0,0,0,.9);
   --ring: 0 0 0 1px var(--line);
-  --nav-h: 76px;
+  --nav-h: 94px;
   --pad: 20px;
   --max: 1220px;
   --r-s:10px; --r-m:16px; --r-l:24px; --r-xl:32px;
@@ -223,9 +223,10 @@ body[data-sito]{
 .hdr__burger{display:grid}
 .progress{position:absolute; left:0; bottom:-1px; height:2px; width:0; background:linear-gradient(90deg,var(--blue),var(--blue-glow)); transition:width .12s linear}
 
-/* La navigazione estesa richiede 1086px: sotto i 1120px resta il menu a scomparsa,
-   altrimenti gli strumenti della testata escono dallo schermo. */
-@media (min-width: 1120px){
+/* La navigazione estesa richiede 1132px con il marchio grande: sotto i 1160px
+   resta il menu a scomparsa, altrimenti gli strumenti della testata escono
+   dallo schermo. Se il logo cambia misura, questa soglia va rimisurata. */
+@media (min-width: 1160px){
   .nav{display:flex}
   .hdr__burger{display:none}
   .hdr .btn{display:inline-flex}
@@ -717,7 +718,7 @@ select.inp{appearance:none; background-image:linear-gradient(45deg,transparent 5
 .skip:focus{top:0}
 
 /* ---------- marchio ---------- */
-.marchio{height:var(--altezza-marchio,58px); width:auto; max-width:none; transition:transform .5s var(--ease), opacity .25s}
+.marchio{height:var(--altezza-marchio,72px); width:auto; max-width:none; transition:transform .5s var(--ease), opacity .25s}
 .brand:hover .marchio{transform:scale(1.03)}
 /* Sui fondi scuri va la versione con lettering chiaro, e viceversa.
    I selettori includono #app perché le regole di base delle immagini
@@ -730,7 +731,7 @@ select.inp{appearance:none; background-image:linear-gradient(45deg,transparent 5
   :root:not([data-theme="light"]) #app .marchio--chiaro{display:block}
 }
 @media (max-width: 560px){
-  #app .marchio{height:53px}
+  #app .marchio{height:62px}
 }
 
 /* ---------- collegamento al gestionale ---------- */

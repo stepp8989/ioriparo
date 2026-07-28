@@ -43,7 +43,7 @@ export function Testata({
   return (
     <header className={cn('hdr', ancorata && 'is-stuck')}>
       <div className="wrap">
-        <Marchio altezza={68} />
+        <Marchio altezza={84} />
 
         <nav className="nav" aria-label="Navigazione principale">
           {VOCI_NAVIGAZIONE.map((v) => (
