@@ -1,5 +1,5 @@
 import 'server-only'
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises'
+import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { MENU_INIZIALE } from '@/dati/menu'
 import { EVENTI_INIZIALI, ORARI_INIZIALI, RECENSIONI_INIZIALI } from '@/dati/contenuti'
@@ -82,10 +82,16 @@ export async function leggi(): Promise<Archivio> {
     // Archivio illeggibile o danneggiato: si prosegue con quello che si ha,
     // senza sovrascrivere il file, così il contenuto resta recuperabile.
     console.error('[archivio] Lettura non riuscita, si prosegue in memoria:', errore)
-    discoLeggibile = false
+    if (discoNonUtilizzabile(errore)) discoLeggibile = false
     memoria ??= archivioIniziale()
     return memoria
   }
+}
+
+/** Errori che indicano un disco non utilizzabile, non un intoppo momentaneo. */
+function discoNonUtilizzabile(errore: unknown): boolean {
+  const codice = (errore as NodeJS.ErrnoException)?.code
+  return codice === 'EROFS' || codice === 'EACCES' || codice === 'EPERM'
 }
 
 /** Salva l'archivio su disco quando possibile, sempre in memoria. */
@@ -93,16 +99,33 @@ export async function scrivi(dati: Archivio): Promise<void> {
   memoria = dati
   if (!discoScrivibile) return
 
+  // Il nome del file temporaneo è unico per singola scrittura, non per
+  // processo: durante la compilazione più operazioni partono insieme dallo
+  // stesso processo e, condividendo il nome, la prima rinomina toglieva il
+  // file da sotto i piedi alle altre.
+  const temporaneo = `${PERCORSO}.${process.pid}.${Date.now().toString(36)}${Math.random()
+    .toString(36)
+    .slice(2, 8)}.tmp`
+
   try {
     await mkdir(dirname(PERCORSO), { recursive: true })
-    const temporaneo = `${PERCORSO}.${process.pid}.tmp`
     await writeFile(temporaneo, JSON.stringify(dati, null, 2), 'utf8')
     await rename(temporaneo, PERCORSO)
   } catch (errore) {
-    // Filesystem di sola lettura: si prosegue con la sola copia in memoria.
-    console.warn('[archivio] Scrittura non riuscita, si prosegue in memoria:', errore)
-    discoScrivibile = false
-    discoLeggibile = false
+    // Il temporaneo non deve restare in giro se qualcosa è andato storto.
+    await rm(temporaneo, { force: true }).catch(() => undefined)
+
+    if (discoNonUtilizzabile(errore)) {
+      // Filesystem di sola lettura: si prosegue con la sola copia in memoria.
+      console.warn('[archivio] Disco non scrivibile, si prosegue in memoria:', errore)
+      discoScrivibile = false
+      discoLeggibile = false
+      return
+    }
+
+    // Intoppo momentaneo: si segnala e si riproverà alla prossima modifica,
+    // senza rinunciare al disco per il resto della vita del processo.
+    console.error('[archivio] Scrittura non riuscita:', errore)
   }
 }
 

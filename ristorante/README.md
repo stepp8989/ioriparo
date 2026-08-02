@@ -160,6 +160,11 @@ Il progetto è pronto per qualsiasi piattaforma che sappia eseguire Next.js.
 Ricordate di impostare `PANNELLO_PASSWORD`, `PANNELLO_SEGRETO` e
 `NEXT_PUBLIC_SITO` fra le variabili d'ambiente della piattaforma.
 
+> **Attenzione alla cartella radice.** Questo repository contiene anche IO
+> RIPARO, che ha un proprio `vercel.json` nella radice. Chi pubblica deve
+> impostare la **Root Directory** del progetto su `ristorante`, altrimenti la
+> piattaforma compila l'altra applicazione.
+
 ## Struttura del progetto
 
 ```
