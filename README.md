@@ -1,5 +1,10 @@
 # IO RIPARO — Sito web e gestionale
 
+> **Nota.** Questo repository ospita anche un secondo progetto, indipendente da IO RIPARO:
+> [`ristorante/`](ristorante/) contiene il sito e il pannello di gestione di **Ristorante Aurea**
+> (Next.js 16 + Tailwind 4 + Framer Motion). Le due applicazioni non condividono codice,
+> dipendenze né dati: si compilano e si pubblicano separatamente.
+
 Progetto unico che contiene due applicazioni con lo stesso archivio dati:
 
 | Area | Percorso | Destinatari | Nella build pubblica |
