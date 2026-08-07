@@ -83,11 +83,11 @@ function testoSicuro(valore: string): string {
 function modello(titolo: string, corpo: string): string {
   return `<!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
-<body style="margin:0;padding:32px 16px;background:#0a0705;font-family:Arial,Helvetica,sans-serif;color:#f5efe7">
+<body style="margin:0;padding:32px 16px;background:#05070b;font-family:Arial,Helvetica,sans-serif;color:#eef2f8">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:0 auto;background:#16110c;border:1px solid #2c231a;border-radius:16px">
     <tr><td style="padding:32px 32px 24px;border-bottom:1px solid #2c231a;text-align:center">
       <p style="margin:0;font-size:22px;letter-spacing:8px;text-transform:uppercase;color:#ffffff">${AZIENDA.nome}</p>
-      <p style="margin:8px 0 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#e59243">Motori</p>
+      <p style="margin:8px 0 0;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#4d8dff">Motori</p>
     </td></tr>
     <tr><td style="padding:32px">
       <h1 style="margin:0 0 20px;font-size:22px;font-weight:600;color:#ffffff">${titolo}</h1>
@@ -105,7 +105,7 @@ function modello(titolo: string, corpo: string): string {
 function riga(etichetta: string, valore: string): string {
   return `<tr>
     <td style="padding:8px 0;font-size:13px;color:#a49686;width:42%">${etichetta}</td>
-    <td style="padding:8px 0;font-size:14px;color:#f5efe7;font-weight:600">${testoSicuro(valore)}</td>
+    <td style="padding:8px 0;font-size:14px;color:#eef2f8;font-weight:600">${testoSicuro(valore)}</td>
   </tr>`
 }
 

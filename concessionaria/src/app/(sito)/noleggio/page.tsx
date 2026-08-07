@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { Inclina } from '@/componenti/animazioni/Inclina'
 import { FiglioRivelato, GruppoRivelato } from '@/componenti/animazioni/Rivela'
 import { PrenotaNoleggio } from '@/componenti/noleggio/PrenotaNoleggio'
 import { Icona, type NomeIcona } from '@/componenti/ui/Icona'
@@ -16,8 +17,8 @@ export const metadata: Metadata = metadatiPagina({
   titolo: 'Noleggio auto e moto',
   descrizione:
     'Noleggio a breve e lungo termine a Tortolì: auto, scooter e maxi enduro con assicurazione ' +
-    'kasko, soccorso stradale e consegna a domicilio inclusi. Tariffe giornaliere, settimanali e ' +
-    'mensili, prenotazione e pagamento online.',
+    'kasko, soccorso stradale e consegna a domicilio inclusi. Tariffe giornaliere, weekend, ' +
+    'settimanali e mensili, prenotazione e pagamento online.',
   percorso: '/noleggio',
 })
 
@@ -128,59 +129,62 @@ export default async function PaginaNoleggio({
                 <GruppoRivelato className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   {elenco.map((veicolo) => (
                     <FiglioRivelato key={veicolo.id}>
-                      <article className="flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo">
-                        <div className="relative aspect-[16/10] overflow-hidden bg-antracite">
-                          <Image
-                            src={veicolo.immagini[0]}
-                            alt={titoloVeicolo(veicolo)}
-                            fill
-                            sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw"
-                            className="object-cover"
-                          />
-                          {veicolo.noleggio?.consegnaDomicilio && (
-                            <span className="absolute top-3 left-3">
-                              <Etichetta tono="scuro">
-                                <Icona nome="consegna" className="size-3" />A domicilio
-                              </Etichetta>
-                            </span>
-                          )}
-                        </div>
+                      <Inclina className="h-full">
+                        <article className="flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo">
+                          <div className="relative aspect-[16/10] overflow-hidden bg-antracite">
+                            <Image
+                              src={veicolo.immagini[0]}
+                              alt={titoloVeicolo(veicolo)}
+                              fill
+                              sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 92vw"
+                              className="object-cover"
+                            />
+                            {veicolo.noleggio?.consegnaDomicilio && (
+                              <span className="absolute top-3 left-3">
+                                <Etichetta tono="scuro">
+                                  <Icona nome="consegna" className="size-3" />A domicilio
+                                </Etichetta>
+                              </span>
+                            )}
+                          </div>
 
-                        <div className="flex flex-1 flex-col p-6">
-                          <p className="text-[0.72rem] font-semibold tracking-[0.2em] text-accento uppercase">
-                            {veicolo.marca}
-                          </p>
-                          <h4 className="mt-1.5 text-[1.1rem] font-semibold">{veicolo.modello}</h4>
-                          <p className="mt-1 text-[0.85rem] text-tenue">{veicolo.allestimento}</p>
+                          <div className="flex flex-1 flex-col p-6">
+                            <p className="text-[0.72rem] font-semibold tracking-[0.2em] text-accento uppercase">
+                              {veicolo.marca}
+                            </p>
+                            <h4 className="mt-1.5 text-[1.1rem] font-semibold">{veicolo.modello}</h4>
+                            <p className="mt-1 text-[0.85rem] text-tenue">{veicolo.allestimento}</p>
 
-                          <dl className="mt-5 space-y-2 border-t border-bordo pt-4 text-[0.88rem]">
-                            {[
-                              { nome: 'Al giorno', valore: veicolo.noleggio?.giornaliera ?? 0 },
-                              { nome: 'A settimana', valore: veicolo.noleggio?.settimanale ?? 0 },
-                              { nome: 'Al mese', valore: veicolo.noleggio?.mensile ?? 0 },
-                            ].map((tariffa) => (
-                              <div key={tariffa.nome} className="flex justify-between gap-4">
-                                <dt className="text-tenue">{tariffa.nome}</dt>
-                                <dd className="font-semibold tabellare">{prezzo(tariffa.valore)}</dd>
-                              </div>
-                            ))}
-                          </dl>
+                            <dl className="mt-5 space-y-2 border-t border-bordo pt-4 text-[0.88rem]">
+                              {[
+                                { nome: 'Al giorno', valore: veicolo.noleggio?.giornaliera ?? 0 },
+                                { nome: 'Weekend', valore: veicolo.noleggio?.weekend ?? 0 },
+                                { nome: 'A settimana', valore: veicolo.noleggio?.settimanale ?? 0 },
+                                { nome: 'Al mese', valore: veicolo.noleggio?.mensile ?? 0 },
+                              ].map((tariffa) => (
+                                <div key={tariffa.nome} className="flex justify-between gap-4">
+                                  <dt className="text-tenue">{tariffa.nome}</dt>
+                                  <dd className="font-semibold tabellare">{prezzo(tariffa.valore)}</dd>
+                                </div>
+                              ))}
+                            </dl>
 
-                          <p className="mt-4 text-[0.78rem] text-tenue">
-                            Cauzione {prezzo(veicolo.noleggio?.cauzione ?? 0)} · età minima{' '}
-                            {veicolo.noleggio?.etaMinima} anni ·{' '}
-                            {veicolo.noleggio?.kmInclusiGiorno} km/giorno
-                          </p>
+                            <p className="mt-4 text-[0.78rem] text-tenue">
+                              Cauzione {prezzo(veicolo.noleggio?.cauzione ?? 0)} · età minima{' '}
+                              {veicolo.noleggio?.etaMinima} anni ·{' '}
+                              {veicolo.noleggio?.kmInclusiGiorno} km/giorno
+                            </p>
 
-                          <a
-                            href="#prenota"
-                            className="mt-auto inline-flex items-center gap-2 pt-5 text-[0.9rem] font-semibold text-accento sottolinea"
-                          >
-                            Prenota questo veicolo
-                            <Icona nome="freccia" className="size-4" />
-                          </a>
-                        </div>
-                      </article>
+                            <a
+                              href="#prenota"
+                              className="mt-auto inline-flex items-center gap-2 pt-5 text-[0.9rem] font-semibold text-accento sottolinea"
+                            >
+                              Prenota questo veicolo
+                              <Icona nome="freccia" className="size-4" />
+                            </a>
+                          </div>
+                        </article>
+                      </Inclina>
                     </FiglioRivelato>
                   ))}
                 </GruppoRivelato>

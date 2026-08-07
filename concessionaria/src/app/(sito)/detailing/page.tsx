@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { Inclina } from '@/componenti/animazioni/Inclina'
 import { FiglioRivelato, GruppoRivelato, Rivela } from '@/componenti/animazioni/Rivela'
 import { Confronto } from '@/componenti/detailing/Confronto'
 import { PrenotaDetailing } from '@/componenti/detailing/PrenotaDetailing'
@@ -67,52 +68,54 @@ export default async function PaginaDetailing() {
         <GruppoRivelato className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {TRATTAMENTI.map((trattamento) => (
             <FiglioRivelato key={trattamento.id}>
-              <article className="flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo">
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={trattamento.immagine}
-                    alt=""
-                    fill
-                    sizes="(min-width: 1024px) 30vw, (min-width: 768px) 46vw, 92vw"
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-notte/85 to-transparent" />
-                  <span className="absolute bottom-4 left-4 inline-flex size-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white backdrop-blur-sm">
-                    <Icona nome={trattamento.icona} className="size-5" />
-                  </span>
-                </div>
-
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-titolo text-[1.15rem] font-semibold">{trattamento.nome}</h3>
-                  <p className="mt-2 text-[0.88rem] leading-relaxed text-tenue">
-                    {trattamento.descrizione}
-                  </p>
-
-                  <ul className="mt-5 space-y-2 text-[0.85rem] text-tenue">
-                    {trattamento.comprende.slice(0, 4).map((voce) => (
-                      <li key={voce} className="flex items-start gap-2.5">
-                        <Icona nome="spunta" className="mt-0.5 size-3.5 shrink-0 text-accento" />
-                        {voce}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-auto flex items-end justify-between gap-4 border-t border-bordo pt-5">
-                    <div>
-                      <p className="text-[0.72rem] tracking-[0.12em] text-tenue uppercase">
-                        A partire da
-                      </p>
-                      <p className="font-titolo text-[1.4rem] leading-none font-semibold tabellare">
-                        {prezzo(trattamento.prezzoDa)}
-                      </p>
-                    </div>
-                    <Etichetta>
-                      <Icona nome="orologio" className="size-3" />
-                      {durataTrattamento(trattamento.ore)}
-                    </Etichetta>
+              <Inclina className="h-full">
+                <article className="flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={trattamento.immagine}
+                      alt=""
+                      fill
+                      sizes="(min-width: 1024px) 30vw, (min-width: 768px) 46vw, 92vw"
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-notte/85 to-transparent" />
+                    <span className="absolute bottom-4 left-4 inline-flex size-11 items-center justify-center rounded-xl border border-white/15 bg-white/10 text-white backdrop-blur-sm">
+                      <Icona nome={trattamento.icona} className="size-5" />
+                    </span>
                   </div>
-                </div>
-              </article>
+
+                  <div className="flex flex-1 flex-col p-6">
+                    <h3 className="font-titolo text-[1.15rem] font-semibold">{trattamento.nome}</h3>
+                    <p className="mt-2 text-[0.88rem] leading-relaxed text-tenue">
+                      {trattamento.descrizione}
+                    </p>
+
+                    <ul className="mt-5 space-y-2 text-[0.85rem] text-tenue">
+                      {trattamento.comprende.slice(0, 4).map((voce) => (
+                        <li key={voce} className="flex items-start gap-2.5">
+                          <Icona nome="spunta" className="mt-0.5 size-3.5 shrink-0 text-accento" />
+                          {voce}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-auto flex items-end justify-between gap-4 border-t border-bordo pt-5">
+                      <div>
+                        <p className="text-[0.72rem] tracking-[0.12em] text-tenue uppercase">
+                          A partire da
+                        </p>
+                        <p className="font-titolo text-[1.4rem] leading-none font-semibold tabellare">
+                          {prezzo(trattamento.prezzoDa)}
+                        </p>
+                      </div>
+                      <Etichetta>
+                        <Icona nome="orologio" className="size-3" />
+                        {durataTrattamento(trattamento.ore)}
+                      </Etichetta>
+                    </div>
+                  </div>
+                </article>
+              </Inclina>
             </FiglioRivelato>
           ))}
         </GruppoRivelato>

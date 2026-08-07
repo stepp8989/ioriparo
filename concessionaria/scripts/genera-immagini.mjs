@@ -436,11 +436,11 @@ function svgMarchio(dimensione = 512) {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="${dimensione}" height="${dimensione}">
   <defs>
     <linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#e59243"/>
-      <stop offset="100%" stop-color="#9c5416"/>
+      <stop offset="0%" stop-color="#4d8dff"/>
+      <stop offset="100%" stop-color="#0b4fd0"/>
     </linearGradient>
   </defs>
-  <rect width="40" height="40" rx="9" fill="#0d0805"/>
+  <rect width="40" height="40" rx="9" fill="#080b12"/>
   <path d="M20 2.5 34.5 8v12.6c0 8.2-5.9 14.4-14.5 16.9C11.4 35 5.5 28.8 5.5 20.6V8z" fill="url(#s)"/>
   <path d="M20 11.5 27.5 28h-4.2L20 20l-3.3 8h-4.2z" fill="#fff"/>
   <path d="M13.5 23.5h13" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity="0.55"/>
@@ -452,16 +452,16 @@ function svgLogo() {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" width="220" height="48">
   <defs>
     <linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#e59243"/>
-      <stop offset="100%" stop-color="#9c5416"/>
+      <stop offset="0%" stop-color="#4d8dff"/>
+      <stop offset="100%" stop-color="#0b4fd0"/>
     </linearGradient>
   </defs>
   <g transform="translate(4 4) scale(1)">
     <path d="M20 2.5 34.5 8v12.6c0 8.2-5.9 14.4-14.5 16.9C11.4 35 5.5 28.8 5.5 20.6V8z" fill="url(#s)"/>
     <path d="M20 11.5 27.5 28h-4.2L20 20l-3.3 8h-4.2z" fill="#fff"/>
   </g>
-  <text x="52" y="27" font-family="Sora, Inter, Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="3.4" fill="#14100c">AURORA</text>
-  <text x="53" y="39" font-family="Inter, Arial, sans-serif" font-size="8" font-weight="500" letter-spacing="5" fill="#6a5f53">MOTORI</text>
+  <text x="52" y="27" font-family="Sora, Inter, Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="3.4" fill="#0a0d14">AURORA</text>
+  <text x="53" y="39" font-family="Inter, Arial, sans-serif" font-size="8" font-weight="500" letter-spacing="5" fill="#5b6479">MOTORI</text>
 </svg>`
 }
 
@@ -502,7 +502,10 @@ async function main() {
       percorso: join(USCITA, `apertura-${indice}.jpg`),
       larghezza: 1920,
       altezza: 1080,
-      palette: indice === 2 ? 'rosso' : indice === 3 ? 'notte' : 'blu',
+      // Le tre aperture restano dentro la tavolozza del sito — nero opaco, blu
+      // elettrico, grigio antracite. Il rosso, provato all'inizio, tingeva
+      // tutto lo schermo dietro il titolo e stonava con l'ingresso blu.
+      palette: indice === 2 ? 'antracite' : indice === 3 ? 'notte' : 'blu',
       soggetto: indice === 2 ? 'moto' : 'auto',
       chiave: `apertura-${indice}`,
       sfocatura: 7,

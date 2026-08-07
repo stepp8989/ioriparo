@@ -24,7 +24,7 @@ export const NAVIGAZIONE: VoceNavigazione[] = [
     nome: 'Noleggio',
     percorso: '/noleggio',
     principale: true,
-    descrizione: 'Tariffe giornaliere, settimanali e mensili',
+    descrizione: 'Tariffe giornaliere, weekend, settimanali e mensili',
   },
   {
     nome: 'Detailing',

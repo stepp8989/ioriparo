@@ -35,10 +35,10 @@ sviluppo la password predefinita è `aurora`; in produzione va impostata
 
 | Percorso | Contenuto |
 | --- | --- |
-| `/` | Apertura a schermo intero, dodici servizi, veicoli in vetrina, noleggio, detailing, traguardi, offerte, recensioni |
+| `/` | Ingresso cinematografico, apertura a schermo intero, dodici servizi, veicoli in vetrina, noleggio, detailing, traguardi, offerte, recensioni |
 | `/catalogo` | Ricerca e filtri su marca, modello, anno, prezzo, alimentazione, cambio, chilometri, potenza e tipologia |
 | `/catalogo/[slug]` | Scheda veicolo: galleria, video, caratteristiche, dotazioni, prezzo, rata, test drive, WhatsApp |
-| `/noleggio` | Flotta con tariffe giornaliere, settimanali e mensili; calendario disponibilità e prenotazione con pagamento |
+| `/noleggio` | Flotta con tariffe giornaliere, weekend, settimanali e mensili; calendario disponibilità e prenotazione con pagamento |
 | `/detailing` | Dieci trattamenti, confronto prima/dopo trascinabile, prenotazione dell'appuntamento |
 | `/servizi` | Tutti i servizi in dettaglio, officina interna |
 | `/finanziamenti` | Simulatore di rata, tre formule di finanziamento, valutazione della permuta |
@@ -158,12 +158,10 @@ Quando arrivano gli scatti veri basta sovrascrivere i file dentro
 `public/immagini/` mantenendo gli stessi nomi: nessuna modifica al codice. Lo
 script segnala da solo se un veicolo del catalogo è rimasto senza fotografie.
 
-**Le tinte dei segnaposto sono ancora fredde**, mentre l'interfaccia è passata
-al rame: si nota soprattutto nell'apertura della home. È una scelta
-consapevole — quelle immagini verranno sostituite da fotografie vere, quindi
-rifarle sarebbe lavoro buttato. Per allinearle basta cambiare i colori di
-`PALETTE` in `scripts/genera-immagini.mjs` e lanciare
-`npm run immagini -- --tutto`.
+Le tinte dei segnaposto seguono la stessa tavolozza dell'interfaccia. Per
+cambiarle basta toccare `PALETTE` in `scripts/genera-immagini.mjs` e lanciare
+`npm run immagini -- --tutto`; senza `--tutto` lo script rigenera solo i file
+mancanti, il che è comodo per rifarne uno solo dopo averlo cancellato.
 
 L'apertura della home usa un filmato se lo trova in `public/video/apertura.mp4`
 (o `.webm`); altrimenti alterna tre immagini con una dissolvenza lenta. Il video
@@ -200,24 +198,45 @@ public/              immagini, marchio, service worker, pagina offline
 
 ## La palette
 
-Rame e arancio bruciato su nero caldo, con avorio e grigio antracite. Tutti i
-colori stanno in `src/app/globals.css`, dichiarati due volte — come variabili
-CSS che cambiano fra tema chiaro e scuro, e come token Tailwind che puntano a
-quelle variabili. Cambiare marchio significa toccare quel file e nient'altro.
+Blu elettrico su nero opaco, con bianco e grigio scuro. Tutti i colori stanno in
+`src/app/globals.css`, dichiarati due volte — come variabili CSS che cambiano
+fra tema chiaro e scuro, e come token Tailwind che puntano a quelle variabili.
+Cambiare marchio significa toccare quel file e nient'altro.
 
-La scelta non è arbitraria: questo repository ospita altri due siti, e ognuno
-deve restare riconoscibile.
+Questo repository ospita altri due siti e ognuno deve restare riconoscibile.
 
 | Sito | Accento |
 | --- | --- |
 | Io Riparo | blu elettrico `#2563eb` su nero `#05070c` |
 | Ristorante Aurea | oro caldo `#7f5c20` su crema |
-| Aurora Motori | rame `#9c5416` su nero caldo `#0d0805` |
+| Aurora Motori | blu elettrico `#0b4fd0` / `#4d8dff` su nero opaco `#05070b` |
 
-Il brief iniziale chiedeva il blu elettrico: è stato scartato proprio perché
-coincideva quasi esattamente con quello di Io Riparo, fondo compreso.
+Il blu era stato scartato in una versione precedente proprio perché vicino a
+quello di Io Riparo, e il sito era passato al rame. Il committente lo ha poi
+chiesto esplicitamente, quindi è tornato. I due marchi si distinguono per come
+lo usano, non per la tinta: Io Riparo è un gestionale chiaro con il blu a
+piccoli tocchi, qui il blu è una sorgente luminosa — fari, aloni, riflessi — su
+superfici quasi sempre nere.
 
 ## Scelte tecniche
+
+**L'ingresso cinematografico si paga una volta sola.** La home si apre al buio
+con un'auto che si avvicina, accende gli anabbaglianti, poi gli abbaglianti, e
+lascia il posto al pulsante ENTRA. È l'effetto che il committente ha chiesto,
+ma un'introduzione da cinque secondi davanti a ogni pagina sarebbe un pedaggio:
+il passaggio viene segnato in `sessionStorage` e uno script in linea decide
+prima del primo disegno se la tenda esiste, così chi torna in home dal catalogo
+non vede nemmeno un lampo di nero. Si esce con il pulsante «Salta» o con Esc, e
+chi ha ridotto le animazioni di sistema trova ENTRA già pronto.
+
+L'auto è disegnata in SVG e non fotografata: deve crescere dal fondo dello
+schermo fino a riempirlo, e una fotografia ingrandita venti volte si sgrana. Il
+rumore del motore è sintetizzato con la Web Audio API — tre oscillatori e un
+soffio d'aria dentro un passa-basso che si apre mentre l'auto arriva — perché un
+file audio sarebbe qualche centinaio di chilobyte scaricati proprio nel momento
+in cui non si possono spendere. I browser tengono muto tutto finché non c'è un
+gesto dell'utente: se il contesto audio resta sospeso compare un pulsante per
+accenderlo, invece di insistere.
 
 **Il filtraggio del catalogo avviene nel browser.** Qualche decina di veicoli sta
 in pochi chilobyte: mandarli tutti una volta sola dà risultati immediati a ogni
@@ -232,7 +251,9 @@ prenotazione è un'anteprima; quello che finisce nell'archivio lo calcola la
 rotta API con le stesse funzioni di [`src/lib/noleggio.ts`](src/lib/noleggio.ts),
 perché i dati nel browser sono modificabili. Lì sta anche la regola che applica
 la combinazione di tariffe più conveniente: sette giorni costano una settimana,
-non sette giornate.
+non sette giornate, e tre giorni da venerdì costano il pacchetto weekend. Quel
+pacchetto ha bisogno della data di partenza e non della sola durata, altrimenti
+si applicherebbe anche a un martedì-giovedì.
 
 **Il consenso ai cookie blocca davvero.** Analytics e mappa di Google non
 vengono inseriti nella pagina finché la scelta non è esplicita: non basta non
@@ -254,8 +275,9 @@ fotografie stanno tutti sul dominio del sito.
 
 ## Accessibilità
 
-Contrasti verificati sulle soglie WCAG AA in entrambi i temi; il rame del tema
-chiaro è volutamente bruciato per reggere il testo piccolo. Ogni campo ha
+Contrasti verificati sulle soglie WCAG AA in entrambi i temi; il blu del tema
+chiaro è volutamente più profondo di quello che si vede sulle fasce scure, per
+reggere il testo piccolo su fondo bianco. Ogni campo ha
 un'etichetta collegata, le icone decorative sono nascoste ai lettori di schermo,
 i grafici del pannello hanno una tabella equivalente. Il carosello delle
 recensioni si ferma al passaggio del puntatore e quando un elemento riceve il

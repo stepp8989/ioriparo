@@ -8,11 +8,12 @@
  * questo modo `bg-sfondo` o `text-accento` funzionano in entrambi i temi senza
  * scrivere due classi.
  *
- * La palette è rame e arancio bruciato su nero caldo, con bianco avorio e
- * grigio antracite. Il blu elettrico è stato deliberatamente evitato: è il
- * colore di Io Riparo, che vive nello stesso repository, e due marchi con lo
- * stesso accento non si distinguono. Per la stessa ragione si sta lontani
- * dall'oro del Ristorante Aurea.
+ * La palette è blu elettrico su nero opaco, con bianco e grigio scuro. Il blu
+ * è anche il colore di Io Riparo, che vive nello stesso repository: qui i due
+ * marchi si distinguono per il fondo e per la luce, non per la tinta. Io Riparo
+ * è un gestionale chiaro con il blu usato a piccoli tocchi; questo sito parte
+ * dal nero opaco e usa il blu come sorgente luminosa — aloni, fari, riflessi —
+ * su superfici quasi sempre scure.
  *
  * Le due tonalità profonde (`--notte`, `--antracite`) restano scure anche nel
  * tema chiaro, perché alcune fasce — apertura, invito finale, piè di pagina —
@@ -24,77 +25,77 @@
 :root {
   color-scheme: light;
 
-  /* Superfici: bianchi caldi, non freddi, per accordarsi al rame. */
-  --sfondo: #faf7f4;
-  --sfondo-alt: #f2ece5;
+  /* Superfici: bianchi freddi, virati appena al blu. */
+  --sfondo: #f6f8fc;
+  --sfondo-alt: #eaeff7;
   --superficie: #ffffff;
-  --superficie-alt: #fbf8f5;
-  --bordo: #e8ded3;
-  --bordo-forte: #cdbeae;
+  --superficie-alt: #f9fbfe;
+  --bordo: #dde4ef;
+  --bordo-forte: #b7c1d3;
 
   /* Testo */
-  --testo: #14100c;
-  --testo-tenue: #6a5f53;
-  --testo-inverso: #fbf8f5;
+  --testo: #0a0d14;
+  --testo-tenue: #5b6479;
+  --testo-inverso: #f9fbfe;
 
   /*
-   * Rame.
-   * Nel tema chiaro è volutamente scuro e bruciato: un rame più brillante su
-   * fondo avorio non raggiungerebbe il contrasto 4.5:1 richiesto dalle WCAG
-   * per il testo piccolo, e qui l'accento è anche colore dei collegamenti,
-   * delle soprattitoli e dei pulsanti.
+   * Blu elettrico.
+   * Nel tema chiaro è volutamente più profondo del blu che si vede sulle fasce
+   * scure: il blu brillante su fondo bianco non raggiungerebbe il contrasto
+   * 4.5:1 richiesto dalle WCAG per il testo piccolo, e qui l'accento è anche
+   * colore dei collegamenti, delle soprattitoli e dei pulsanti.
    */
-  --accento: #9c5416;
-  --accento-forte: #7a3f0e;
-  --accento-tenue: #f0cfae;
+  --accento: #0b4fd0;
+  --accento-forte: #0a3ea6;
+  --accento-tenue: #cbdcff;
 
   /* Estremi della sfumatura dei titoli (utilità `testo-accento`). */
-  --accento-1: #9c5416;
-  --accento-2: #cf7a2c;
+  --accento-1: #0b4fd0;
+  --accento-2: #2f80ff;
 
-  /* Tonalità profonde: identiche nei due temi. */
-  --notte: #0d0805;
-  --antracite: #1f170f;
-  --grigio: #362c22;
+  /* Tonalità profonde: identiche nei due temi. Nero opaco, non nero pieno. */
+  --notte: #05070b;
+  --antracite: #10141c;
+  --grigio: #232936;
 
   /* Vetro: fondo e bordo delle superfici traslucide. */
   --vetro-fondo: rgb(255 255 255 / 0.68);
   --vetro-bordo: rgb(255 255 255 / 0.75);
 
   /* Ombre morbide, mai nette */
-  --ombra-bassa: 0 1px 2px rgb(20 16 12 / 0.04), 0 6px 18px rgb(20 16 12 / 0.06);
-  --ombra-alta: 0 2px 8px rgb(20 16 12 / 0.06), 0 24px 60px rgb(20 16 12 / 0.14);
-  --ombra-accento: 0 12px 34px rgb(156 84 22 / 0.28);
+  --ombra-bassa: 0 1px 2px rgb(10 13 20 / 0.04), 0 6px 18px rgb(10 13 20 / 0.07);
+  --ombra-alta: 0 2px 8px rgb(10 13 20 / 0.06), 0 24px 60px rgb(10 13 20 / 0.16);
+  --ombra-accento: 0 12px 34px rgb(11 79 208 / 0.3);
 }
 
 .scuro {
   color-scheme: dark;
 
-  --sfondo: #0a0705;
-  --sfondo-alt: #0f0b07;
-  --superficie: #16110c;
-  --superficie-alt: #1d1711;
-  --bordo: #2c231a;
-  --bordo-forte: #3f3427;
+  --sfondo: #05070b;
+  --sfondo-alt: #090c13;
+  --superficie: #0e121a;
+  --superficie-alt: #151a24;
+  --bordo: #1e2531;
+  --bordo-forte: #2e3746;
 
-  --testo: #f5efe7;
-  --testo-tenue: #a49686;
-  --testo-inverso: #0a0705;
+  --testo: #eef2f8;
+  --testo-tenue: #8d97ab;
+  --testo-inverso: #05070b;
 
-  /* Sul fondo scuro il rame può tornare luminoso. */
-  --accento: #e59243;
-  --accento-forte: #f3b273;
-  --accento-tenue: #4d2c0e;
+  /* Sul fondo nero il blu torna elettrico. */
+  --accento: #4d8dff;
+  --accento-forte: #86b3ff;
+  --accento-tenue: #0e2a5c;
 
-  --accento-1: #f3b273;
-  --accento-2: #e59243;
+  --accento-1: #86b3ff;
+  --accento-2: #3d7bfa;
 
-  --vetro-fondo: rgb(26 20 14 / 0.62);
-  --vetro-bordo: rgb(255 255 255 / 0.09);
+  --vetro-fondo: rgb(14 18 26 / 0.62);
+  --vetro-bordo: rgb(255 255 255 / 0.1);
 
   --ombra-bassa: 0 1px 2px rgb(0 0 0 / 0.5), 0 6px 18px rgb(0 0 0 / 0.4);
   --ombra-alta: 0 2px 8px rgb(0 0 0 / 0.5), 0 24px 60px rgb(0 0 0 / 0.6);
-  --ombra-accento: 0 12px 34px rgb(229 146 67 / 0.32);
+  --ombra-accento: 0 12px 34px rgb(61 123 250 / 0.35);
 }
 
 @theme inline {
@@ -418,6 +419,340 @@
   to {
     transform: translateX(320%) skewX(-18deg);
   }
+}
+
+/* ── Ingresso cinematografico ────────────────────────────────────────────── */
+
+/*
+ * L'apertura buia con l'auto che arriva.
+ *
+ * La tenda è nascosta per impostazione predefinita e compare solo quando uno
+ * script all'inizio della pagina scrive `data-ingresso` sull'elemento radice.
+ * È una scelta precisa: se il visitatore ha già visto l'introduzione in questa
+ * sessione — o se JavaScript non parte del tutto — l'attributo non viene mai
+ * scritto e il sito si apre normalmente, senza un velo nero che resta incollato
+ * davanti al contenuto. Lo script scrive prima che il browser disegni, quindi
+ * chi torna in home non vede nemmeno un lampo della tenda.
+ */
+.ingresso {
+  display: none;
+}
+
+html[data-ingresso='attivo'] .ingresso,
+html[data-ingresso='uscita'] .ingresso {
+  display: flex;
+}
+
+/* Finché la tenda è alzata la pagina sotto non si scorre. */
+html[data-ingresso='attivo'] {
+  overflow: hidden;
+}
+
+/*
+ * Le animazioni della home restano ferme al primo fotogramma finché la tenda
+ * copre tutto: altrimenti il titolo comparirebbe dietro il nero e chi entra
+ * troverebbe la scena già finita. Riprendono da sole quando l'attributo cambia.
+ */
+html[data-ingresso='attivo'] .affiora,
+html[data-ingresso='attivo'] .panoramica,
+html[data-ingresso='attivo'] .scorrimento {
+  animation-play-state: paused;
+}
+
+/* Il sito che si accende sotto la tenda che si apre. */
+@keyframes entra-scena {
+  0% {
+    opacity: 0.2;
+    filter: brightness(2.6) saturate(0.5);
+  }
+  55% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    filter: none;
+  }
+}
+
+html[data-ingresso='uscita'] main {
+  animation: entra-scena 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Avvicinamento.
+   La curva è volutamente sbilanciata in avanti: un'auto che viaggia a velocità
+   costante non cresce in modo costante sulla retina — resta piccola a lungo e
+   poi arriva addosso. Una curva lineare sembrerebbe uno zoom, non un
+   avvicinamento. Gli ultimi fotogrammi rallentano, come una frenata. */
+@keyframes ingresso-avvicina {
+  0% {
+    transform: translate3d(0, 7%, 0) scale(0.1);
+    opacity: 0.4;
+    filter: blur(4px);
+  }
+  82% {
+    transform: translate3d(0, 0.6%, 0) scale(1.03);
+    opacity: 1;
+    filter: blur(0.4px);
+    animation-timing-function: cubic-bezier(0.22, 0.9, 0.3, 1);
+  }
+  100% {
+    transform: none;
+    opacity: 1;
+    filter: none;
+  }
+}
+
+.ingresso-auto {
+  width: clamp(320px, 108vw, 1560px);
+  transform: translate3d(0, 7%, 0) scale(0.1);
+  opacity: 0.4;
+  filter: blur(4px);
+  will-change: transform, opacity, filter;
+}
+
+.ingresso-auto.avvicina {
+  animation: ingresso-avvicina 2700ms cubic-bezier(0.58, 0.02, 0.72, 0.35) both;
+}
+
+/* Oscillazione dello sterzo, su un elemento a parte perché le due
+   trasformazioni non possono stare sulla stessa proprietà. */
+@keyframes ingresso-sterza {
+  0%,
+  100% {
+    transform: translateX(-0.9%) rotate(-0.4deg);
+  }
+  50% {
+    transform: translateX(0.9%) rotate(0.4deg);
+  }
+}
+
+.ingresso-sospensione {
+  animation: ingresso-sterza 3.6s ease-in-out infinite;
+}
+
+/* ── Luci ──
+   `data-luce` vale 1 con gli anabbaglianti e 2 con gli abbaglianti. Il disegno
+   dell'auto non cambia: cambia solo quanta luce emette. */
+.ingresso .fanale,
+.ingresso .diurna {
+  opacity: 0;
+  transition: opacity 340ms ease-out;
+}
+
+.ingresso .bagliore {
+  opacity: 0;
+  filter: blur(26px);
+  transition:
+    opacity 420ms ease-out,
+    filter 420ms ease-out;
+}
+
+.ingresso[data-luce='1'] .fanale {
+  opacity: 0.9;
+}
+
+.ingresso[data-luce='1'] .diurna {
+  opacity: 1;
+}
+
+.ingresso[data-luce='1'] .bagliore {
+  opacity: 0.16;
+}
+
+.ingresso[data-luce='2'] .fanale,
+.ingresso[data-luce='2'] .diurna {
+  opacity: 1;
+}
+
+.ingresso[data-luce='2'] .bagliore {
+  opacity: 0.5;
+  filter: blur(34px);
+}
+
+/* Fascio proiettato verso chi guarda: di fronte a un'auto non si vede la lama
+   di luce di lato, si vede l'abbagliamento. */
+.ingresso-fascio {
+  position: absolute;
+  top: 49.6%;
+  width: 46%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(226 238 255 / 0.95) 0%,
+    rgb(125 172 255 / 0.42) 22%,
+    rgb(61 123 250 / 0.12) 48%,
+    transparent 70%
+  );
+  opacity: 0;
+  filter: blur(18px);
+  transform: translate(-50%, -50%) scale(0.5);
+  transition:
+    opacity 520ms ease-out,
+    transform 520ms ease-out;
+}
+
+.ingresso[data-luce='1'] .ingresso-fascio {
+  opacity: 0.32;
+  transform: translate(-50%, -50%) scale(0.78);
+}
+
+.ingresso[data-luce='2'] .ingresso-fascio {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.65);
+}
+
+/* Striscia orizzontale: il riflesso allungato che le ottiche lasciano
+   sull'obiettivo quando la luce è troppa. */
+.ingresso-riga {
+  position: absolute;
+  top: 49.6%;
+  left: 50%;
+  height: 3px;
+  width: 130%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(134 179 255 / 0.75),
+    #ffffff,
+    rgb(134 179 255 / 0.75),
+    transparent
+  );
+  filter: blur(2.5px);
+  opacity: 0;
+  transform: translate(-50%, -50%) scaleX(0.15);
+  transition:
+    opacity 520ms ease-out,
+    transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ingresso[data-luce='2'] .ingresso-riga {
+  opacity: 0.9;
+  transform: translate(-50%, -50%) scaleX(1);
+}
+
+/*
+ * Dopo il lampo la luce si assesta: gli abbaglianti restano accesi ma smettono
+ * di bruciare l'immagine, altrimenti l'auto resterebbe un'ombra slavata proprio
+ * mentre il visitatore la sta guardando. Queste regole vengono dopo quelle su
+ * `data-luce` e le sovrascrivono a parità di specificità.
+ */
+.ingresso[data-fase='invito'] .ingresso-fascio,
+.ingresso[data-fase='uscita'] .ingresso-fascio {
+  opacity: 0.68;
+  transform: translate(-50%, -50%) scale(1.28);
+}
+
+.ingresso[data-fase='invito'] .bagliore,
+.ingresso[data-fase='uscita'] .bagliore {
+  opacity: 0.32;
+}
+
+/* Il lampo degli abbaglianti che riempie lo schermo. */
+@keyframes ingresso-lampo {
+  0% {
+    opacity: 0;
+  }
+  16% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.ingresso-lampo {
+  animation: ingresso-lampo 1600ms cubic-bezier(0.2, 0, 0.1, 1) both;
+}
+
+/* Comparsa del pulsante ENTRA. */
+@keyframes ingresso-invito {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.94);
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.ingresso-invito {
+  animation: ingresso-invito 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Riflesso che scorre sul vetro del pulsante, all'infinito e al passaggio del
+   puntatore: è quello che lo fa sembrare vetro e non un rettangolo grigio. */
+@keyframes ingresso-riflesso {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  55%,
+  100% {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+.ingresso-riflesso {
+  animation: ingresso-riflesso 3.6s cubic-bezier(0.5, 0, 0.2, 1) infinite;
+}
+
+/* ── Uscita ── */
+@keyframes ingresso-esce {
+  0% {
+    transform: none;
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-82%, 3%, 0) scale(1.3) rotate(-2.5deg);
+    opacity: 0;
+  }
+}
+
+html[data-ingresso='uscita'] .ingresso-auto.avvicina,
+html[data-ingresso='uscita'] .ingresso-auto {
+  animation: ingresso-esce 1.05s cubic-bezier(0.7, 0, 0.84, 0) both;
+}
+
+@keyframes ingresso-tenda {
+  0%,
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+html[data-ingresso='uscita'] .ingresso {
+  animation: ingresso-tenda 1.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+  pointer-events: none;
+}
+
+/* Lama di luce che si apre in orizzontale: la transizione da sala di posa. */
+@keyframes ingresso-sipario {
+  0% {
+    transform: scaleY(0.004);
+    opacity: 0;
+  }
+  18% {
+    transform: scaleY(0.006);
+    opacity: 1;
+  }
+  60% {
+    transform: scaleY(1.15);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scaleY(2.2);
+    opacity: 0;
+  }
+}
+
+.ingresso-sipario {
+  animation: ingresso-sipario 1.15s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* La stampa di una scheda veicolo deve restare leggibile in bianco e nero. */

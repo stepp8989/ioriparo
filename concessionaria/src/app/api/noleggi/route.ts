@@ -118,7 +118,7 @@ export async function POST(richiestaHttp: Request) {
 
   // Il totale si ricalcola sempre lato server: quello arrivato dal browser è
   // solo un'anteprima e non viene mai considerato.
-  const totale = calcolaTotale(veicolo.noleggio, giorni)
+  const totale = calcolaTotale(veicolo.noleggio, giorni, dal)
 
   const metodoRichiesto = fraLeVoci(corpo.pagamento, METODI_PAGAMENTO) ? corpo.pagamento : 'in-sede'
   const metodo = metodiDisponibili().includes(metodoRichiesto) ? metodoRichiesto : 'in-sede'
@@ -135,7 +135,7 @@ export async function POST(richiestaHttp: Request) {
     dal,
     al,
     giorni,
-    formula: formulaApplicata(giorni),
+    formula: formulaApplicata(giorni, dal),
     consegnaDomicilio,
     indirizzoConsegna,
     totale,

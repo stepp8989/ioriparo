@@ -109,6 +109,12 @@ export const NOMI_STATO_VEICOLO: Record<StatoVeicolo, string> = {
  */
 export type TariffeNoleggio = {
   giornaliera: number
+  /**
+   * Pacchetto fine settimana: ritiro il venerdì, riconsegna la domenica o il
+   * lunedì. È la formula più richiesta e costa meno dei due o tre giorni
+   * sciolti, perché il veicolo sarebbe comunque fermo in piazzale.
+   */
+  weekend: number
   settimanale: number
   mensile: number
   /** Deposito cauzionale trattenuto e restituito alla riconsegna. */
@@ -227,11 +233,12 @@ export type Richiesta = {
 
 /* ── Noleggi ─────────────────────────────────────────────────────────────── */
 
-export const FORMULE_NOLEGGIO = ['giornaliera', 'settimanale', 'mensile'] as const
+export const FORMULE_NOLEGGIO = ['giornaliera', 'weekend', 'settimanale', 'mensile'] as const
 export type FormulaNoleggio = (typeof FORMULE_NOLEGGIO)[number]
 
 export const NOMI_FORMULA: Record<FormulaNoleggio, string> = {
   giornaliera: 'Giornaliera',
+  weekend: 'Fine settimana',
   settimanale: 'Settimanale',
   mensile: 'Mensile',
 }

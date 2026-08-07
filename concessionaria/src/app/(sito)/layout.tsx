@@ -36,7 +36,13 @@ export default async function SitoLayout({ children }: { children: React.ReactNo
 
       <Testata />
 
-      <main id="contenuto">{children}</main>
+      {/* `tabIndex={-1}` non lo mette nell'ordine di tabulazione: serve perché
+          il salto al contenuto — e il ritorno dall'ingresso cinematografico —
+          possano spostarci davvero il fuoco. Senza, alcuni browser fanno
+          scorrere la pagina ma lasciano il fuoco dov'era. */}
+      <main id="contenuto" tabIndex={-1} className="focus:outline-none">
+        {children}
+      </main>
 
       <PiePagina orari={orari} />
 

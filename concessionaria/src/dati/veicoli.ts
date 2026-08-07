@@ -273,6 +273,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 59,
+      weekend: 139,
       settimanale: 340,
       mensile: 1090,
       cauzione: 500,
@@ -330,6 +331,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 45,
+      weekend: 105,
       settimanale: 265,
       mensile: 830,
       cauzione: 400,
@@ -385,6 +387,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 69,
+      weekend: 165,
       settimanale: 399,
       mensile: 1250,
       cauzione: 600,
@@ -491,6 +494,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 89,
+      weekend: 209,
       settimanale: 520,
       mensile: 1590,
       cauzione: 800,
@@ -546,6 +550,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 35,
+      weekend: 82,
       settimanale: 199,
       mensile: 620,
       cauzione: 300,
@@ -603,6 +608,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 75,
+      weekend: 179,
       settimanale: 430,
       mensile: 1340,
       cauzione: 600,
@@ -757,6 +763,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 119,
+      weekend: 285,
       settimanale: 690,
       mensile: 2100,
       cauzione: 1500,
@@ -810,6 +817,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 69,
+      weekend: 165,
       settimanale: 390,
       mensile: 1190,
       cauzione: 800,
@@ -913,6 +921,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 45,
+      weekend: 105,
       settimanale: 250,
       mensile: 760,
       cauzione: 400,
@@ -1014,6 +1023,7 @@ export const VEICOLI_INIZIALI: Veicolo[] = [
     visibile: true,
     noleggio: {
       giornaliera: 99,
+      weekend: 235,
       settimanale: 570,
       mensile: 1750,
       cauzione: 1200,

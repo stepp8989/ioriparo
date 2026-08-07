@@ -51,8 +51,8 @@ export const SERVIZI: Servizio[] = [
     sommario: 'Da un giorno a un anno',
     descrizione:
       'Flotta recente con assicurazione kasko inclusa, soccorso stradale ventiquattro ore e vettura ' +
-      'sostitutiva in caso di fermo. Tariffe giornaliere, settimanali e mensili, con consegna a domicilio ' +
-      'in tutta l’Ogliastra.',
+      'sostitutiva in caso di fermo. Tariffe giornaliere, weekend, settimanali e mensili, con consegna ' +
+      'a domicilio in tutta l’Ogliastra.',
     icona: 'chiave',
     immagine: '/immagini/servizi/noleggio-auto.jpg',
     link: '/noleggio?tipo=auto',

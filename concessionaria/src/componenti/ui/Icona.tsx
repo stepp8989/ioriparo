@@ -92,6 +92,8 @@ const TRACCIATI = {
   occhioBarrato: 'M4 4l16 16M10 5.2A9.6 9.6 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.3 4M6.3 7.5A17 17 0 0 0 2 12s3.6 7 10 7c1.6 0 3-.4 4.2-1M9.9 9.9a3 3 0 0 0 4.2 4.2',
   lucchetto: 'M6 10h12a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM8 10V7a4 4 0 0 1 8 0v3M12 15v2',
   targa: 'M3 7h18a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zM7 11v2M11 11v2M15 11v2M19 11v2',
+  audio: 'M11 5L6.5 9H3v6h3.5L11 19zM15 9.5a3.5 3.5 0 0 1 0 5M18 7a7 7 0 0 1 0 10',
+  audioMuto: 'M11 5L6.5 9H3v6h3.5L11 19zM16 10l5 4M21 10l-5 4',
 } as const
 
 /** Icone con più tracciati o con riempimenti: gestite a parte. */

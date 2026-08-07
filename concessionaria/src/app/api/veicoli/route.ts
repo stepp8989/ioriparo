@@ -63,6 +63,7 @@ function veicoloDalCorpo(corpo: Record<string, unknown>, esistente?: Veicolo): V
     tariffe && typeof tariffe === 'object'
       ? {
           giornaliera: numeroDecimale(tariffe.giornaliera, 0, 5_000, 0),
+          weekend: numeroDecimale(tariffe.weekend, 0, 15_000, 0),
           settimanale: numeroDecimale(tariffe.settimanale, 0, 30_000, 0),
           mensile: numeroDecimale(tariffe.mensile, 0, 100_000, 0),
           cauzione: numeroDecimale(tariffe.cauzione, 0, 20_000, 0),

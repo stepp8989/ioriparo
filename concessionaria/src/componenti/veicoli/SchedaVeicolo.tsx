@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { Inclina } from '@/componenti/animazioni/Inclina'
 import { Etichetta } from '@/componenti/ui/Sezione'
 import { Icona } from '@/componenti/ui/Icona'
 import {
@@ -8,7 +9,7 @@ import {
   NOMI_CONDIZIONE,
   type Veicolo,
 } from '@/lib/tipi'
-import { chilometri, classi, prezzo, titoloVeicolo } from '@/lib/utili'
+import { chilometri, prezzo, titoloVeicolo } from '@/lib/utili'
 
 /**
  * Scheda di un veicolo nella griglia del catalogo.
@@ -33,13 +34,8 @@ export function SchedaVeicolo({
       ? Math.round((1 - veicolo.prezzo / veicolo.prezzoPrecedente) * 100)
       : null
 
-  return (
-    <article
-      className={classi(
-        'group relative flex flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo',
-        className,
-      )}
-    >
+  const scheda = (
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie shadow-morbida transition-all duration-500 hover:-translate-y-1 hover:shadow-rilievo">
       <div className="relative aspect-[3/2] overflow-hidden bg-antracite">
         <Image
           src={veicolo.immagini[0]}
@@ -134,4 +130,10 @@ export function SchedaVeicolo({
       </div>
     </article>
   )
+
+  // `Inclina` porta l'inclinazione tridimensionale e la luce che segue il
+  // puntatore. Sta fuori dall'articolo e non dentro perché è un componente di
+  // parte client: tenendolo all'esterno, tutto il contenuto della scheda resta
+  // renderizzato dal server.
+  return <Inclina className={className}>{scheda}</Inclina>
 }

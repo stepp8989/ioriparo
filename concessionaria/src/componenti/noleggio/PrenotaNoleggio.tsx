@@ -8,6 +8,7 @@ import { Area, Campo, Esito, Scelta, Spunta } from '@/componenti/ui/campi'
 import { AZIENDA } from '@/dati/azienda'
 import { calcolaTotale, formulaApplicata } from '@/lib/noleggio'
 import {
+  NOMI_FORMULA,
   NOMI_METODO_PAGAMENTO,
   type MetodoPagamento,
   type Veicolo,
@@ -62,7 +63,7 @@ export function PrenotaNoleggio({
   )
 
   const giorni = dal && al ? giorniFra(dal, al) : 0
-  const totale = veicolo?.noleggio ? calcolaTotale(veicolo.noleggio, giorni) : 0
+  const totale = veicolo?.noleggio ? calcolaTotale(veicolo.noleggio, giorni, dal) : 0
 
   /**
    * Le date già impegnate si chiedono al server a ogni cambio di veicolo.
@@ -381,7 +382,7 @@ export function PrenotaNoleggio({
                 <div className="flex justify-between gap-4">
                   <dt className="text-tenue">Formula</dt>
                   <dd className="font-medium">
-                    {giorni > 0 ? formulaApplicata(giorni) : '—'}
+                    {giorni > 0 ? NOMI_FORMULA[formulaApplicata(giorni, dal)] : '—'}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-4">

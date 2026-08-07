@@ -3,7 +3,7 @@ import { archivioIniziale } from '@/dati/iniziali'
 import { depositoFile } from '@/lib/deposito/file'
 import { depositoPostgres } from '@/lib/deposito/postgres'
 import type { Deposito } from '@/lib/deposito/tipi'
-import type { Archivio } from '@/lib/tipi'
+import type { Archivio, Veicolo } from '@/lib/tipi'
 
 /**
  * Archivio dei contenuti gestiti dal pannello di amministrazione.
@@ -35,11 +35,34 @@ let memoria: Archivio | null = null
 /** Passa a `true` dopo un guasto irrimediabile del deposito. */
 let soloMemoria = false
 
+/**
+ * Riporta i veicoli letti dal deposito allo schema corrente.
+ *
+ * La tariffa del fine settimana è stata aggiunta dopo la messa in linea: gli
+ * archivi già in uso non ce l'hanno, e senza un valore la scheda del noleggio
+ * mostrerebbe «0 €» — che un cliente legge come «gratis». Finché nessuno la
+ * imposta dal pannello si ricava dalla giornaliera, con lo sconto che il
+ * listino applica al pacchetto di due o tre giorni.
+ */
+function conTariffeComplete(veicoli: Veicolo[]): Veicolo[] {
+  return veicoli.map((veicolo) =>
+    veicolo.noleggio && !veicolo.noleggio.weekend
+      ? {
+          ...veicolo,
+          noleggio: {
+            ...veicolo.noleggio,
+            weekend: Math.round((veicolo.noleggio.giornaliera * 2.4) / 5) * 5,
+          },
+        }
+      : veicolo,
+  )
+}
+
 /** Completa un archivio letto dal deposito con le collezioni mancanti. */
 function normalizza(dati: Partial<Archivio>): Archivio {
   const base = archivioIniziale()
   return {
-    veicoli: dati.veicoli ?? base.veicoli,
+    veicoli: conTariffeComplete(dati.veicoli ?? base.veicoli),
     richieste: dati.richieste ?? [],
     noleggi: dati.noleggi ?? [],
     appuntamenti: dati.appuntamenti ?? [],

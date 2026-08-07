@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Apertura } from '@/componenti/home/Apertura'
 import { FasciaDetailing, FasciaNoleggio, Traguardi } from '@/componenti/home/Fasce'
+import { Ingresso, SCRIPT_INGRESSO } from '@/componenti/home/Ingresso'
 import { Marche } from '@/componenti/home/Marche'
 import { Invito, Offerte } from '@/componenti/home/Offerte'
 import { Recensioni } from '@/componenti/home/Recensioni'
@@ -22,6 +23,16 @@ export default async function Home() {
 
   return (
     <>
+      {/*
+        Decide se mostrare l'ingresso cinematografico prima che il browser
+        disegni. Deve stare qui e non in un effetto: React arriva dopo il primo
+        fotogramma, e per quel fotogramma la tenda comparirebbe anche a chi
+        l'ha appena chiusa. Senza JavaScript l'attributo non viene mai scritto e
+        il sito si apre normalmente.
+      */}
+      <script dangerouslySetInnerHTML={{ __html: SCRIPT_INGRESSO }} />
+      <Ingresso />
+
       {/* Le domande frequenti sono in fondo alla pagina Contatti, ma i dati
           strutturati stanno in home perché è la pagina che Google indicizza per
           prima e da cui costruisce la scheda dell'attività. */}

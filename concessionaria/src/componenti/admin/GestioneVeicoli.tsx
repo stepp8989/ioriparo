@@ -298,6 +298,7 @@ function ModuloVeicolo({
       noleggio: conNoleggio
         ? {
             giornaliera: num('giornaliera'),
+            weekend: num('weekend'),
             settimanale: num('settimanale'),
             mensile: num('mensile'),
             cauzione: num('cauzione'),
@@ -553,6 +554,13 @@ function ModuloVeicolo({
             type="number"
             min={0}
             defaultValue={veicolo?.noleggio?.giornaliera ?? 0}
+          />
+          <Campo
+            etichetta="Tariffa weekend (€)"
+            name="weekend"
+            type="number"
+            min={0}
+            defaultValue={veicolo?.noleggio?.weekend ?? 0}
           />
           <Campo
             etichetta="Tariffa settimanale (€)"
