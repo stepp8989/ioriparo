@@ -120,12 +120,18 @@ progetto **nuovo e separato** da quello di Io Riparo:
 ### In locale, per provarlo
 
 ```bash
-git clone -b claude/dealership-website-build-dmwl6j https://github.com/stepp8989/ioriparo
+git clone -b claude/premium-auto-website-3d9dfr https://github.com/stepp8989/ioriparo
 cd ioriparo/concessionaria
 npm install
-npm run immagini      # genera le fotografie segnaposto
 npm run dev           # http://localhost:3000
 ```
+
+Le fotografie segnaposto sono già nel repository: `npm run immagini` serve solo
+per rigenerarle dopo aver cambiato i colori in `scripts/genera-immagini.mjs`.
+
+L'ingresso cinematografico si vede una volta per sessione del browser. Per
+rivederlo basta una finestra anonima, oppure svuotare `sessionStorage` dagli
+strumenti di sviluppo.
 
 Il pannello è su `/admin`: in sviluppo la password è `aurora`.
 
