@@ -1,0 +1,600 @@
+@import 'tailwindcss';
+
+/*
+ * ─────────────────────────────────────────────────────────────────────────────
+ * Sistema grafico di Orbita Studio
+ * ─────────────────────────────────────────────────────────────────────────────
+ *
+ * Il sito è a tema scuro fisso: non è una preferenza, è l'identità. Tutta la
+ * grafica — bagliori, vetro, sfumature al neon — è calcolata per vivere su un
+ * fondo quasi nero, e su fondo chiaro perderebbe senso. Per questo qui non c'è
+ * la doppia dichiarazione chiaro/scuro degli altri siti del repository.
+ *
+ * La palette è blu elettrico e viola al neon su nero bluastro, con bianco
+ * ghiaccio per il testo. Il blu è più freddo e più saturo di quello di Io
+ * Riparo, e il viola è l'elemento che distingue davvero i due marchi: dove Io
+ * Riparo resta su un blu di servizio, qui la coppia blu→viola corre in
+ * sfumatura su titoli, bordi e bagliori.
+ *
+ * Tutti i colori sono dichiarati una volta come variabili CSS e riesposti come
+ * token Tailwind: `bg-fondo`, `text-blu`, `border-bordo` funzionano ovunque, e
+ * cambiare marchio significa cambiare cinque righe qui sotto.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ── Superfici ──────────────────────────────────────────────────────────── */
+  --fondo: #04060d;
+  --fondo-alt: #070a14;
+  --superficie: #0b0f1c;
+  --superficie-alta: #111729;
+  --bordo: #1c2438;
+  --bordo-forte: #2b3550;
+
+  /* ── Testo ──────────────────────────────────────────────────────────────── */
+  --testo: #eef2ff;
+  --testo-tenue: #93a0c0;
+  --testo-fioco: #5b6786;
+
+  /* ── Accenti ────────────────────────────────────────────────────────────── */
+  --blu: #3b82f6;
+  --blu-chiaro: #7fb2ff;
+  --blu-cupo: #1d4ed8;
+  --viola: #8b5cf6;
+  --viola-chiaro: #b79dff;
+  --ciano: #22d3ee;
+
+  /* ── Vetro (glassmorphism) ──────────────────────────────────────────────── */
+  --vetro-fondo: rgb(17 23 41 / 0.55);
+  --vetro-bordo: rgb(255 255 255 / 0.08);
+  --vetro-luce: rgb(255 255 255 / 0.14);
+
+  /* ── Bagliori ───────────────────────────────────────────────────────────── */
+  --bagliore-blu: 0 0 0 1px rgb(59 130 246 / 0.35), 0 8px 30px -6px rgb(59 130 246 / 0.45);
+  --bagliore-viola: 0 0 0 1px rgb(139 92 246 / 0.35), 0 8px 30px -6px rgb(139 92 246 / 0.45);
+  --bagliore-forte: 0 0 24px -2px rgb(59 130 246 / 0.6), 0 0 64px -12px rgb(139 92 246 / 0.55);
+
+  /* ── Ombre ──────────────────────────────────────────────────────────────── */
+  --ombra-bassa: 0 1px 2px rgb(0 0 0 / 0.6), 0 8px 24px -12px rgb(0 0 0 / 0.8);
+  --ombra-alta: 0 24px 70px -20px rgb(0 0 0 / 0.9), 0 2px 8px rgb(0 0 0 / 0.5);
+
+  /* Altezza della testata: serve allo scroll con ancore e ai riempimenti. */
+  --testata: 4.5rem;
+}
+
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-fondo-alt: var(--fondo-alt);
+  --color-superficie: var(--superficie);
+  --color-superficie-alta: var(--superficie-alta);
+  --color-bordo: var(--bordo);
+  --color-bordo-forte: var(--bordo-forte);
+
+  --color-testo: var(--testo);
+  --color-tenue: var(--testo-tenue);
+  --color-fioco: var(--testo-fioco);
+
+  --color-blu: var(--blu);
+  --color-blu-chiaro: var(--blu-chiaro);
+  --color-blu-cupo: var(--blu-cupo);
+  --color-viola: var(--viola);
+  --color-viola-chiaro: var(--viola-chiaro);
+  --color-ciano: var(--ciano);
+
+  --font-titolo: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-testo: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-spazio), ui-monospace, SFMono-Regular, monospace;
+
+  --shadow-bassa: var(--ombra-bassa);
+  --shadow-alta: var(--ombra-alta);
+  --shadow-blu: var(--bagliore-blu);
+  --shadow-viola: var(--bagliore-viola);
+  --shadow-neon: var(--bagliore-forte);
+
+  --radius-tenue: 0.75rem;
+  --radius-morbido: 1.25rem;
+  --radius-ampio: 1.75rem;
+  --radius-enorme: 2.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Base
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    border-color: var(--bordo);
+    min-width: 0;
+  }
+
+  html {
+    /* Scorrimento morbido nativo: nessuna libreria, nessun ritardo sul primo
+     * caricamento, e il comportamento resta corretto anche con la tastiera. */
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--testata) + 1.5rem);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--fondo);
+    color: var(--testo);
+    font-family: var(--font-testo);
+    /* La pagina non deve mai scorrere in orizzontale: alcune decorazioni
+     * escono di proposito dai bordi. */
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titolo);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: rgb(59 130 246 / 0.35);
+    color: var(--testo);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--blu-chiaro);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Barra di scorrimento coerente con il tema, dove il browser la espone. */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--fondo);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--blu-cupo), var(--viola));
+    border-radius: 99px;
+    border: 2px solid var(--fondo);
+  }
+
+  /* Le immagini non escono mai dal loro contenitore. */
+  img,
+  svg,
+  canvas {
+    max-width: 100%;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Utilità
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@layer utilities {
+  /* Testo con sfumatura blu→viola: soprattitoli, numeri, parole chiave. */
+  .testo-neon {
+    background-image: linear-gradient(100deg, var(--blu-chiaro), var(--viola-chiaro) 55%, var(--ciano));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  /* Sfumatura in movimento, per i titoli più importanti. */
+  .testo-neon-vivo {
+    background-image: linear-gradient(
+      100deg,
+      var(--blu-chiaro),
+      var(--viola-chiaro) 30%,
+      var(--ciano) 50%,
+      var(--viola-chiaro) 70%,
+      var(--blu-chiaro)
+    );
+    background-size: 250% 100%;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    animation: scorri-sfumatura 9s linear infinite;
+  }
+
+  /*
+   * Pannello di vetro: fondo traslucido, bordo chiaro, sfocatura dietro.
+   *
+   * La sfocatura di sfondo è l'effetto più caro della pagina: obbliga il
+   * browser a rifare la sfocatura di ciò che sta dietro a ogni fotogramma di
+   * scorrimento, per ognuno dei pannelli. Su schermo stretto — dove i pannelli
+   * occupano quasi tutta la larghezza e dietro c'è solo il fondo scuro con
+   * qualche particella — non si vede la differenza, ma si paga tutta. Quindi
+   * sotto i 768 pixel resta un fondo un po' più coperto, e la sfocatura si
+   * accende solo da lì in su.
+   */
+  .vetro {
+    background-color: rgb(17 23 41 / 0.82);
+    border: 1px solid var(--vetro-bordo);
+  }
+
+  @media (min-width: 768px) {
+    .vetro {
+      background-color: var(--vetro-fondo);
+      backdrop-filter: blur(18px) saturate(140%);
+      -webkit-backdrop-filter: blur(18px) saturate(140%);
+    }
+  }
+
+  /* Riga di luce sul bordo superiore, come sui vetri illuminati da sopra. */
+  .vetro-luce {
+    position: relative;
+  }
+  .vetro-luce::before {
+    content: '';
+    position: absolute;
+    inset-inline: 12%;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--vetro-luce), transparent);
+    pointer-events: none;
+  }
+
+  /* Bordo che si accende in sfumatura: due strati, così il testo resta netto. */
+  .bordo-neon {
+    position: relative;
+  }
+  .bordo-neon::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--blu), var(--viola) 55%, transparent);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+    pointer-events: none;
+  }
+  .bordo-neon:hover::after,
+  .bordo-neon:focus-within::after {
+    opacity: 1;
+  }
+
+  /* Alone luminoso dietro un elemento, senza toccarne il fondo. */
+  .alone::before {
+    content: '';
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at 50% 50%, rgb(59 130 246 / 0.22), transparent 62%);
+    filter: blur(28px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .alone:hover::before {
+    opacity: 1;
+  }
+
+  /* Reticolo tecnico di fondo: si dissolve verso il basso. */
+  .griglia {
+    background-image:
+      linear-gradient(to right, rgb(148 163 220 / 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 220 / 0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Prospettiva per le carte che si inclinano sotto il puntatore. */
+  .scena {
+    perspective: 1200px;
+    perspective-origin: center;
+  }
+  .piano {
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  /* Contenitore standard delle sezioni. */
+  .contenitore {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .contenitore {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Testo nascosto ma leggibile dai lettori di schermo. */
+  .solo-lettori {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Comparse allo scorrimento
+ *
+ * Un solo osservatore in JavaScript aggiunge `.visibile`; tutto il movimento è
+ * qui, in CSS, dove lo compone il browser senza far lavorare il thread
+ * principale. `--ritardo` scala le comparse di una fila di elementi.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+.rivela {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--ritardo, 0ms);
+  will-change: opacity, transform;
+}
+.rivela.visibile {
+  opacity: 1;
+  transform: none;
+}
+
+.rivela-scala {
+  opacity: 0;
+  transform: scale(0.92);
+}
+.rivela-scala.visibile {
+  opacity: 1;
+  transform: none;
+}
+
+.rivela-sinistra {
+  opacity: 0;
+  transform: translate3d(-36px, 0, 0);
+}
+.rivela-destra {
+  opacity: 0;
+  transform: translate3d(36px, 0, 0);
+}
+.rivela-sinistra.visibile,
+.rivela-destra.visibile {
+  opacity: 1;
+  transform: none;
+}
+
+/* Sfocatura in entrata, per i titoli cinematografici. */
+.rivela-fuoco {
+  opacity: 0;
+  filter: blur(14px);
+  transform: translate3d(0, 18px, 0);
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 1s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--ritardo, 0ms);
+}
+.rivela-fuoco.visibile {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Animazioni
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@keyframes scorri-sfumatura {
+  to {
+    background-position: 250% 0;
+  }
+}
+
+/* Striscia che scorre senza fine: il contenuto è duplicato, e a metà corsa
+ * la posizione torna quella di partenza senza che si veda il salto. */
+@keyframes scorri-striscia {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fluttua {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
+  }
+}
+
+@keyframes respiro {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes orbita {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulsa-anello {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes scansione {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
+}
+
+@keyframes lampeggia-cursore {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Nascita del portale: la particella si accende e si allarga in un disco. */
+@keyframes nascita-nucleo {
+  0% {
+    transform: scale(0.05);
+    opacity: 0;
+  }
+  35% {
+    transform: scale(0.16);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Gli anelli del portale si aprono uno dopo l'altro. */
+@keyframes apri-anello {
+  from {
+    transform: rotateX(74deg) rotateZ(0deg) scale(0.15);
+    opacity: 0;
+  }
+  to {
+    transform: rotateX(74deg) rotateZ(360deg) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Rotazione continua di un anello già aperto. */
+@keyframes gira-anello {
+  from {
+    transform: rotateX(74deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(74deg) rotateZ(360deg);
+  }
+}
+
+@keyframes entra-dal-basso {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes dissolvi {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.anima-fluttua {
+  animation: fluttua 7s ease-in-out infinite;
+}
+.anima-respiro {
+  animation: respiro 5s ease-in-out infinite;
+}
+.anima-orbita {
+  animation: orbita 22s linear infinite;
+}
+.anima-entra {
+  animation: entra-dal-basso 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--ritardo, 0ms);
+}
+.anima-dissolvi {
+  animation: dissolvi 0.6s ease both;
+  animation-delay: var(--ritardo, 0ms);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Cursore su misura
+ *
+ * Compare solo dove esiste davvero un puntatore: su telefoni e tablet il
+ * cursore non viene nemmeno montato (vedi `Cursore.tsx`), e il cursore di
+ * sistema resta al suo posto.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@media (pointer: fine) {
+  body.cursore-su-misura,
+  body.cursore-su-misura a,
+  body.cursore-su-misura button {
+    cursor: none;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+ * Movimento ridotto
+ *
+ * Chi ha chiesto meno animazioni al sistema operativo riceve un sito immobile
+ * ma completo: le comparse diventano immediate, i cicli infiniti si fermano.
+ * Nessun contenuto sparisce, perché tutto quello che si anima è visibile anche
+ * da fermo.
+ * ────────────────────────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .rivela,
+  .rivela-scala,
+  .rivela-sinistra,
+  .rivela-destra,
+  .rivela-fuoco {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

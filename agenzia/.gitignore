@@ -1,0 +1,13 @@
+node_modules/
+.next/
+out/
+build/
+.env
+.env.local
+*.tsbuildinfo
+next-env.d.ts
+dati-locali/
+
+# Istruzioni per gli assistenti, riscritte da `next dev` a ogni avvio.
+AGENTS.md
+CLAUDE.md

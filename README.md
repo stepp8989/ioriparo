@@ -1,10 +1,15 @@
 # IO RIPARO — Sito web e gestionale
 
-> **Nota.** Questo repository ospita anche un secondo progetto, indipendente da IO RIPARO:
-> [`ristorante/`](ristorante/) contiene il sito e il pannello di gestione di **Ristorante Aurea**
-> (Next.js 16 + Tailwind 4 + Framer Motion). Le due applicazioni non condividono codice,
-> dipendenze né dati: si compilano e si pubblicano separatamente. Chi pubblica il ristorante
-> deve impostare la **Root Directory** su `ristorante`, altrimenti viene compilato IO RIPARO.
+> **Nota.** Questo repository ospita anche altri progetti, indipendenti da IO RIPARO e
+> indipendenti fra loro. Nessuno condivide codice, dipendenze o dati con gli altri: si
+> compilano e si pubblicano separatamente, e **chi ne pubblica uno deve impostare la Root
+> Directory sulla sua cartella**, altrimenti viene compilato IO RIPARO.
+>
+> | Cartella | Progetto | Tecnologia |
+> | --- | --- | --- |
+> | [`ristorante/`](ristorante/) | **Ristorante Aurea** — sito e pannello di gestione | Next.js 16, Tailwind 4, Framer Motion |
+> | [`concessionaria/`](concessionaria/) | **Aurora Motori** — sito, catalogo e pannello | Next.js 16, Tailwind 4, Framer Motion |
+> | [`agenzia/`](agenzia/) | **Orbita Studio** — vetrina per chi realizza siti web | Next.js 16, Tailwind 4, nessuna dipendenza per le animazioni |
 
 Progetto unico che contiene due applicazioni con lo stesso archivio dati:
 
