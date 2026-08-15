@@ -140,3 +140,58 @@ revoke all on function stato_riparazione(text) from public;
 grant execute on function stato_riparazione(text) to anon, authenticated;
 
 commit;
+
+-- ── Analytics del sito ───────────────────────────────────────
+-- Una riga per pagina vista, depositata dal sito pubblico quando il
+-- visitatore lascia la pagina. Nessun dato personale: niente indirizzi IP,
+-- niente identificativi che durino oltre la sessione del browser.
+--
+-- `sessione` e' un numero casuale che vive in sessionStorage: serve solo a
+-- cucire insieme le pagine di una stessa visita e sparisce chiudendo la
+-- scheda. Non identifica una persona e non permette di riconoscerla domani.
+
+create table if not exists visite (
+  id           uuid primary key default gen_random_uuid(),
+  sessione     text not null,
+  -- Percorso della pagina, senza dominio e senza parametri di ricerca:
+  -- nei parametri finiscono nomi e codici, qui non devono entrare.
+  pagina       text not null,
+  ingresso     boolean not null default false,
+  -- Solo il nome del sito di provenienza (es. "google.com"), mai
+  -- l'indirizzo completo: quello a volte contiene la ricerca fatta.
+  provenienza  text,
+  -- Etichetta di campagna, se il link era marcato (utm_source).
+  campagna     text,
+  dispositivo  text not null default 'sconosciuto',
+  sistema      text,
+  browser      text,
+  -- Secondi passati sulla pagina e percentuale massima di scorrimento.
+  secondi      int  not null default 0,
+  scorrimento  int  not null default 0,
+  -- Azioni compiute su questa pagina: telefono, whatsapp, email, moduli.
+  azioni       text[] not null default '{}',
+  vista_il     timestamptz not null default now()
+);
+
+create index if not exists visite_data_idx on visite (vista_il desc);
+create index if not exists visite_sessione_idx on visite (sessione);
+create index if not exists visite_pagina_idx on visite (pagina);
+
+alter table visite enable row level security;
+
+-- Il personale legge tutto.
+drop policy if exists "personale legge le visite" on visite;
+create policy "personale legge le visite" on visite
+  for all to authenticated using (true) with check (true);
+
+-- Il sito pubblico può solo depositare, mai rileggere: senza questa
+-- distinzione chiunque potrebbe scaricarsi l'intero storico delle visite.
+drop policy if exists "il sito deposita visite" on visite;
+create policy "il sito deposita visite" on visite
+  for insert to anon with check (
+    length(sessione) between 8 and 40
+    and length(pagina) <= 120
+    and secondi between 0 and 7200
+    and scorrimento between 0 and 100
+    and coalesce(array_length(azioni, 1), 0) <= 20
+  );

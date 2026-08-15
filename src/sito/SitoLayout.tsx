@@ -10,6 +10,7 @@ import { PiePagina } from './componenti/PiePagina'
 import { Testata } from './componenti/Testata'
 import { WHATSAPP } from './dati/azienda'
 import { animazioniRidotte, useMemoria } from './lib/hook'
+import { cambiaPagina, impostaMisure } from './lib/misure'
 import { cn } from './lib/utili'
 
 function Contenuto() {
@@ -45,6 +46,16 @@ function Contenuto() {
       document.documentElement.style.colorScheme = ''
     }
   }, [])
+
+  /* Misure di visita: si accendono e si spengono seguendo il consenso. */
+  useEffect(() => {
+    impostaMisure(consenso)
+  }, [consenso])
+
+  /* Ogni cambio di pagina chiude quella precedente e ne apre una nuova. */
+  useEffect(() => {
+    cambiaPagina(posizione.pathname)
+  }, [posizione.pathname])
 
   /* Banner cookie alla prima visita. */
   useEffect(() => {
