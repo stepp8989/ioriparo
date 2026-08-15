@@ -134,6 +134,22 @@ export const CHIUSURE: { dal: string; al: string; motivo: string }[] = [
 const iso = (d: Date) =>
   `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
 
+/**
+ * Auguri che compaiono nell'apertura del sito per un giorno solo.
+ *
+ * La data sta scritta qui: passata la mezzanotte spariscono da soli. Un
+ * augurio rimasto su il giorno dopo fa più brutta figura di uno non fatto.
+ */
+export const AUGURI: { giorno: string; testo: string }[] = [
+  { giorno: '2026-08-15', testo: 'Buon Ferragosto da Io Riparo' },
+]
+
+/** Gli auguri di oggi, se ce ne sono. */
+export function auguriDiOggi(adesso = new Date()): string | null {
+  const giorno = iso(adesso)
+  return AUGURI.find((a) => a.giorno === giorno)?.testo ?? null
+}
+
 /** La chiusura in corso nel giorno indicato, se ce n'è una. */
 export function chiusuraDi(adesso = new Date()) {
   const giorno = iso(adesso)

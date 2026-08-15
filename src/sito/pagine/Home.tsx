@@ -8,7 +8,16 @@ import { SchedaPratica } from '../componenti/SchedaPratica'
 import { Stagione } from '../componenti/Stagione'
 import { GrigliaServizi } from '../componenti/Servizi'
 import { Chip, Intestazione, LinkBottone, Sezione } from '../componenti/base'
-import { AZIENDA, GARANZIA, GOOGLE, apertoOra, chiusuraDi, chiusuraOdierna, prossimaApertura } from '../dati/azienda'
+import {
+  AZIENDA,
+  GARANZIA,
+  GOOGLE,
+  apertoOra,
+  auguriDiOggi,
+  chiusuraDi,
+  chiusuraOdierna,
+  prossimaApertura,
+} from '../dati/azienda'
 import { NUMERI } from '../dati/contenuti'
 import { useContatore, useRivela } from '../lib/hook'
 import { useSeo } from '../lib/seo'
@@ -56,6 +65,8 @@ export function Home() {
   // Durante le ferie il sito lo dice, invece di lasciar credere di essere aperto.
   const ferie = chiusuraDi()
   const riapertura = ferie ? prossimaApertura() : null
+  // Auguri della giornata: durano un giorno e poi spariscono da soli.
+  const auguri = auguriDiOggi()
 
   /** In vetrina la pratica aperta più recente: è la stessa del gestionale. */
   const inLavorazione =
@@ -74,6 +85,9 @@ export function Home() {
           <div className="hero__grid">
             <div>
               <div className="hero__badges">
+                {/* Primo della fila: e' la prima cosa che si legge entrando,
+                    e oggi conta piu' dell'orario. */}
+                {auguri && <Chip variante="warn">{auguri}</Chip>}
                 <Chip variante={aperto ? 'blue' : 'alert'} punto>
                   {ferie
                     ? `${ferie.motivo}${riapertura ? ` · riapriamo ${dataEstesa(riapertura)}` : ''}`
