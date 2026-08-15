@@ -1,0 +1,433 @@
+@import 'tailwindcss';
+
+/*
+ * Sistema grafico del sito.
+ *
+ * I colori sono dichiarati due volte: come variabili CSS (che cambiano fra tema
+ * chiaro e scuro) e come token Tailwind che puntano a quelle variabili. In
+ * questo modo `bg-sfondo` o `text-accento` funzionano in entrambi i temi senza
+ * scrivere due classi.
+ *
+ * La palette è rame e arancio bruciato su nero caldo, con bianco avorio e
+ * grigio antracite. Il blu elettrico è stato deliberatamente evitato: è il
+ * colore di Io Riparo, che vive nello stesso repository, e due marchi con lo
+ * stesso accento non si distinguono. Per la stessa ragione si sta lontani
+ * dall'oro del Ristorante Aurea.
+ *
+ * Le due tonalità profonde (`--notte`, `--antracite`) restano scure anche nel
+ * tema chiaro, perché alcune fasce — apertura, invito finale, piè di pagina —
+ * sono sempre scure per scelta grafica.
+ */
+
+@custom-variant scuro (&:where(.scuro, .scuro *));
+
+:root {
+  color-scheme: light;
+
+  /* Superfici: bianchi caldi, non freddi, per accordarsi al rame. */
+  --sfondo: #faf7f4;
+  --sfondo-alt: #f2ece5;
+  --superficie: #ffffff;
+  --superficie-alt: #fbf8f5;
+  --bordo: #e8ded3;
+  --bordo-forte: #cdbeae;
+
+  /* Testo */
+  --testo: #14100c;
+  --testo-tenue: #6a5f53;
+  --testo-inverso: #fbf8f5;
+
+  /*
+   * Rame.
+   * Nel tema chiaro è volutamente scuro e bruciato: un rame più brillante su
+   * fondo avorio non raggiungerebbe il contrasto 4.5:1 richiesto dalle WCAG
+   * per il testo piccolo, e qui l'accento è anche colore dei collegamenti,
+   * delle soprattitoli e dei pulsanti.
+   */
+  --accento: #9c5416;
+  --accento-forte: #7a3f0e;
+  --accento-tenue: #f0cfae;
+
+  /* Estremi della sfumatura dei titoli (utilità `testo-accento`). */
+  --accento-1: #9c5416;
+  --accento-2: #cf7a2c;
+
+  /* Tonalità profonde: identiche nei due temi. */
+  --notte: #0d0805;
+  --antracite: #1f170f;
+  --grigio: #362c22;
+
+  /* Vetro: fondo e bordo delle superfici traslucide. */
+  --vetro-fondo: rgb(255 255 255 / 0.68);
+  --vetro-bordo: rgb(255 255 255 / 0.75);
+
+  /* Ombre morbide, mai nette */
+  --ombra-bassa: 0 1px 2px rgb(20 16 12 / 0.04), 0 6px 18px rgb(20 16 12 / 0.06);
+  --ombra-alta: 0 2px 8px rgb(20 16 12 / 0.06), 0 24px 60px rgb(20 16 12 / 0.14);
+  --ombra-accento: 0 12px 34px rgb(156 84 22 / 0.28);
+}
+
+.scuro {
+  color-scheme: dark;
+
+  --sfondo: #0a0705;
+  --sfondo-alt: #0f0b07;
+  --superficie: #16110c;
+  --superficie-alt: #1d1711;
+  --bordo: #2c231a;
+  --bordo-forte: #3f3427;
+
+  --testo: #f5efe7;
+  --testo-tenue: #a49686;
+  --testo-inverso: #0a0705;
+
+  /* Sul fondo scuro il rame può tornare luminoso. */
+  --accento: #e59243;
+  --accento-forte: #f3b273;
+  --accento-tenue: #4d2c0e;
+
+  --accento-1: #f3b273;
+  --accento-2: #e59243;
+
+  --vetro-fondo: rgb(26 20 14 / 0.62);
+  --vetro-bordo: rgb(255 255 255 / 0.09);
+
+  --ombra-bassa: 0 1px 2px rgb(0 0 0 / 0.5), 0 6px 18px rgb(0 0 0 / 0.4);
+  --ombra-alta: 0 2px 8px rgb(0 0 0 / 0.5), 0 24px 60px rgb(0 0 0 / 0.6);
+  --ombra-accento: 0 12px 34px rgb(229 146 67 / 0.32);
+}
+
+@theme inline {
+  --color-sfondo: var(--sfondo);
+  --color-sfondo-alt: var(--sfondo-alt);
+  --color-superficie: var(--superficie);
+  --color-superficie-alt: var(--superficie-alt);
+  --color-bordo: var(--bordo);
+  --color-bordo-forte: var(--bordo-forte);
+
+  --color-testo: var(--testo);
+  --color-tenue: var(--testo-tenue);
+  --color-inverso: var(--testo-inverso);
+
+  --color-accento: var(--accento);
+  --color-accento-forte: var(--accento-forte);
+  --color-accento-tenue: var(--accento-tenue);
+
+  --color-notte: var(--notte);
+  --color-antracite: var(--antracite);
+  --color-grigio: var(--grigio);
+
+  --font-titolo: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-testo: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-morbida: var(--ombra-bassa);
+  --shadow-rilievo: var(--ombra-alta);
+  --shadow-accento: var(--ombra-accento);
+
+  --radius-tenue: 0.75rem;
+  --radius-morbido: 1.25rem;
+  --radius-ampio: 1.75rem;
+}
+
+/* ── Impostazioni di base ────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    border-color: var(--bordo);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compensa l'intestazione fissa quando si salta a un'ancora. */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /*
+     * Le comparse laterali partono con uno scostamento di qualche decina di
+     * pixel: su schermi stretti gli elementi ancora fuori dalla finestra
+     * sporgerebbero oltre il bordo destro, facendo comparire una barra di
+     * scorrimento orizzontale. `clip` la elimina e, a differenza di `hidden`,
+     * non crea un contenitore di scorrimento: gli elementi agganciati con
+     * `position: sticky` continuano a funzionare.
+     */
+    overflow-x: clip;
+    background-color: var(--sfondo);
+    color: var(--testo);
+    font-family: var(--font-testo);
+    font-feature-settings: 'kern', 'liga', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titolo);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* I numeri delle tabelle tecniche devono incolonnarsi. */
+  table,
+  .tabellare {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Contorno di messa a fuoco visibile solo da tastiera. */
+  :focus-visible {
+    outline: 2px solid var(--accento);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accento);
+    color: #fff;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* I campi ereditano il carattere del sito, che il browser non farebbe. */
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* ── Utilità del progetto ────────────────────────────────────────────────── */
+
+@utility contenitore {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 82rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+/*
+ * Vetro smerigliato.
+ *
+ * `backdrop-filter` non è supportato ovunque; dove manca resta il fondo
+ * traslucido, che è già leggibile. Il colore del fondo cambia con il tema,
+ * quindi la stessa classe funziona sopra sezioni chiare e scure.
+ */
+@utility vetro {
+  background-color: var(--vetro-fondo);
+  border: 1px solid var(--vetro-bordo);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* Variante per il vetro appoggiato sopra fotografie scure. */
+@utility vetro-scuro {
+  background-color: rgb(10 13 20 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.12);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+}
+
+/* Filetto decorativo ramato usato sotto le soprattitoli. */
+@utility filetto {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accento));
+}
+
+/* Testo con sfumatura ramata: solo per titoli brevi. */
+@utility testo-accento {
+  background: linear-gradient(100deg, var(--accento-1), var(--accento-2), var(--accento-1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Sottolineatura animata al passaggio del puntatore. */
+@utility sottolinea {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Nasconde la barra di scorrimento su caroselli e liste orizzontali. */
+@utility senza-barra {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ── Elementi ricorrenti ─────────────────────────────────────────────────── */
+
+/* Trama impercettibile che toglie la piattezza ai fondi pieni. */
+.trama {
+  background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+  background-size: 26px 26px;
+  opacity: 0.05;
+}
+
+/* Griglia tecnica: fondale delle sezioni scure. */
+.griglia-tecnica {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+}
+
+/* Alone luminoso dietro gli elementi in evidenza. */
+.alone {
+  background: radial-gradient(circle, var(--accento) 0%, transparent 68%);
+  opacity: 0.22;
+  filter: blur(90px);
+}
+
+/* Barra di scorrimento coerente con il tema. */
+* {
+  scrollbar-color: var(--bordo-forte) transparent;
+  scrollbar-width: thin;
+}
+
+/* ── Movimento ───────────────────────────────────────────────────────────── */
+
+/*
+ * Chi ha chiesto meno animazioni al sistema operativo vede il sito fermo:
+ * i contenuti restano tutti visibili, cambia solo il modo in cui compaiono.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scorrimento continuo della fascia marchi e recensioni. */
+@keyframes scorri {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.scorrimento {
+  animation: scorri 46s linear infinite;
+}
+
+.scorrimento:hover {
+  animation-play-state: paused;
+}
+
+/* Comparsa lenta usata dall'apertura della home. */
+@keyframes affiora {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.affiora {
+  animation: affiora 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Lenta panoramica dell'immagine di apertura: dà vita alla fotografia ferma. */
+@keyframes panoramica {
+  from {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-1.4%, -1.2%, 0);
+  }
+}
+
+.panoramica {
+  animation: panoramica 30s ease-in-out infinite alternate;
+}
+
+/* Pulsazione discreta del punto «disponibile». */
+@keyframes pulsa {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+
+.pulsa {
+  animation: pulsa 2.4s ease-in-out infinite;
+}
+
+/* Riflesso che attraversa i pulsanti principali al passaggio del puntatore. */
+@keyframes riflesso {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+/* La stampa di una scheda veicolo deve restare leggibile in bianco e nero. */
+@media print {
+  .no-stampa {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+}

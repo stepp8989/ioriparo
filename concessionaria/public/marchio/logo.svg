@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" width="220" height="48">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e59243"/>
+      <stop offset="100%" stop-color="#9c5416"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4 4) scale(1)">
+    <path d="M20 2.5 34.5 8v12.6c0 8.2-5.9 14.4-14.5 16.9C11.4 35 5.5 28.8 5.5 20.6V8z" fill="url(#s)"/>
+    <path d="M20 11.5 27.5 28h-4.2L20 20l-3.3 8h-4.2z" fill="#fff"/>
+  </g>
+  <text x="52" y="27" font-family="Sora, Inter, Arial, sans-serif" font-size="17" font-weight="600" letter-spacing="3.4" fill="#14100c">AURORA</text>
+  <text x="53" y="39" font-family="Inter, Arial, sans-serif" font-size="8" font-weight="500" letter-spacing="5" fill="#6a5f53">MOTORI</text>
+</svg>

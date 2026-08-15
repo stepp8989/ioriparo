@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Senza connessione — Aurora Motori</title>
+    <meta name="robots" content="noindex" />
+    <!--
+      Pagina di cortesia mostrata dal registratore di servizio quando manca la
+      rete. È volutamente autosufficiente: nessun foglio di stile esterno,
+      nessun carattere da scaricare, nessuna immagine. Se servisse qualcosa
+      dalla rete non potrebbe comparire proprio nel momento in cui serve.
+    -->
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 2rem 1.5rem;
+        background: #0a0705;
+        color: #f5efe7;
+        font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+        text-align: center;
+      }
+      .riquadro {
+        max-width: 32rem;
+      }
+      svg {
+        width: 4rem;
+        height: 4rem;
+      }
+      h1 {
+        margin: 1.75rem 0 0;
+        font-size: 1.6rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      p {
+        margin: 1rem 0 0;
+        line-height: 1.7;
+        color: #a49686;
+      }
+      a {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.85rem 1.75rem;
+        border-radius: 999px;
+        background: #e59243;
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .recapito {
+        margin-top: 1.75rem;
+        font-size: 0.9rem;
+      }
+      .recapito a {
+        margin: 0;
+        padding: 0;
+        background: none;
+        color: #f3b273;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="riquadro">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <path
+          d="M20 2.5 34.5 8v12.6c0 8.2-5.9 14.4-14.5 16.9C11.4 35 5.5 28.8 5.5 20.6V8z"
+          fill="#e59243"
+        />
+        <path d="M20 11.5 27.5 28h-4.2L20 20l-3.3 8h-4.2z" fill="#fff" />
+      </svg>
+
+      <h1>Sembra che manchi la connessione</h1>
+
+      <p>
+        Le pagine già visitate restano disponibili. Per il catalogo aggiornato e per prenotare serve
+        invece la rete: riprovate fra poco.
+      </p>
+
+      <a href="/">Riprova</a>
+
+      <p class="recapito">
+        Se avete urgenza, chiamateci allo
+        <a href="tel:+390782012345">+39 0782 012 345</a>.
+      </p>
+    </div>
+  </body>
+</html>
