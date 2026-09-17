@@ -79,10 +79,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: '#07060c' },
-    { media: '(prefers-color-scheme: light)', color: '#f7f5fb' },
-  ],
+  // Un colore solo, senza distinzione per `prefers-color-scheme`: il tema
+  // predefinito è scuro a prescindere dall'impostazione del sistema, e
+  // dichiarare il chiaro qui farebbe colorare la barra del browser in modo
+  // diverso dalla pagina.
+  themeColor: '#07060c',
 }
 
 export default function RadiceLayout({ children }: { children: React.ReactNode }) {

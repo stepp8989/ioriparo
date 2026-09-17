@@ -124,6 +124,16 @@ export type EsitoOrdine =
       piano: PianoAbbonamento | null
       /** Posti con prezzo e tipologia già risolti, pronti a diventare biglietti. */
       posti: (SelezionePosto & { prezzo: number; tipologiaNome: string })[]
+      /**
+       * Righe del banco con nome e prezzo presi dal listino.
+       *
+       * Devono uscire da qui: quelle che arrivano dal browser portano solo
+       * l'identificativo del prodotto e la quantità, perché nome e prezzo non
+       * si accettano dall'esterno. Copiando quelle nella prenotazione si
+       * salverebbero righe senza nome e a prezzo zero — il totale resterebbe
+       * giusto, ma il biglietto e le statistiche del banco no.
+       */
+      food: RigaFood[]
     }
 
 /**
@@ -399,7 +409,7 @@ export function valutaOrdine(
     tipologiaNome: tipologie.find((voce) => voce.id === scelta.tipologiaId)?.nome ?? 'Intero',
   }))
 
-  return { ok: true, conto, spettacolo, promozione, coupon, giftCard, piano, posti }
+  return { ok: true, conto, spettacolo, promozione, coupon, giftCard, piano, posti, food }
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -431,7 +441,7 @@ export function creaPrenotazione(
   esito: Extract<EsitoOrdine, { ok: true }>,
   adesso = new Date(),
 ): Prenotazione {
-  const { spettacolo, conto, posti } = esito
+  const { spettacolo, conto, posti, food } = esito
 
   const codice = codiceLibero(archivio)
   const scadenza = new Date(
@@ -462,7 +472,7 @@ export function creaPrenotazione(
       codiceBiglietto: nuovoCodice(10),
       utilizzatoIl: null,
     })),
-    food: richiesta.food.map((riga) => ({ ...riga })),
+    food: food.map((riga) => ({ ...riga })),
     importoBiglietti: conto.importoBiglietti,
     importoFood: conto.importoFood,
     sconto: conto.sconto,
