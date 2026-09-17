@@ -1,0 +1,547 @@
+@import 'tailwindcss';
+
+/*
+ * Sistema grafico di CINEMAX.
+ *
+ * I colori sono dichiarati due volte: come variabili CSS (che cambiano fra tema
+ * scuro e chiaro) e come token Tailwind che puntano a quelle variabili. In
+ * questo modo `bg-sfondo` o `text-accento` funzionano in entrambi i temi senza
+ * scrivere due classi.
+ *
+ * Qui il tema scuro è quello predefinito, non una variante: una sala
+ * cinematografica è buia, le locandine sono fatte per risaltare sul nero, e
+ * chi consulta gli orari lo fa quasi sempre di sera. Il tema chiaro esiste
+ * comunque, perché di giorno su uno schermo esterno il nero pieno abbaglia, e
+ * perché toglierlo sarebbe una scelta fatta al posto di chi legge.
+ *
+ * La palette è rosso sipario e viola proiezione su un nero tendente al blu.
+ * Il blu elettrico, il rame e l'oro sono stati deliberatamente evitati: sono i
+ * colori degli altri tre progetti che vivono in questo repository, e quattro
+ * marchi con lo stesso accento non si distinguono.
+ */
+
+@custom-variant chiaro (&:where(.chiaro, .chiaro *));
+
+:root {
+  color-scheme: dark;
+
+  /* Superfici: neri con una punta di viola, mai grigi neutri. */
+  --sfondo: #07060c;
+  --sfondo-alt: #0c0a14;
+  --superficie: #12101c;
+  --superficie-alt: #1a1727;
+  --bordo: #262238;
+  --bordo-forte: #3a3352;
+
+  /* Testo */
+  --testo: #f4f1fa;
+  --testo-tenue: #9d95b5;
+  --testo-inverso: #07060c;
+
+  /*
+   * Rosso sipario.
+   * Sul fondo scuro può permettersi di essere acceso: è il colore dei pulsanti
+   * d'acquisto, e deve vincere sul resto della pagina senza diventare fluo.
+   */
+  --accento: #ff3f6c;
+  --accento-forte: #ff6b8e;
+  --accento-tenue: #47101f;
+
+  /* Viola proiezione: accento secondario, per i formati speciali e i grafici. */
+  --viola: #9d6bff;
+  --viola-forte: #b894ff;
+  --viola-tenue: #2a1d47;
+
+  /* Estremi della sfumatura dei titoli (utilità `testo-accento`). */
+  --accento-1: #ff5c7f;
+  --accento-2: #9d6bff;
+
+  /* Tonalità profonde: identiche nei due temi, per le fasce sempre scure. */
+  --notte: #05040a;
+  --ombra-sala: #0a0812;
+  --grigio: #2c2740;
+
+  /* Vetro: fondo e bordo delle superfici traslucide. */
+  --vetro-fondo: rgb(18 16 28 / 0.66);
+  --vetro-bordo: rgb(255 255 255 / 0.1);
+
+  /* Stato: usati da badge, posti e avvisi. */
+  --ok: #34d399;
+  --attesa: #fbbf24;
+  --errore: #f87171;
+
+  --ombra-bassa: 0 1px 2px rgb(0 0 0 / 0.5), 0 6px 18px rgb(0 0 0 / 0.38);
+  --ombra-alta: 0 2px 8px rgb(0 0 0 / 0.5), 0 24px 60px rgb(0 0 0 / 0.62);
+  --ombra-accento: 0 12px 34px rgb(255 63 108 / 0.32);
+}
+
+.chiaro {
+  color-scheme: light;
+
+  --sfondo: #f7f5fb;
+  --sfondo-alt: #efecf6;
+  --superficie: #ffffff;
+  --superficie-alt: #f7f5fb;
+  --bordo: #e3dfee;
+  --bordo-forte: #c5bdd8;
+
+  --testo: #120f1c;
+  --testo-tenue: #635b7a;
+  --testo-inverso: #ffffff;
+
+  /*
+   * Sul fondo chiaro il rosso acceso non raggiungerebbe il contrasto 4.5:1
+   * richiesto dalle WCAG per il testo piccolo, e qui l'accento è anche colore
+   * dei collegamenti: si scurisce fino a un cremisi profondo.
+   */
+  --accento: #c4144b;
+  --accento-forte: #9d0e3b;
+  --accento-tenue: #fbdae3;
+
+  --viola: #6935cc;
+  --viola-forte: #4f24a0;
+  --viola-tenue: #ece3fb;
+
+  --accento-1: #c4144b;
+  --accento-2: #6935cc;
+
+  --vetro-fondo: rgb(255 255 255 / 0.72);
+  --vetro-bordo: rgb(255 255 255 / 0.8);
+
+  --ok: #047857;
+  --attesa: #b45309;
+  --errore: #b91c1c;
+
+  --ombra-bassa: 0 1px 2px rgb(18 15 28 / 0.05), 0 6px 18px rgb(18 15 28 / 0.07);
+  --ombra-alta: 0 2px 8px rgb(18 15 28 / 0.07), 0 24px 60px rgb(18 15 28 / 0.16);
+  --ombra-accento: 0 12px 34px rgb(196 20 75 / 0.26);
+}
+
+@theme inline {
+  --color-sfondo: var(--sfondo);
+  --color-sfondo-alt: var(--sfondo-alt);
+  --color-superficie: var(--superficie);
+  --color-superficie-alt: var(--superficie-alt);
+  --color-bordo: var(--bordo);
+  --color-bordo-forte: var(--bordo-forte);
+
+  --color-testo: var(--testo);
+  --color-tenue: var(--testo-tenue);
+  --color-inverso: var(--testo-inverso);
+
+  --color-accento: var(--accento);
+  --color-accento-forte: var(--accento-forte);
+  --color-accento-tenue: var(--accento-tenue);
+
+  --color-viola: var(--viola);
+  --color-viola-forte: var(--viola-forte);
+  --color-viola-tenue: var(--viola-tenue);
+
+  --color-notte: var(--notte);
+  --color-sala: var(--ombra-sala);
+  --color-grigio: var(--grigio);
+
+  --color-ok: var(--ok);
+  --color-attesa: var(--attesa);
+  --color-errore: var(--errore);
+
+  --font-titolo: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-testo: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-morbida: var(--ombra-bassa);
+  --shadow-rilievo: var(--ombra-alta);
+  --shadow-accento: var(--ombra-accento);
+
+  --radius-tenue: 0.75rem;
+  --radius-morbido: 1.25rem;
+  --radius-ampio: 1.75rem;
+}
+
+/* ── Impostazioni di base ────────────────────────────────────────────────── */
+
+@layer base {
+  * {
+    border-color: var(--bordo);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compensa l'intestazione fissa quando si salta a un'ancora. */
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    /*
+     * Le comparse laterali partono con uno scostamento di qualche decina di
+     * pixel: su schermi stretti gli elementi ancora fuori dalla finestra
+     * sporgerebbero oltre il bordo destro, facendo comparire una barra di
+     * scorrimento orizzontale. `clip` la elimina e, a differenza di `hidden`,
+     * non crea un contenitore di scorrimento: gli elementi agganciati con
+     * `position: sticky` continuano a funzionare.
+     */
+    overflow-x: clip;
+    background-color: var(--sfondo);
+    color: var(--testo);
+    font-family: var(--font-testo);
+    font-feature-settings: 'kern', 'liga', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titolo);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Orari, prezzi e numeri di posto devono incolonnarsi. */
+  table,
+  .tabellare {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Contorno di messa a fuoco visibile solo da tastiera. */
+  :focus-visible {
+    outline: 2px solid var(--accento);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accento);
+    color: #fff;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* I campi ereditano il carattere del sito, che il browser non farebbe. */
+  input,
+  select,
+  textarea,
+  button {
+    font: inherit;
+    color: inherit;
+  }
+}
+
+/* ── Utilità del progetto ────────────────────────────────────────────────── */
+
+@utility contenitore {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 84rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2rem;
+  }
+}
+
+/*
+ * Vetro smerigliato.
+ *
+ * `backdrop-filter` non è supportato ovunque; dove manca resta il fondo
+ * traslucido, che è già leggibile. Il colore del fondo cambia con il tema,
+ * quindi la stessa classe funziona sopra sezioni chiare e scure.
+ */
+@utility vetro {
+  background-color: var(--vetro-fondo);
+  border: 1px solid var(--vetro-bordo);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* Variante per il vetro appoggiato sopra i fondali dei film, sempre scuri. */
+@utility vetro-scuro {
+  background-color: rgb(7 6 12 / 0.55);
+  border: 1px solid rgb(255 255 255 / 0.14);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+}
+
+/* Filetto decorativo usato sotto le soprattitoli. */
+@utility filetto {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accento));
+}
+
+/* Testo con sfumatura rosso-viola: solo per titoli brevi. */
+@utility testo-accento {
+  background: linear-gradient(100deg, var(--accento-1), var(--accento-2), var(--accento-1));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Sottolineatura animata al passaggio del puntatore. */
+@utility sottolinea {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* Nasconde la barra di scorrimento su caroselli e liste orizzontali. */
+@utility senza-barra {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Proporzione fissa delle locandine: è quella dei manifesti da esposizione. */
+@utility locandina {
+  aspect-ratio: 2 / 3;
+}
+
+/* ── Elementi ricorrenti ─────────────────────────────────────────────────── */
+
+/* Trama impercettibile che toglie la piattezza ai fondi pieni. */
+.trama {
+  background-image: radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0);
+  background-size: 26px 26px;
+  opacity: 0.05;
+}
+
+/*
+ * Grana da pellicola.
+ *
+ * È una texture SVG in linea, non un'immagine: pesa meno di un chilobyte e non
+ * aggiunge una richiesta di rete. Serve a togliere l'aspetto «digitale piatto»
+ * ai fondali grandi, ed è volutamente appena percettibile.
+ */
+.grana {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+}
+
+/* Griglia tecnica: fondale discreto delle fasce scure. */
+.griglia-tecnica {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 0%, #000 20%, transparent 75%);
+}
+
+/* Alone luminoso dietro gli elementi in evidenza. */
+.alone {
+  background: radial-gradient(circle, var(--accento) 0%, transparent 68%);
+  opacity: 0.2;
+  filter: blur(90px);
+}
+
+.alone-viola {
+  background: radial-gradient(circle, var(--viola) 0%, transparent 68%);
+  opacity: 0.18;
+  filter: blur(100px);
+}
+
+/*
+ * Fascio del proiettore: il cono di luce che dalla cabina arriva allo schermo.
+ * È l'unico elemento decorativo che si permette di essere letterale.
+ */
+.fascio {
+  background: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.1) 0%,
+    rgb(255 255 255 / 0.035) 45%,
+    transparent 100%
+  );
+  clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
+}
+
+/* Barra di scorrimento coerente con il tema. */
+* {
+  scrollbar-color: var(--bordo-forte) transparent;
+  scrollbar-width: thin;
+}
+
+/* ── Movimento ───────────────────────────────────────────────────────────── */
+
+/*
+ * Chi ha chiesto meno animazioni al sistema operativo vede il sito fermo:
+ * i contenuti restano tutti visibili, cambia solo il modo in cui compaiono.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Comparsa lenta usata dall'apertura della home. */
+@keyframes affiora {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.affiora {
+  animation: affiora 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Lenta panoramica del fondale: dà vita all'immagine ferma. */
+@keyframes panoramica {
+  from {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.16) translate3d(-1.4%, -1.2%, 0);
+  }
+}
+
+.panoramica {
+  animation: panoramica 34s ease-in-out infinite alternate;
+}
+
+/* Pulsazione discreta del punto «in sala ora». */
+@keyframes pulsa {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.35);
+  }
+}
+
+.pulsa {
+  animation: pulsa 2.4s ease-in-out infinite;
+}
+
+/* Riflesso che attraversa i pulsanti principali al passaggio del puntatore. */
+@keyframes riflesso {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(320%) skewX(-18deg);
+  }
+}
+
+/* Scorrimento continuo delle fasce di loghi e citazioni. */
+@keyframes scorri {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.scorrimento {
+  animation: scorri 48s linear infinite;
+}
+
+.scorrimento:hover {
+  animation-play-state: paused;
+}
+
+/*
+ * Scheletro di caricamento.
+ *
+ * Il lampeggio è una sfumatura che attraversa l'elemento, non un cambio di
+ * opacità: a schermo intero, su una griglia di venti locandine, venti elementi
+ * che pulsano insieme danno fastidio, mentre un riflesso che scorre si legge
+ * come «sta arrivando».
+ */
+@keyframes scheletro {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.scheletro {
+  background-image: linear-gradient(
+    90deg,
+    var(--superficie-alt) 25%,
+    var(--bordo) 50%,
+    var(--superficie-alt) 75%
+  );
+  background-size: 200% 100%;
+  animation: scheletro 1.6s linear infinite;
+}
+
+/* Comparsa degli avvisi temporanei, dal basso. */
+@keyframes avviso {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.avviso {
+  animation: avviso 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Il biglietto stampato deve restare leggibile in bianco e nero. */
+@media print {
+  .no-stampa {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .solo-stampa {
+    display: block !important;
+  }
+}
