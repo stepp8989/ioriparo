@@ -107,7 +107,7 @@ export default async function PaginaPromozioni() {
   }
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Promozioni"
         titolo="Il cinema costa meno di quanto pensi"
@@ -116,11 +116,11 @@ export default async function PaginaPromozioni() {
       />
 
       {promozioni.length === 0 ? (
-        <Nota className="mt-10 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
+        <Nota className="mt-6 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
           Nessuna promozione attiva in questo momento. Iscriviti al CLUB per ricevere le prossime.
         </Nota>
       ) : (
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+        <div className="mt-6 grid gap-6 lg:grid-cols-2">
           {promozioni.map((promozione) => (
             <article
               key={promozione.id}
@@ -185,7 +185,7 @@ export default async function PaginaPromozioni() {
         </div>
       )}
 
-      <Nota className="mt-10 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
+      <Nota className="mt-6 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
         Le promozioni non sono cumulabili fra loro. Quando più di una è applicabile allo stesso
         ordine, il sistema applica automaticamente quella che ti conviene di più — non serve
         provarle a una a una. I punti CLUB e le gift card si sommano invece a qualsiasi promozione.{' '}

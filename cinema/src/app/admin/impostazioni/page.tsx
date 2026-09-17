@@ -87,7 +87,7 @@ export default function PaginaImpostazioniAdmin() {
         </Bottone>
       </header>
 
-      <div className="mt-8 space-y-8">
+      <div className="mt-8 space-y-5">
         {/* ── Marchio ───────────────────────────────────────────────────── */}
         <section className="rounded-ampio border border-bordo bg-superficie p-6">
           <h2 className="font-titolo text-[1.15rem] font-semibold">Marchio</h2>

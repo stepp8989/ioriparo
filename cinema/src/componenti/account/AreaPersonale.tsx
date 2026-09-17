@@ -114,7 +114,7 @@ export function AreaPersonale({ vistaIniziale }: { vistaIniziale: string }) {
           Biglietti, punti, coupon e abbonamento in un posto solo.
         </p>
 
-        <div className="mt-9">
+        <div className="mt-5">
           <Accesso registrazioneAperta onAccesso={carica} />
         </div>
       </div>
@@ -373,7 +373,7 @@ function SezioneClub({ dati, onAggiorna }: { dati: DatiArea; onAggiorna: () => v
   }
 
   return (
-    <div className="space-y-9">
+    <div className="space-y-6">
       <section>
         <h3 className="font-titolo text-[1.15rem] font-semibold">Premi disponibili</h3>
         <p className="mt-1.5 text-[0.86rem] text-tenue">

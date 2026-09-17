@@ -31,7 +31,7 @@ export function PiePagina({
 
   return (
     <footer className="mt-auto border-t border-bordo bg-sfondo-alt">
-      <div className="contenitore py-10">
+      <div className="contenitore py-6">
         <div className="grid gap-8 lg:grid-cols-[1.2fr_2fr]">
           <div>
             <Marchio nome={marchio.nome} claim={marchio.claim} />

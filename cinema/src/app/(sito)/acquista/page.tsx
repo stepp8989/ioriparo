@@ -98,7 +98,7 @@ export default async function PaginaAcquista({
   }
 
   return (
-    <Sezione className="pt-32" ampiezza="larga">
+    <Sezione spaziatura="testata" ampiezza="larga">
       <h1 className="sr-only">Acquisto dei biglietti</h1>
 
       <Prenotazione

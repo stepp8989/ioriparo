@@ -164,7 +164,7 @@ export default async function PaginaFilm({
           <div className="absolute inset-0 bg-gradient-to-t from-sfondo via-sfondo/75 to-sfondo/30" aria-hidden />
         </div>
 
-        <div className="contenitore grid gap-10 pb-14 lg:grid-cols-[18rem_1fr] lg:gap-14">
+        <div className="contenitore grid gap-6 pb-9 lg:grid-cols-[18rem_1fr] lg:gap-8">
           <div className="mx-auto w-52 lg:mx-0 lg:w-full">
             <div className="locandina overflow-hidden rounded-morbido shadow-rilievo">
               <Locandina
@@ -187,7 +187,7 @@ export default async function PaginaFilm({
               <span className="text-testo">{film.titolo}</span>
             </nav>
 
-            <h1 className="text-balance font-titolo text-[2.2rem] leading-[1.05] sm:text-[3.2rem]">
+            <h1 className="text-balance font-titolo text-[1.9rem] leading-[1.03] sm:text-[2.7rem]">
               {film.titolo}
             </h1>
 
@@ -259,7 +259,7 @@ export default async function PaginaFilm({
 
       {/* ── Trama e cast ────────────────────────────────────────────────── */}
       <Sezione spaziatura="ridotta">
-        <div className="grid gap-12 lg:grid-cols-[1.6fr_1fr]">
+        <div className="grid gap-7 lg:grid-cols-[1.6fr_1fr]">
           <div>
             <h2 className="font-titolo text-[1.5rem] font-semibold">La storia</h2>
             <div className="mt-5 space-y-4 text-[1rem] leading-relaxed text-tenue">
@@ -350,7 +350,7 @@ export default async function PaginaFilm({
               allineamento="sinistra"
             />
 
-            <div className="mt-9 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap gap-2">
               <Link
                 href={indirizzo('cinema', '')}
                 scroll={false}
@@ -388,7 +388,7 @@ export default async function PaginaFilm({
               className="mt-6"
             />
 
-            <div className="mt-10 space-y-9">
+            <div className="mt-6 space-y-6">
               {perCinema.size === 0 && (
                 <Nota icona={<Icona nome="info" className="size-4" />}>
                   Nessuno spettacolo in questa combinazione di cinema e giorno. Prova un altro
@@ -438,7 +438,7 @@ export default async function PaginaFilm({
       {simili.length > 0 && (
         <Sezione>
           <TitoloSezione soprattitolo="Ti potrebbe piacere" titolo="Dello stesso genere" allineamento="sinistra" />
-          <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
             {simili.map((voce) => (
               <SchedaFilm key={voce.id} film={voce} />
             ))}

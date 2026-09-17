@@ -49,7 +49,7 @@ export default async function PaginaRicerca({
   const totale = esito.film.length + esito.persone.length + esito.cinema.length
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Ricerca"
         titolo={termine ? `Risultati per «${termine}»` : 'Cerca nel catalogo'}
@@ -62,7 +62,7 @@ export default async function PaginaRicerca({
       />
 
       {termine && totale === 0 && (
-        <Nota className="mt-10 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
+        <Nota className="mt-6 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
           Nessun risultato per «{termine}». Prova con meno parole, oppure sfoglia{' '}
           <Link href="/film" className="text-accento underline">
             tutti i film in programmazione
@@ -72,7 +72,7 @@ export default async function PaginaRicerca({
       )}
 
       {esito.film.length > 0 && (
-        <section className="mt-12">
+        <section className="mt-6">
           <h2 className="font-titolo text-[1.3rem] font-semibold">
             Film <span className="text-tenue">({esito.film.length})</span>
           </h2>
@@ -85,7 +85,7 @@ export default async function PaginaRicerca({
       )}
 
       {esito.persone.length > 0 && (
-        <section className="mt-14">
+        <section className="mt-7">
           <h2 className="font-titolo text-[1.3rem] font-semibold">
             Persone <span className="text-tenue">({esito.persone.length})</span>
           </h2>
@@ -113,7 +113,7 @@ export default async function PaginaRicerca({
       )}
 
       {esito.cinema.length > 0 && (
-        <section className="mt-14">
+        <section className="mt-7">
           <h2 className="font-titolo text-[1.3rem] font-semibold">
             Cinema <span className="text-tenue">({esito.cinema.length})</span>
           </h2>

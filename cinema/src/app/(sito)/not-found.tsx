@@ -24,7 +24,7 @@ export default async function NonTrovata() {
           <Icona nome="ciak" className="size-8" />
         </span>
 
-        <p className="mt-7 font-titolo text-[3.5rem] font-bold leading-none testo-accento">404</p>
+        <p className="mt-5 font-stretto text-[4.5rem] font-bold leading-none text-accento">404</p>
 
         <h1 className="mt-4 font-titolo text-[1.8rem] font-semibold">
           Questa pagina non è in programmazione
@@ -47,7 +47,7 @@ export default async function NonTrovata() {
       </div>
 
       {suggeriti.length > 0 && (
-        <div className="mt-16">
+        <div className="mt-8">
           <h2 className="text-center text-[0.74rem] font-semibold uppercase tracking-[0.2em] text-tenue">
             In sala ora
           </h2>

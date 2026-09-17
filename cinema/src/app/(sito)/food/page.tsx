@@ -42,7 +42,7 @@ export default async function PaginaFood() {
   const cinemaPerId = new Map(archivio.cinema.map((voce) => [voce.id, voce]))
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Food & Drink"
         titolo="Il banco, prima della sala"
@@ -50,7 +50,7 @@ export default async function PaginaFood() {
         allineamento="sinistra"
       />
 
-      <div className="mt-12 space-y-14">
+      <div className="mt-6 space-y-14">
         {CATEGORIE_FOOD.filter((categoria) => perCategoria.has(categoria)).map((categoria) => (
           <section key={categoria}>
             <h2 className="font-titolo text-[1.4rem] font-semibold">{categoria}</h2>
@@ -121,7 +121,7 @@ export default async function PaginaFood() {
         ))}
       </div>
 
-      <Nota className="mt-12 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
+      <Nota className="mt-6 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
         Le informazioni sugli allergeni riguardano gli ingredienti dichiarati dai fornitori. I
         prodotti sono preparati in un ambiente in cui si manipolano glutine, latte, uova, soia e
         frutta a guscio: non possiamo garantire l’assenza di contaminazione crociata. Per

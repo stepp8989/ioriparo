@@ -33,7 +33,7 @@ export default async function PaginaTrailer() {
   const film = filmVisibili(archivio).filter((voce) => voce.trailer)
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Trailer"
         titolo="Guarda prima di scegliere"
@@ -42,11 +42,11 @@ export default async function PaginaTrailer() {
       />
 
       {film.length === 0 ? (
-        <Nota className="mt-10 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
+        <Nota className="mt-6 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
           Nessun trailer disponibile al momento.
         </Nota>
       ) : (
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {film.map((voce) => (
             <article key={voce.id}>
               <LettoreTrailer trailer={voce.trailer} titolo={voce.titolo} className="block w-full">

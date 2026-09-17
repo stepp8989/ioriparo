@@ -41,7 +41,7 @@ export default async function PaginaAbbonamenti() {
 
   return (
     <>
-      <Sezione className="pt-32">
+      <Sezione spaziatura="testata">
         <TitoloSezione
           soprattitolo="Abbonamenti"
           titolo="Vai al cinema tutto l’anno"
@@ -50,11 +50,11 @@ export default async function PaginaAbbonamenti() {
         />
 
         {piani.length === 0 ? (
-          <Nota className="mt-10 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
+          <Nota className="mt-6 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
             Nessun piano di abbonamento attivo al momento.
           </Nota>
         ) : (
-          <div className="mt-12 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-6 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {piani.map((piano) => (
               <article
                 key={piano.id}
@@ -144,7 +144,7 @@ export default async function PaginaAbbonamenti() {
         <Sezione className="bg-sfondo-alt">
           <TitoloSezione soprattitolo="Confronto" titolo="Quale piano fa per te" allineamento="sinistra" />
 
-          <div className="senza-barra mt-10 overflow-x-auto">
+          <div className="senza-barra mt-6 overflow-x-auto">
             <table className="w-full min-w-[42rem] border-collapse text-[0.88rem]">
               <caption className="sr-only">
                 Confronto fra i piani di abbonamento: prezzo, ingressi, formati compresi e sconto

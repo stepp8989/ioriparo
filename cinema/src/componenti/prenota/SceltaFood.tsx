@@ -62,7 +62,7 @@ export function SceltaFood({
         </p>
       )}
 
-      <div className="mt-7 space-y-9">
+      <div className="mt-7 space-y-6">
         {CATEGORIE_FOOD.filter((categoria) => perCategoria.has(categoria)).map((categoria) => (
           <div key={categoria}>
             <h3 className="font-titolo text-[1.08rem] font-semibold">{categoria}</h3>

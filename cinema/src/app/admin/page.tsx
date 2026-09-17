@@ -23,7 +23,7 @@ export default function PaginaCruscotto() {
         <Statistica />
       </div>
 
-      <section className="mt-10">
+      <section className="mt-6">
         <h2 className="mb-5 font-titolo text-[1.2rem] font-semibold">Operazioni frequenti</h2>
         <Scorciatoie />
       </section>

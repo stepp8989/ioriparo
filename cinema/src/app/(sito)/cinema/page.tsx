@@ -37,7 +37,7 @@ export default async function PaginaCinema() {
   }
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Trova cinema"
         titolo="Trova il tuo cinema"
@@ -45,7 +45,7 @@ export default async function PaginaCinema() {
         allineamento="sinistra"
       />
 
-      <div className="mt-10">
+      <div className="mt-6">
         <TrovaCinema
           cinema={strutture}
           nomeMarchio={archivio.impostazioni.marchio.nome}

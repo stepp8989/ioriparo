@@ -61,7 +61,7 @@ export default async function PaginaBiglietto({
   const passato = mancanti < -240
 
   return (
-    <Sezione className="pt-32" ampiezza="stretta">
+    <Sezione spaziatura="testata" ampiezza="stretta">
       {appenaPagato && prenotazione.stato !== 'in-attesa' && (
         <div className="mb-8 rounded-ampio border border-ok/40 bg-ok/6 p-6 text-center">
           <span className="inline-flex size-14 items-center justify-center rounded-full bg-ok/15 text-ok">

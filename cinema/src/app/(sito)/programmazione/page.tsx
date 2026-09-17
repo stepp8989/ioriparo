@@ -68,7 +68,7 @@ export default async function PaginaProgrammazione({
   }
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Programmazione"
         titolo="Cosa c’è in sala"
@@ -76,7 +76,7 @@ export default async function PaginaProgrammazione({
         allineamento="sinistra"
       />
 
-      <div className="mt-9 flex flex-wrap gap-2">
+      <div className="mt-5 flex flex-wrap gap-2">
         <Link
           href={indirizzo('cinema', '')}
           className={classi(
@@ -112,12 +112,12 @@ export default async function PaginaProgrammazione({
       />
 
       {perFilm.size === 0 ? (
-        <Nota className="mt-10 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
+        <Nota className="mt-6 max-w-2xl" icona={<Icona nome="info" className="size-4" />}>
           Nessuno spettacolo per questa combinazione. Prova un altro giorno, oppure guarda la
           programmazione di tutta la rete.
         </Nota>
       ) : (
-        <div className="mt-10 space-y-6">
+        <div className="mt-6 space-y-6">
           {[...perFilm.entries()].map(([filmId, voci]) => {
             const film = voci[0].film
 

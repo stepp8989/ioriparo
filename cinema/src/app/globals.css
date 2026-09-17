@@ -54,9 +54,6 @@
   --ambra-forte: #ffc04d;
   --ambra-tenue: #3d2a05;
 
-  --accento-1: #ff2b47;
-  --accento-2: #ff7a3d;
-
   /* Tonalità profonde per le fasce sempre scure. */
   --notte: #030304;
   --sala: #08080a;
@@ -99,9 +96,6 @@
   --ambra: #9a6200;
   --ambra-forte: #7a4e00;
   --ambra-tenue: #fff2d9;
-
-  --accento-1: #d1002a;
-  --accento-2: #c2410c;
 
   --vetro-fondo: rgb(255 255 255 / 0.86);
   --vetro-bordo: rgb(0 0 0 / 0.07);
@@ -307,13 +301,6 @@
   &:hover::after {
     transform: scaleX(1);
   }
-}
-
-@utility testo-accento {
-  background: linear-gradient(100deg, var(--accento-1), var(--accento-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 @utility senza-barra {

@@ -29,7 +29,7 @@ export default async function PaginaAreaPersonale({
   const vista = (Array.isArray(parametri.vista) ? parametri.vista[0] : parametri.vista) ?? ''
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <AreaPersonale vistaIniziale={vista} />
     </Sezione>
   )

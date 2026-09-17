@@ -109,7 +109,7 @@ export default async function PaginaFilm({
   ]
 
   return (
-    <Sezione className="pt-32">
+    <Sezione spaziatura="testata">
       <TitoloSezione
         soprattitolo="Catalogo"
         titolo="Film in sala e prossime uscite"
@@ -117,15 +117,15 @@ export default async function PaginaFilm({
         allineamento="sinistra"
       />
 
-      <Filtri filtri={filtri} conteggio={risultati.length} className="mt-10" />
+      <Filtri filtri={filtri} conteggio={risultati.length} className="mt-6" />
 
       {risultati.length === 0 ? (
-        <Nota className="mt-10" icona={<Icona nome="info" className="size-4" />}>
+        <Nota className="mt-6" icona={<Icona nome="info" className="size-4" />}>
           Nessun film corrisponde a questi filtri. Prova ad allargare la ricerca: togliendo il
           filtro sul cinema si vedono anche i titoli programmati altrove.
         </Nota>
       ) : (
-        <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-6 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
           {risultati.map((film) => (
             <SchedaFilm key={film.id} film={film} prezzoDa={prezziMinimi.get(film.id)} />
           ))}

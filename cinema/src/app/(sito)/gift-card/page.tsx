@@ -34,8 +34,8 @@ export default async function PaginaGiftCard() {
   const { marchio } = archivio.impostazioni
 
   return (
-    <Sezione className="pt-32">
-      <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr]">
+    <Sezione spaziatura="testata">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr]">
         <div>
           <TitoloSezione
             soprattitolo="Gift card"
@@ -45,7 +45,7 @@ export default async function PaginaGiftCard() {
           />
 
           <div
-            className="relative mt-10 aspect-[16/10] overflow-hidden rounded-ampio p-8 text-white shadow-rilievo"
+            className="relative mt-6 aspect-[16/10] overflow-hidden rounded-ampio p-8 text-white shadow-rilievo"
             style={{
               backgroundImage: `linear-gradient(135deg, ${marchio.colore}, ${marchio.coloreAlt})`,
             }}
@@ -74,7 +74,7 @@ export default async function PaginaGiftCard() {
             />
           </div>
 
-          <ul className="mt-9 space-y-3.5">
+          <ul className="mt-5 space-y-3.5">
             {[
               {
                 icona: 'posta' as const,
@@ -117,7 +117,7 @@ export default async function PaginaGiftCard() {
         </div>
       </div>
 
-      <Nota className="mt-12 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
+      <Nota className="mt-6 max-w-3xl" icona={<Icona nome="info" className="size-4" />}>
         Le gift card non sono rimborsabili né convertibili in denaro e non possono essere usate per
         acquistare altre gift card. In caso di smarrimento del codice, contattaci: possiamo
         riemetterlo a chi risulta averlo acquistato.

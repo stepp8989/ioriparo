@@ -112,7 +112,7 @@ export default async function PaginaCinema({
           <div className="absolute inset-0 bg-gradient-to-t from-sfondo via-sfondo/80 to-sfondo/40" aria-hidden />
         </div>
 
-        <div className="contenitore pb-12">
+        <div className="contenitore pb-8">
           <nav aria-label="Percorso" className="mb-5 text-[0.8rem] text-tenue">
             <Link href="/cinema" className="transition-colors hover:text-accento">
               Cinema
@@ -123,7 +123,7 @@ export default async function PaginaCinema({
             <span className="text-testo">{cinema.nome}</span>
           </nav>
 
-          <h1 className="text-balance font-titolo text-[2.2rem] leading-tight sm:text-[3rem]">
+          <h1 className="text-balance font-titolo text-[1.9rem] leading-tight sm:text-[2.5rem]">
             {nome} {cinema.nome}
           </h1>
 
@@ -216,7 +216,7 @@ export default async function PaginaCinema({
 
       {/* ── Struttura e servizi ─────────────────────────────────────────── */}
       <Sezione className="bg-sfondo-alt">
-        <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+        <div className="grid gap-7 lg:grid-cols-[1.4fr_1fr]">
           <div>
             <h2 className="font-titolo text-[1.5rem] font-semibold">Le sale</h2>
             <p className="mt-2 text-[0.92rem] text-tenue">
@@ -255,7 +255,7 @@ export default async function PaginaCinema({
             </ul>
           </div>
 
-          <aside className="space-y-8">
+          <aside className="space-y-5">
             <div>
               <h2 className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-accento">
                 Orari di apertura

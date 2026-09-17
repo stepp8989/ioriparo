@@ -695,7 +695,7 @@ export function Prenotazione({ catalogo, spettacoloIniziale, annullato }: Props)
 
         {/* ── Navigazione ─────────────────────────────────────────────── */}
         {passo !== 'pagamento' && (
-          <div className="mt-9 flex items-center justify-between gap-4">
+          <div className="mt-5 flex items-center justify-between gap-4">
             <Bottone
               variante="contorno"
               onClick={indietro}

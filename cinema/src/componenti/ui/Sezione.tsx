@@ -90,11 +90,20 @@ export function Sezione({
   id?: string
   className?: string
   ampiezza?: 'normale' | 'stretta' | 'larga' | 'piena'
-  spaziatura?: 'normale' | 'ridotta' | 'nessuna'
+  spaziatura?: 'normale' | 'ridotta' | 'nessuna' | 'testata'
 }) {
+  /*
+   * «testata» è la prima sezione di una pagina senza immagine d'apertura:
+   * deve scavalcare l'intestazione fissa, che è alta 3,9 rem e sta sopra il
+   * contenuto. Vive qui dentro e non come `className="pt-24"` sul chiamante
+   * perché due utilità di padding sullo stesso elemento si contendono la
+   * precedenza secondo l'ordine del foglio di stile, non quello dell'attributo:
+   * `lg:py-13` batte `pt-24` e il titolo finisce sotto l'intestazione.
+   */
   const PADDING = {
     normale: 'py-9 sm:py-11 lg:py-13',
     ridotta: 'py-6 sm:py-8',
+    testata: 'pb-9 pt-24 sm:pb-11 sm:pt-26 lg:pb-13',
     nessuna: '',
   } as const
 
