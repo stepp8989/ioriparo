@@ -8,6 +8,11 @@ cinema. Next.js 16, React 19, TypeScript, Tailwind CSS 4.
 > materiale protetto da copyright: il progetto non contiene neppure un file
 > immagine di repertorio, perché locandine e fondali sono disegnati dal sito
 > stesso. Anche il nome «CINEMAX» è provvisorio e si cambia dal pannello.
+>
+> Per lavorare con film veri c'è l'importazione da [The Movie
+> Database](https://www.themoviedb.org): si configura una chiave e il pannello
+> porta in catalogo schede, locandine, cast e trailer. Vedi
+> [Film veri: importazione da TMDB](#film-veri-importazione-da-tmdb).
 
 > **Progetto indipendente.** Questa cartella ospita un'applicazione a sé, che
 > non condivide codice, dipendenze né dati con gli altri progetti del
@@ -110,7 +115,8 @@ biglietti (il tablet all'ingresso della sala, con una password propria).
 
 Cruscotto e statistiche · programmazione con generatore automatico di
 palinsesto · prenotazioni con incasso in cassa, annullamenti e rimborsi ·
-verifica dei QR · catalogo film · cinema · **editor grafico delle sale** ·
+verifica dei QR · catalogo film · **importazione da TMDB** · cinema ·
+**editor grafico delle sale** ·
 banco alimentari · tipologie di biglietto · promozioni · coupon anche a lotti ·
 gift card · abbonamenti · programma fedeltà · anagrafica clienti · registro
 delle operazioni · impostazioni.
@@ -118,6 +124,61 @@ delle operazioni · impostazioni.
 Dal pannello si cambiano nome del marchio, commissioni, supplementi, valore dei
 punti e moduli attivi: spegnendo un modulo spariscono la voce di menu, la
 pagina pubblica e il passo corrispondente nel flusso d'acquisto.
+
+## Film veri: importazione da TMDB
+
+Il catalogo incluso è inventato e resta tale: le locandine vere sono materiale
+di altri, e distribuirle dentro un repository pubblico non è una cosa che si fa.
+Un cinema che apre davvero, però, programma film veri, e trascrivere a mano
+trenta schede a settimana — trama, durata, generi, cast, regia, classificazione
+— è il genere di lavoro che si smette di fare dopo la seconda settimana.
+
+Per questo c'è `/admin/importa`, che parla con le API di
+[The Movie Database](https://www.themoviedb.org).
+
+**Come si attiva.** Una chiave v3 dal proprio profilo TMDB (Impostazioni → API),
+scritta in `.env.local`:
+
+```
+TMDB_API_KEY=la-vostra-chiave
+TMDB_LINGUA=it-IT
+TMDB_PAESE=IT
+```
+
+La chiave non sta nel codice e non deve starci mai: `src/lib/tmdb.ts` la legge
+solo da variabile d'ambiente, e il modulo è `server-only` — non finisce nel
+pacchetto mandato al browser. Senza chiave la pagina d'importazione dice che
+cosa manca e dove metterlo; tutto il resto della piattaforma funziona identico.
+
+**Che cosa fa.** Tre elenchi — in sala ora, in arrivo, ricerca per titolo — e un
+pulsante per titolo. La scheda arriva compilata: titolo e titolo originale,
+frase d'effetto, sinossi e trama, generi, durata, anno, paese, lingua
+originale, regia, primi dodici interpreti con i rispettivi ruoli,
+classificazione d'età italiana, valutazione, locandina, fondale e il primo
+trailer ufficiale su YouTube.
+
+**Due scelte deliberate.**
+
+1. Il film importato nasce **non pubblicato**. L'importazione porta dentro la
+   materia prima; che un titolo compaia sul sito resta una decisione di chi
+   programma la sala, non l'effetto collaterale di un clic.
+2. Reimportare un film già in catalogo lo **aggiorna** invece di duplicarlo, e
+   l'aggiornamento non tocca i campi che appartengono alla sala e non al film:
+   formati di proiezione (IMAX, 4DX, Dolby Atmos dipendono dalla sala), evidenza
+   in home, visibilità, identificativo, indirizzo della pagina e trailer scelto
+   a mano — che spesso è la versione italiana, mentre TMDB propone l'originale.
+
+L'archivio non conserva il numero TMDB: il riconoscimento passa dall'indirizzo
+della pagina (titolo più anno). È voluto — una scheda importata si modifica poi
+a mano senza che nulla la rileghi all'originale, e la piattaforma resta
+indipendente dal servizio da cui i dati sono arrivati.
+
+**Diritti.** TMDB richiede l'attribuzione a chi usa le sue API: il testo è in
+fondo alla pagina d'importazione. Le locandine restano materiale dei rispettivi
+titolari e vengono servite dai server di TMDB — la piattaforma non ne fa copia,
+e per questo `image.tmdb.org` è dichiarato in `images.remotePatterns` dentro
+`next.config.ts`. Chi pubblica un sito commerciale verifichi le condizioni
+d'uso correnti di TMDB e dei distributori.
 
 ## Architettura
 
@@ -231,8 +292,13 @@ che è predisposto:
   svolto: la dichiarazione in `/accessibilita` dice cosa è stato verificato e
   cosa no.
 - **Locandine, fondali e fotografie del banco** sono disegnati dal sito. In
-  produzione vanno caricate le immagini vere su un archivio compatibile S3 e il
-  loro host va aggiunto a `images.remotePatterns` in `next.config.ts`.
+  produzione o si importa il catalogo da TMDB, oppure si caricano le immagini
+  su un archivio compatibile S3 aggiungendone l'host a `images.remotePatterns`
+  in `next.config.ts`.
+- **Importazione TMDB**: scritta e verificata staticamente, ma **non provata
+  contro il servizio reale**, perché l'ambiente in cui è stata sviluppata non
+  ha accesso in uscita a `api.themoviedb.org`. Va provata con una chiave vera
+  prima di contarci in produzione.
 - **Trailer**: gli identificativi dei video si inseriscono dal pannello.
 - I documenti legali (privacy, termini) sono scritti sui trattamenti reali
   della piattaforma ma vanno riletti e adattati dal titolare: riferimenti

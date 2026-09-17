@@ -60,11 +60,16 @@ const config: NextConfig = {
     /**
      * Le locandine dimostrative sono disegnate dal sito (SVG procedurale), ma
      * l'amministratore può indicare l'indirizzo di un'immagine caricata su un
-     * archivio compatibile S3. L'host va aggiunto qui prima della messa in
-     * produzione: `remotePatterns` è deliberatamente vuoto per non lasciare
-     * aperta la porta a qualunque dominio.
+     * archivio compatibile S3, e l'importazione da TMDB scrive gli indirizzi
+     * del server immagini di TMDB. L'elenco è chiuso di proposito: ogni host
+     * aggiunto qui è un dominio a cui il nostro server accetta di fare da
+     * proxy, e lasciarlo aperto significherebbe prestarlo a chiunque.
+     *
+     * Gli archivi S3 vanno aggiunti qui prima della messa in produzione.
      */
-    remotePatterns: [],
+    remotePatterns: [
+      { protocol: 'https', hostname: 'image.tmdb.org', pathname: '/t/p/**' },
+    ],
   },
 
   async headers() {

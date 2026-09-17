@@ -55,6 +55,7 @@ export const NAVIGAZIONE_ADMIN: GruppoAdmin[] = [
     titolo: 'Catalogo',
     voci: [
       { href: '/admin/film', etichetta: 'Film', icona: 'ciak', descrizione: 'Catalogo, locandine, cast e trailer' },
+      { href: '/admin/importa', etichetta: 'Importa film', icona: 'scarica', descrizione: 'Schede, locandine e cast da The Movie Database' },
       { href: '/admin/cinema', etichetta: 'Cinema', icona: 'posizione', descrizione: 'Strutture, indirizzi, orari e servizi' },
       { href: '/admin/sale', etichetta: 'Sale e posti', icona: 'poltrona', descrizione: 'Piante delle sale e tipi di poltrona' },
       { href: '/admin/food', etichetta: 'Food & Drink', icona: 'popcorn', descrizione: 'Banco alimentari, prezzi e allergeni' },
