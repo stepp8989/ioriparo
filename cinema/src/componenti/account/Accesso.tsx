@@ -97,7 +97,7 @@ export function Accesso({
 
   return (
     <div className="mx-auto max-w-md">
-      <div className="mb-7 flex rounded-full border border-bordo bg-superficie p-1">
+      <div className="mb-7 flex rounded-tenue border border-bordo bg-superficie p-1">
         {(['accesso', 'registrazione'] as const).map((voce) => (
           <button
             key={voce}
@@ -109,7 +109,7 @@ export function Accesso({
             }}
             disabled={voce === 'registrazione' && !registrazioneAperta}
             className={classi(
-              'flex-1 rounded-full px-4 py-2.5 text-[0.88rem] font-medium transition-colors disabled:opacity-40',
+              'flex-1 rounded-tenue px-4 py-2.5 text-[0.88rem] font-medium transition-colors disabled:opacity-40',
               modo === voce ? 'bg-accento text-white' : 'text-tenue hover:text-testo',
             )}
           >

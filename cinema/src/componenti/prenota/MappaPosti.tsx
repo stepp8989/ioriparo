@@ -185,7 +185,7 @@ export function MappaPosti({
         <button
           type="button"
           onClick={scegliPerMe}
-          className="inline-flex items-center gap-2 rounded-full border border-bordo bg-superficie px-4 py-2 text-[0.82rem] font-medium text-tenue transition-colors hover:border-accento hover:text-accento"
+          className="inline-flex items-center gap-2 rounded-tenue border border-bordo bg-superficie px-4 py-2 text-[0.82rem] font-medium text-tenue transition-colors hover:border-accento hover:text-accento"
         >
           <Icona nome="fulmine" className="size-4" />
           Scegli tu i posti migliori
@@ -290,7 +290,7 @@ export function MappaPosti({
                         !occupato &&
                           !scelto &&
                           posto.tipo === 'premium' &&
-                          'bg-viola/25 text-viola hover:bg-viola/45',
+                          'bg-ambra/25 text-ambra hover:bg-ambra/45',
                         !occupato &&
                           !scelto &&
                           (posto.tipo === 'disabili' || posto.tipo === 'accompagnatore') &&
@@ -341,7 +341,7 @@ export function MappaPosti({
         </li>
         {tipiPresenti.includes('premium') && (
           <li className="flex items-center gap-2">
-            <span className="size-4 rounded-t-md rounded-b-sm bg-viola/25" aria-hidden />
+            <span className="size-4 rounded-t-md rounded-b-sm bg-ambra/25" aria-hidden />
             Premium
             {supplementi.premium > 0 && (
               <span className="tabellare">

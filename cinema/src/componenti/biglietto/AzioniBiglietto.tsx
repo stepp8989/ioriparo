@@ -71,7 +71,7 @@ export function AzioniBiglietto({ codice, className }: { codice: string; classNa
         type="button"
         disabled
         title="Apple Wallet e Google Wallet richiedono certificati rilasciati dai rispettivi fornitori: l’integrazione è predisposta ma non ancora attiva."
-        className="inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-bordo px-4 py-2 text-[0.8rem] text-tenue opacity-50"
+        className="inline-flex cursor-not-allowed items-center gap-2 rounded-tenue border border-bordo px-4 py-2 text-[0.8rem] text-tenue opacity-50"
       >
         <Icona nome="portafoglio" className="size-4" />
         Aggiungi al Wallet

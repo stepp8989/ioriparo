@@ -31,7 +31,7 @@ import { classi, numero, prezzo } from '@/lib/utili'
 
 const TIPI_MODIFICABILI: { tipo: TipoPosto; etichetta: string; colore: string }[] = [
   { tipo: 'standard', etichetta: 'Standard', colore: 'bg-bordo' },
-  { tipo: 'premium', etichetta: 'Premium', colore: 'bg-viola/40' },
+  { tipo: 'premium', etichetta: 'Premium', colore: 'bg-ambra/40' },
   { tipo: 'disabili', etichetta: 'Riservato', colore: 'bg-ok/35' },
   { tipo: 'accompagnatore', etichetta: 'Accompagnatore', colore: 'bg-ok/20' },
   { tipo: 'vuoto', etichetta: 'Corridoio', colore: 'bg-transparent border border-dashed border-bordo-forte' },
@@ -152,7 +152,7 @@ export default function PaginaSaleAdmin() {
 
                 <p className="mt-4 flex flex-wrap gap-1.5">
                   {sala.formati.map((formato) => (
-                    <Etichetta key={formato} tono="viola" className="px-2 py-0.5 text-[0.56rem]">
+                    <Etichetta key={formato} tono="ambra" className="px-2 py-0.5 text-[0.56rem]">
                       {formato}
                     </Etichetta>
                   ))}
@@ -227,7 +227,7 @@ function Anteprima({ schema, className }: { schema: SchemaSala; className?: stri
                   'size-[5px] rounded-[1px]',
                   posto.tipo === 'vuoto' && 'bg-transparent',
                   posto.tipo === 'standard' && 'bg-bordo-forte',
-                  posto.tipo === 'premium' && 'bg-viola',
+                  posto.tipo === 'premium' && 'bg-ambra',
                   (posto.tipo === 'disabili' || posto.tipo === 'accompagnatore') && 'bg-ok',
                 )}
               />
@@ -404,7 +404,7 @@ function EditorSala({
                     )
                   }
                   className={classi(
-                    'rounded-full border px-3.5 py-2 text-[0.82rem] transition-colors',
+                    'rounded-tenue border px-3.5 py-2 text-[0.82rem] transition-colors',
                     attivo
                       ? 'border-accento bg-accento text-white'
                       : 'border-bordo text-tenue hover:border-accento',
@@ -477,7 +477,7 @@ function EditorSala({
                     aria-pressed={pennello === voce.tipo}
                     onClick={() => setPennello(voce.tipo)}
                     className={classi(
-                      'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.76rem] transition-colors',
+                      'inline-flex items-center gap-1.5 rounded-tenue border px-3 py-1.5 text-[0.76rem] transition-colors',
                       pennello === voce.tipo
                         ? 'border-accento text-accento'
                         : 'border-bordo text-tenue hover:border-accento',
@@ -513,7 +513,7 @@ function EditorSala({
                           'size-5 rounded-t-md rounded-b-sm transition-colors',
                           posto.tipo === 'vuoto' && 'border border-dashed border-bordo-forte bg-transparent',
                           posto.tipo === 'standard' && 'bg-bordo hover:bg-bordo-forte',
-                          posto.tipo === 'premium' && 'bg-viola/45 hover:bg-viola/65',
+                          posto.tipo === 'premium' && 'bg-ambra/45 hover:bg-ambra/65',
                           posto.tipo === 'disabili' && 'bg-ok/45 hover:bg-ok/65',
                           posto.tipo === 'accompagnatore' && 'bg-ok/25 hover:bg-ok/40',
                         )}

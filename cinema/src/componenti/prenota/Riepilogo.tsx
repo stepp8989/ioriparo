@@ -149,7 +149,7 @@ export function Riepilogo({
 
           {esito?.piano && (
             <p className="mt-2 flex items-center gap-2 text-[0.8rem] text-tenue">
-              <Icona nome="tessera" className="size-3.5 shrink-0 text-viola" />
+              <Icona nome="tessera" className="size-3.5 shrink-0 text-ambra" />
               Vantaggi dell’abbonamento {esito.piano.nome} applicati.
             </p>
           )}

@@ -172,7 +172,6 @@ export default async function PaginaFilm({
                 chiave={film.id}
                 palette={film.palette}
                 immagine={film.locandina}
-                mostraTitolo={false}
               />
             </div>
           </div>
@@ -220,7 +219,7 @@ export default async function PaginaFilm({
                   const supplemento = supplementoFormato(formato, archivio.impostazioni)
                   return (
                     <li key={formato}>
-                      <Etichetta tono={formato === '2D' ? 'neutro' : 'viola'}>
+                      <Etichetta tono={formato === '2D' ? 'neutro' : 'ambra'}>
                         {formato}
                         {supplemento > 0 && (
                           <span className="font-normal normal-case tracking-normal opacity-75">
@@ -241,14 +240,14 @@ export default async function PaginaFilm({
                   Acquista biglietti
                 </Bottone>
               ) : (
-                <span className="inline-flex items-center gap-2.5 rounded-full border border-viola/40 bg-viola/10 px-7 py-4 text-[0.95rem] font-semibold text-viola">
+                <span className="inline-flex items-center gap-2 rounded-tenue border border-ambra/40 bg-ambra/10 px-6 py-3.5 text-[0.92rem] font-semibold text-ambra">
                   <Icona nome="calendario" className="size-4" />
                   In sala dal {dataEstesa(film.dataUscita)}
                 </span>
               )}
 
               <LettoreTrailer trailer={film.trailer} titolo={film.titolo}>
-                <span className="inline-flex items-center gap-2.5 rounded-full vetro px-7 py-4 text-[0.95rem] font-semibold transition-all duration-500 hover:-translate-y-0.5 hover:text-accento">
+                <span className="vetro-scuro inline-flex items-center gap-2 rounded-tenue px-6 py-3.5 text-[0.92rem] font-semibold text-white transition-colors duration-200 hover:bg-white/15">
                   <Icona nome="play" className="size-4" pieno />
                   Trailer
                 </span>
@@ -356,7 +355,7 @@ export default async function PaginaFilm({
                 href={indirizzo('cinema', '')}
                 scroll={false}
                 className={classi(
-                  'rounded-full border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
+                  'rounded-tenue border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
                   cinemaScelto
                     ? 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento'
                     : 'border-accento bg-accento text-white',
@@ -370,7 +369,7 @@ export default async function PaginaFilm({
                   href={indirizzo('cinema', struttura.id)}
                   scroll={false}
                   className={classi(
-                    'rounded-full border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
+                    'rounded-tenue border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
                     cinemaScelto === struttura.id
                       ? 'border-accento bg-accento text-white'
                       : 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento',

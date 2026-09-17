@@ -147,7 +147,7 @@ export default function PaginaGiftCardAdmin() {
           onChange={(evento) => setCerca(evento.target.value)}
           placeholder="Codice o email…"
           aria-label="Cerca fra le gift card"
-          className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+          className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
         />
       </div>
 
@@ -214,7 +214,7 @@ export default function PaginaGiftCardAdmin() {
                         <button
                           type="button"
                           onClick={() => setAzione({ giftCard, tipo: 'annulla' })}
-                          className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-errore hover:text-errore"
+                          className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-errore hover:text-errore"
                         >
                           Blocca
                         </button>
@@ -222,7 +222,7 @@ export default function PaginaGiftCardAdmin() {
                         <button
                           type="button"
                           onClick={() => setAzione({ giftCard, tipo: 'riattiva' })}
-                          className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-ok hover:text-ok"
+                          className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-ok hover:text-ok"
                         >
                           Riattiva
                         </button>
@@ -233,7 +233,7 @@ export default function PaginaGiftCardAdmin() {
                           setSaldo(giftCard.saldo)
                           setAzione({ giftCard, tipo: 'saldo' })
                         }}
-                        className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                        className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-accento hover:text-accento"
                       >
                         Saldo
                       </button>

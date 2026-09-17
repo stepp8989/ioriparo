@@ -73,32 +73,33 @@ export function Testata({
       {/* Salto al contenuto: la prima cosa che incontra chi naviga da tastiera. */}
       <a
         href="#contenuto"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-accento focus:px-5 focus:py-3 focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-tenue focus:bg-accento focus:px-5 focus:py-3 focus:text-white"
       >
         Salta al contenuto
       </a>
 
       <header
         className={classi(
-          'fixed inset-x-0 top-0 z-50 transition-all duration-500',
-          scorso ? 'vetro shadow-morbida' : 'bg-transparent',
+          'fixed inset-x-0 top-0 z-50 transition-colors duration-300',
+          scorso ? 'vetro' : 'bg-transparent',
         )}
       >
-        <div className="contenitore flex h-[4.5rem] items-center justify-between gap-4">
+        <div className="contenitore flex h-[3.9rem] items-center justify-between gap-4">
           <Marchio nome={nome} claim={claim} compatto={scorso} />
 
           <nav aria-label="Navigazione principale" className="hidden xl:block">
-            <ul className="flex items-center gap-1">
+            <ul className="flex items-center gap-0.5">
               {menu.map((voce) => (
                 <li key={voce.href}>
                   <Link
                     href={voce.href}
                     aria-current={attiva(voce.href) ? 'page' : undefined}
                     className={classi(
-                      'rounded-full px-3.5 py-2 text-[0.85rem] font-medium transition-colors duration-300',
+                      'relative block px-3 py-4 text-[0.82rem] font-semibold transition-colors duration-200',
+                      'after:absolute after:inset-x-3 after:bottom-2.5 after:h-0.5 after:bg-accento after:transition-transform after:duration-200',
                       attiva(voce.href)
-                        ? 'text-accento'
-                        : 'text-tenue hover:bg-superficie-alt hover:text-testo',
+                        ? 'text-testo after:scale-x-100'
+                        : 'text-tenue hover:text-testo after:scale-x-0',
                     )}
                   >
                     {voce.etichetta}
@@ -116,7 +117,7 @@ export function Testata({
             <button
               type="button"
               onClick={() => setRicercaAperta((precedente) => !precedente)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-current/20 text-tenue transition-colors hover:border-accento hover:text-accento 2xl:hidden"
+              className="inline-flex size-9 items-center justify-center rounded-tenue border border-bordo text-tenue transition-colors hover:border-accento hover:text-accento 2xl:hidden"
               aria-label="Apri la ricerca"
               aria-expanded={ricercaAperta}
             >
@@ -138,7 +139,7 @@ export function Testata({
             <button
               type="button"
               onClick={() => setApertoMobile(true)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-current/20 text-tenue transition-colors hover:border-accento hover:text-accento xl:hidden"
+              className="inline-flex size-9 items-center justify-center rounded-tenue border border-bordo text-tenue transition-colors hover:border-accento hover:text-accento xl:hidden"
               aria-label="Apri il menu"
               aria-expanded={apertoMobile}
             >
@@ -186,7 +187,7 @@ export function Testata({
             <button
               type="button"
               onClick={() => setApertoMobile(false)}
-              className="inline-flex size-10 items-center justify-center rounded-full border border-bordo text-tenue transition-colors hover:border-accento hover:text-accento"
+              className="inline-flex size-9 items-center justify-center rounded-tenue border border-bordo text-tenue transition-colors hover:border-accento hover:text-accento"
               aria-label="Chiudi il menu"
             >
               <Icona nome="chiudi" />

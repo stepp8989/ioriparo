@@ -131,7 +131,7 @@ export default async function PaginaPromozioni() {
                 <Fondale chiave={promozione.id} palette={promozione.palette} immagine={promozione.immagine} />
                 <div className="absolute inset-0 bg-gradient-to-t from-superficie via-notte/30 to-transparent" aria-hidden />
 
-                <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-notte/85 px-4 py-2 font-titolo text-[1.05rem] font-bold text-white">
+                <span className="absolute left-5 top-5 inline-flex items-center gap-2 rounded-tenue bg-notte/85 px-4 py-2 font-titolo text-[1.05rem] font-bold text-white">
                   {vantaggio(promozione)}
                 </span>
 

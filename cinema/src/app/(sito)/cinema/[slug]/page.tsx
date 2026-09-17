@@ -136,7 +136,7 @@ export default async function PaginaCinema({
               href={`https://www.openstreetmap.org/?mlat=${cinema.coordinate.lat}&mlon=${cinema.coordinate.lng}#map=17/${cinema.coordinate.lat}/${cinema.coordinate.lng}`}
               target="_blank"
               rel="noreferrer noopener"
-              className="inline-flex items-center gap-2 rounded-full vetro px-5 py-3 text-[0.88rem] font-semibold transition-colors hover:text-accento"
+              className="vetro-scuro inline-flex items-center gap-2 rounded-tenue px-5 py-3 text-[0.86rem] font-semibold text-white transition-colors hover:bg-white/15"
             >
               <Icona nome="posizione" className="size-4" />
               {cinema.indirizzo}, {cinema.citta}
@@ -144,7 +144,7 @@ export default async function PaginaCinema({
             </a>
             <a
               href={`tel:${cinema.telefono.replace(/\s/g, '')}`}
-              className="inline-flex items-center gap-2 rounded-full vetro px-5 py-3 text-[0.88rem] font-semibold transition-colors hover:text-accento"
+              className="vetro-scuro inline-flex items-center gap-2 rounded-tenue px-5 py-3 text-[0.86rem] font-semibold text-white transition-colors hover:bg-white/15"
             >
               <Icona nome="telefono" className="size-4" />
               {cinema.telefono}
@@ -184,7 +184,6 @@ export default async function PaginaCinema({
                         chiave={film.id}
                         palette={film.palette}
                         immagine={film.locandina}
-                        mostraTitolo={false}
                       />
                     </div>
                   </Link>
@@ -242,7 +241,7 @@ export default async function PaginaCinema({
                         {sala.formati.map((formato) => (
                           <Etichetta
                             key={formato}
-                            tono={formato === '2D' ? 'neutro' : 'viola'}
+                            tono={formato === '2D' ? 'neutro' : 'ambra'}
                             className="px-2 py-0.5 text-[0.6rem]"
                           >
                             {formato}
@@ -283,7 +282,7 @@ export default async function PaginaCinema({
                 {cinema.servizi.map((servizio) => (
                   <li
                     key={servizio}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-bordo bg-superficie px-3 py-1.5 text-[0.8rem] text-tenue"
+                    className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo bg-superficie px-3 py-1.5 text-[0.8rem] text-tenue"
                   >
                     <Icona nome="spunta" className="size-3.5 text-ok" />
                     {servizio}

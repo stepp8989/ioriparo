@@ -255,7 +255,7 @@ export default function PaginaProgrammazioneAdmin() {
                         filmId: film[0]?.id ?? '',
                       })
                     }
-                    className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-3 py-1.5 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                    className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-3 py-1.5 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
                   >
                     <Icona nome="piu" className="size-3.5" />
                     In questa sala

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Outfit } from 'next/font/google'
+import { Archivo, Barlow_Condensed, Inter } from 'next/font/google'
 import './globals.css'
 
 import { ScriptTema } from '@/componenti/layout/TemaToggle'
@@ -18,10 +18,24 @@ import { BASE } from '@/lib/seo'
  * nessun cookie di terze parti e nessuno spostamento del testo grazie ai
  * fallback metrici calcolati automaticamente.
  */
-const outfit = Outfit({
+/*
+ * Tre caratteri, ciascuno con un compito.
+ *
+ * Archivo per i titoli: è una grottesca stretta e robusta, pensata per i pesi
+ * alti — quello che serve a un titolo di sezione che deve reggere accanto a una
+ * fila di locandine senza sparire.
+ *
+ * Inter per il testo corrente, dove la leggibilità viene prima del carattere.
+ *
+ * Barlow Condensed per i numeri che stanno in poco spazio: orari, prezzi,
+ * numeri di posto. Un orario in una griglia fitta sta stretto in una grottesca
+ * normale, e rimpicciolirlo lo renderebbe illeggibile: un condensato risolve
+ * il problema allargando invece di ridurre.
+ */
+const archivio = Archivo({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-outfit',
+  weight: ['500', '600', '700', '800'],
+  variable: '--font-archivio',
   display: 'swap',
 })
 
@@ -29,6 +43,13 @@ const inter = Inter({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
   variable: '--font-inter',
+  display: 'swap',
+})
+
+const stretto = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-stretto',
   display: 'swap',
 })
 
@@ -83,12 +104,16 @@ export const viewport: Viewport = {
   // predefinito è scuro a prescindere dall'impostazione del sistema, e
   // dichiarare il chiaro qui farebbe colorare la barra del browser in modo
   // diverso dalla pagina.
-  themeColor: '#07060c',
+  themeColor: '#0a0a0c',
 }
 
 export default function RadiceLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="it" className={`${outfit.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html
+      lang="it"
+      className={`${archivio.variable} ${inter.variable} ${stretto.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <ScriptTema />
       </head>

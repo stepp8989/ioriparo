@@ -231,7 +231,7 @@ export function Pagamento({
                   )
                 }
                 className={classi(
-                  'rounded-full border px-4 py-2 text-[0.82rem] font-medium transition-colors',
+                  'rounded-tenue border px-4 py-2 text-[0.82rem] font-medium transition-colors',
                   puntiDaUsare > 0
                     ? 'border-accento bg-accento text-white'
                     : 'border-bordo text-tenue hover:border-accento hover:text-accento',

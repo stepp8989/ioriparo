@@ -384,7 +384,7 @@ export function Prenotazione({ catalogo, spettacoloIniziale, annullato }: Props)
                   onClick={() => setPasso(voce)}
                   aria-current={corrente ? 'step' : undefined}
                   className={classi(
-                    'flex items-center gap-2 rounded-full px-3 py-2 text-[0.8rem] font-medium transition-colors',
+                    'flex items-center gap-2 rounded-tenue px-3 py-2 text-[0.8rem] font-medium transition-colors',
                     corrente && 'bg-accento text-white',
                     fatto && 'text-accento hover:bg-accento/10',
                     !corrente && !fatto && 'text-tenue',
@@ -495,7 +495,6 @@ export function Prenotazione({ catalogo, spettacoloIniziale, annullato }: Props)
                       chiave={voce.id}
                       palette={voce.palette}
                       immagine={voce.locandina}
-                      mostraTitolo={false}
                     />
                   </span>
                   <span className="block p-3">
@@ -617,7 +616,7 @@ export function Prenotazione({ catalogo, spettacoloIniziale, annullato }: Props)
               <button
                 type="button"
                 onClick={() => void aggiornaDisponibilita()}
-                className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-3.5 py-2 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-3.5 py-2 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
               >
                 <Icona nome="aggiorna" className="size-3.5" />
                 Aggiorna

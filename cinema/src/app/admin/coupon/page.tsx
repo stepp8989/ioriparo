@@ -167,7 +167,7 @@ export default function PaginaCouponAdmin() {
           onChange={(evento) => setCerca(evento.target.value)}
           placeholder="Codice o descrizione…"
           aria-label="Cerca fra i coupon"
-          className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+          className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
         />
       </div>
 

@@ -67,7 +67,7 @@ export function BigliettoDigitale({
           </div>
 
           {totale > 1 && (
-            <span className="shrink-0 rounded-full bg-black/25 px-3 py-1 text-[0.7rem] font-semibold">
+            <span className="shrink-0 rounded-tenue bg-black/25 px-3 py-1 text-[0.7rem] font-semibold">
               {indice} di {totale}
             </span>
           )}

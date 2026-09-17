@@ -47,7 +47,7 @@ const colonne: ColonnaGestione<PianoAbbonamento>[] = [
     resa: (voce) => (
       <span className="flex flex-wrap gap-1">
         {voce.formatiInclusi.map((formato) => (
-          <Etichetta key={formato} tono="viola" className="px-2 py-0.5 text-[0.56rem]">
+          <Etichetta key={formato} tono="ambra" className="px-2 py-0.5 text-[0.56rem]">
             {formato}
           </Etichetta>
         ))}

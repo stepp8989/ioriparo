@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { LettoreTrailer } from '@/componenti/film/LettoreTrailer'
 import { Bottone } from '@/componenti/ui/Bottone'
 import { Icona } from '@/componenti/ui/Icona'
-import { Fondale } from '@/componenti/ui/Poster'
+import { Fondale, Locandina } from '@/componenti/ui/Poster'
 import { Etichetta } from '@/componenti/ui/Sezione'
 import { Stelle } from '@/componenti/ui/Stelle'
 import type { Film } from '@/lib/tipi'
@@ -22,9 +22,16 @@ import { classi, dataEstesa, durata } from '@/lib/utili'
  *     questo tipo di sezione;
  *   — chi ha chiesto meno animazioni al sistema non vede nessuna rotazione,
  *     e i comandi restano per scorrere a mano;
- *   — i titoli non mostrati restano nel documento con `aria-hidden` e
- *     `inert`, così non finiscono nella navigazione da tastiera ma la
- *     transizione può comunque dissolverli.
+ *   — i titoli non mostrati restano nel documento con `aria-hidden`, così non
+ *     finiscono nella navigazione da tastiera ma la transizione può comunque
+ *     dissolverli.
+ *
+ * Rispetto alla prima versione l'apertura è **più bassa** — poco più di due
+ * terzi di schermata invece di quasi una intera — e i puntini di scorrimento
+ * sono diventati una fila di locandine. Un'apertura alta come tutto lo schermo
+ * costringe a scorrere prima di vedere anche solo un titolo in programmazione,
+ * e i puntini non dicono che cosa si sta per vedere: le locandine sì, e
+ * intanto mostrano quattro film invece di uno.
  */
 
 const DURATA_ROTAZIONE = 9000
@@ -52,7 +59,7 @@ export function Apertura({ film }: { film: Film[] }) {
 
   return (
     <section
-      className="relative isolate flex min-h-[min(92vh,52rem)] items-end overflow-hidden"
+      className="relative isolate flex min-h-[min(62vh,38rem)] items-end overflow-hidden"
       aria-roledescription="carosello"
       aria-label="Film in evidenza"
       onMouseEnter={() => setFermo(true)}
@@ -63,7 +70,7 @@ export function Apertura({ film }: { film: Film[] }) {
         <div
           key={voce.id}
           className={classi(
-            'absolute inset-0 -z-10 transition-opacity duration-1000',
+            'absolute inset-0 -z-10 transition-opacity duration-700',
             posizione === indice ? 'opacity-100' : 'opacity-0',
           )}
           aria-hidden={posizione !== indice}
@@ -76,86 +83,123 @@ export function Apertura({ film }: { film: Film[] }) {
 
       {/* Due veli: uno dal basso per il testo, uno da sinistra per il blocco. */}
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-sfondo via-sfondo/70 to-transparent"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-sfondo via-sfondo/72 to-transparent"
         aria-hidden
       />
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-sfondo/90 via-sfondo/35 to-transparent"
+        className="absolute inset-0 -z-10 bg-gradient-to-r from-sfondo/94 via-sfondo/40 to-transparent"
         aria-hidden
       />
 
-      <div className="contenitore w-full pb-14 pt-32 sm:pb-20">
-        <div key={attuale.id} className="affiora max-w-2xl">
-          <div className="mb-5 flex flex-wrap items-center gap-2">
-            <Etichetta tono="pieno">
-              {attuale.stato === 'in-sala' ? 'In sala ora' : 'Prossimamente'}
-            </Etichetta>
-            {attuale.formati
-              .filter((formato) => formato !== '2D' && formato !== 'VO sottotitolato')
-              .slice(0, 2)
-              .map((formato) => (
-                <Etichetta key={formato} tono="scuro">
-                  {formato}
-                </Etichetta>
-              ))}
-          </div>
+      <div className="contenitore w-full pb-7 pt-24">
+        <div className="flex flex-wrap items-end justify-between gap-8">
+          <div key={attuale.id} className="affiora max-w-xl">
+            <div className="mb-3 flex flex-wrap items-center gap-1.5">
+              <Etichetta tono="pieno">
+                {attuale.stato === 'in-sala' ? 'In sala ora' : 'Prossimamente'}
+              </Etichetta>
+              {attuale.formati
+                .filter((formato) => formato !== '2D' && formato !== 'VO sottotitolato')
+                .slice(0, 2)
+                .map((formato) => (
+                  <Etichetta key={formato} tono="scuro">
+                    {formato}
+                  </Etichetta>
+                ))}
+            </div>
 
-          <h1 className="text-balance font-titolo text-[2.4rem] leading-[1.03] sm:text-6xl lg:text-[4.2rem]">
-            {attuale.titolo}
-          </h1>
+            <h1 className="text-balance font-titolo text-[2.1rem] leading-[1.02] sm:text-[3rem] lg:text-[3.4rem]">
+              {attuale.titolo}
+            </h1>
 
-          <p className="mt-4 max-w-xl text-[1.05rem] leading-relaxed text-tenue">
-            {attuale.sottotitolo}
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[0.85rem] text-tenue">
-            <span className="inline-flex items-center gap-1.5">
-              <Icona nome="orologio" className="size-4" />
-              {durata(attuale.durataMinuti)}
-            </span>
-            <span>{attuale.generi.join(' · ')}</span>
-            <span>{attuale.anno}</span>
-            <span className="rounded border border-bordo-forte px-1.5 py-0.5 text-[0.72rem] font-semibold">
-              {attuale.classificazione}
-            </span>
-            {attuale.valutazione > 0 && <Stelle valore={attuale.valutazione} />}
-          </div>
-
-          <p className="mt-5 max-w-xl text-[0.92rem] leading-relaxed text-tenue">
-            <span className="text-testo">Regia</span> {attuale.regista}
-            {attuale.cast.length > 0 && (
-              <>
-                {' · '}
-                <span className="text-testo">Con</span>{' '}
-                {attuale.cast.slice(0, 3).map((voce) => voce.nome).join(', ')}
-              </>
-            )}
-          </p>
-
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            {attuale.stato === 'in-sala' ? (
-              <Bottone href={`/film/${attuale.slug}#orari`} misura="grande">
-                <Icona nome="biglietto" className="size-4" />
-                Acquista biglietti
-              </Bottone>
-            ) : (
-              <Bottone href={`/film/${attuale.slug}`} misura="grande" variante="viola">
-                <Icona nome="calendario" className="size-4" />
-                Dal {dataEstesa(attuale.dataUscita)}
-              </Bottone>
-            )}
-
-            <LettoreTrailer trailer={attuale.trailer} titolo={attuale.titolo}>
-              <span className="inline-flex items-center gap-2.5 rounded-full vetro px-7 py-4 text-[0.95rem] font-semibold transition-all duration-500 hover:-translate-y-0.5 hover:text-accento">
-                <Icona nome="play" className="size-4" pieno />
-                Guarda il trailer
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-[0.82rem] text-tenue">
+              {attuale.valutazione > 0 && <Stelle valore={attuale.valutazione} />}
+              <span className="tabellare">{durata(attuale.durataMinuti)}</span>
+              <span>{attuale.generi.slice(0, 2).join(' · ')}</span>
+              <span className="tabellare">{attuale.anno}</span>
+              <span className="rounded-[3px] border border-bordo-forte px-1.5 py-0.5 font-stretto text-[0.72rem] font-bold">
+                {attuale.classificazione}
               </span>
-            </LettoreTrailer>
+            </div>
+
+            <p className="mt-3 max-w-lg text-[0.95rem] leading-relaxed text-tenue">
+              {attuale.sottotitolo}
+            </p>
+
+            <p className="mt-2 max-w-lg text-[0.85rem] leading-relaxed text-tenue">
+              <span className="font-semibold text-testo">Regia</span> {attuale.regista}
+              {attuale.cast.length > 0 && (
+                <>
+                  {' · '}
+                  <span className="font-semibold text-testo">Con</span>{' '}
+                  {attuale.cast
+                    .slice(0, 3)
+                    .map((voce) => voce.nome)
+                    .join(', ')}
+                </>
+              )}
+            </p>
+
+            <div className="mt-5 flex flex-wrap items-center gap-2">
+              {attuale.stato === 'in-sala' ? (
+                <Bottone href={`/film/${attuale.slug}#orari`} misura="grande">
+                  <Icona nome="biglietto" className="size-4" />
+                  Acquista biglietti
+                </Bottone>
+              ) : (
+                <Bottone href={`/film/${attuale.slug}`} misura="grande" variante="ambra">
+                  <Icona nome="calendario" className="size-4" />
+                  Dal {dataEstesa(attuale.dataUscita)}
+                </Bottone>
+              )}
+
+              <LettoreTrailer trailer={attuale.trailer} titolo={attuale.titolo}>
+                <span className="vetro-scuro inline-flex items-center gap-2 rounded-tenue px-6 py-3.5 text-[0.92rem] font-semibold text-white transition-colors duration-200 hover:bg-white/15">
+                  <Icona nome="play" className="size-4" pieno />
+                  Trailer
+                </span>
+              </LettoreTrailer>
+            </div>
           </div>
+
+          {/*
+           * Selettore: le locandine degli altri film in evidenza. Fa da indice
+           * del carosello e da anteprima insieme, e su schermo stretto sparisce
+           * perché ruberebbe l'altezza al blocco di testo.
+           */}
+          {film.length > 1 && (
+            <div className="hidden shrink-0 items-end gap-2 md:flex">
+              {film.map((voce, posizione) => (
+                <button
+                  key={voce.id}
+                  type="button"
+                  onClick={() => {
+                    setIndice(posizione)
+                    setFermo(true)
+                  }}
+                  aria-label={`Mostra ${voce.titolo}`}
+                  aria-current={posizione === indice}
+                  className={classi(
+                    'locandina w-[4.75rem] overflow-hidden rounded-tenue border-2 transition-all duration-300 lg:w-[5.75rem]',
+                    posizione === indice
+                      ? 'border-accento opacity-100'
+                      : 'border-transparent opacity-45 hover:opacity-80',
+                  )}
+                >
+                  <Locandina
+                    titolo={voce.titolo}
+                    chiave={voce.id}
+                    palette={voce.palette}
+                    immagine={voce.locandina}
+                  />
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
-        {film.length > 1 && (
-          <div className="mt-12 flex flex-wrap items-center gap-3">
+        <div className="mt-6 flex items-center gap-4 border-t border-bordo pt-3">
+          <div className="flex gap-1.5 md:hidden">
             {film.map((voce, posizione) => (
               <button
                 key={voce.id}
@@ -167,29 +211,22 @@ export function Apertura({ film }: { film: Film[] }) {
                 aria-label={`Mostra ${voce.titolo}`}
                 aria-current={posizione === indice}
                 className={classi(
-                  'h-1 rounded-full transition-all duration-500',
-                  posizione === indice
-                    ? 'w-14 bg-accento'
-                    : 'w-7 bg-bordo-forte hover:bg-tenue',
+                  'h-1 rounded-full transition-all duration-300',
+                  posizione === indice ? 'w-10 bg-accento' : 'w-5 bg-bordo-forte',
                 )}
               />
             ))}
-
-            <Link
-              href="/film"
-              className="sottolinea ml-3 text-[0.82rem] font-medium text-tenue transition-colors hover:text-accento"
-            >
-              Tutti i film
-            </Link>
           </div>
-        )}
-      </div>
 
-      {/* Fascio del proiettore: l'unico elemento puramente decorativo della pagina. */}
-      <div
-        className="fascio pointer-events-none absolute inset-x-0 top-0 -z-10 h-1/2 opacity-60"
-        aria-hidden
-      />
+          <Link
+            href="/film"
+            className="sottolinea ml-auto inline-flex items-center gap-1.5 text-[0.82rem] font-semibold text-tenue transition-colors hover:text-accento"
+          >
+            Tutti i film in programmazione
+            <Icona nome="freccia" className="size-3.5" />
+          </Link>
+        </div>
+      </div>
     </section>
   )
 }

@@ -596,7 +596,7 @@ function SezioneAbbonamento({ dati, onAggiorna }: { dati: DatiArea; onAggiorna: 
           </div>
           <div className="mt-2 h-2 overflow-hidden rounded-full bg-superficie-alt">
             <div
-              className="h-full rounded-full bg-viola transition-all duration-700"
+              className="h-full rounded-full bg-ambra transition-all duration-700"
               style={{
                 width: `${Math.min(100, (sottoscrizione.ingressiUsati / piano.ingressiInclusi) * 100)}%`,
               }}
@@ -654,7 +654,6 @@ function SezionePreferiti({ film }: { film: Film[] }) {
               chiave={voce.id}
               palette={voce.palette}
               immagine={voce.locandina}
-              mostraTitolo={false}
             />
           </div>
           <p className="mt-2.5 text-[0.88rem] font-medium transition-colors group-hover:text-accento">

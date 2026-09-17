@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Etichetta } from '@/componenti/ui/Sezione'
 import { Icona } from '@/componenti/ui/Icona'
 import type { Impostazioni, Sala, Spettacolo } from '@/lib/tipi'
 import { classi, minutiAllInizio, oraFine, prezzo } from '@/lib/utili'
@@ -14,9 +13,12 @@ import { MINUTI_PUBBLICITA } from '@/lib/programmazione'
  * flusso. È la ragione per cui il motore di prenotazione accetta uno
  * spettacolo nell'indirizzo invece di partire sempre dal primo passo.
  *
- * L'ora mostrata è quella d'ingresso; sotto, in piccolo, l'ora di fine
- * proiezione — l'informazione che serve davvero a chi deve prendere l'ultimo
- * autobus, e che quasi nessuna biglietteria dichiara.
+ * La pastiglia è compatta di proposito: su una scheda film ce ne stanno anche
+ * venti, e in quattro righe di dati ciascuna diventavano un muro. L'ora, in
+ * condensato, è l'unica cosa che si legge da lontano; formato, sala e prezzo
+ * stanno sulla riga sotto, e l'ora di fine — l'informazione che serve a chi
+ * deve prendere l'ultimo autobus, e che quasi nessuna biglietteria dichiara —
+ * resta nel `title` e nella descrizione accessibile del collegamento.
  */
 export function Orari({
   spettacoli,
@@ -42,56 +44,54 @@ export function Orari({
   const salePerId = new Map(sale.map((sala) => [sala.id, sala]))
 
   return (
-    <ul className={classi('flex flex-wrap gap-2.5', className)}>
+    <ul className={classi('flex flex-wrap gap-1.5', className)}>
       {spettacoli.map((spettacolo) => {
         const sala = salePerId.get(spettacolo.salaId) ?? null
         const mancanti = minutiAllInizio(spettacolo.data, spettacolo.ora)
-        // «Ultimi posti» non è un artificio di vendita: passata la chiusura
-        // della prevendita online restano davvero solo i posti in cassa.
+        // «Fra poco» non è un artificio di vendita: passata la chiusura della
+        // prevendita online restano davvero solo i posti in cassa.
         const inPartenza = mancanti < 90 && mancanti >= impostazioni.chiusuraVenditaMinuti
         const da = prezzoDaPartireDa(spettacolo, sala, impostazioni)
+        const fine = oraFine(spettacolo.ora, durataFilm, MINUTI_PUBBLICITA)
+        // L'italiano è la lingua predefinita del listino: segnalarlo su ogni
+        // orario sarebbe rumore, mentre la versione originale va detta sempre.
+        const contorno = [
+          spettacolo.formato !== '2D' ? spettacolo.formato : '',
+          spettacolo.lingua === 'IT' ? '' : spettacolo.lingua,
+        ]
+          .filter(Boolean)
+          .join(' · ')
 
         return (
           <li key={spettacolo.id}>
             <Link
               href={`/acquista?spettacolo=${spettacolo.id}`}
+              title={`${spettacolo.ora} – fine alle ${fine}${sala ? `, ${sala.nome}` : ''}`}
+              aria-label={`Spettacolo delle ${spettacolo.ora}, fine alle ${fine}${
+                sala ? `, ${sala.nome}` : ''
+              }, da ${prezzo(da)}`}
               className={classi(
-                'group flex min-w-[6.5rem] flex-col gap-0.5 rounded-tenue border px-3.5 py-2.5 transition-all duration-300',
-                'border-bordo bg-superficie hover:-translate-y-0.5 hover:border-accento hover:shadow-morbida',
+                'flex min-w-[5.25rem] flex-col items-start gap-0.5 rounded-tenue border px-2.5 py-1.5 transition-colors duration-200',
+                inPartenza
+                  ? 'border-accento/45 bg-accento/8 hover:border-accento'
+                  : 'border-bordo bg-superficie hover:border-accento',
               )}
             >
-              <span className="flex items-baseline justify-between gap-2">
-                <span className="tabellare font-titolo text-[1.05rem] font-semibold group-hover:text-accento">
+              <span className="flex w-full items-baseline gap-1.5">
+                <span className="tabellare font-stretto text-[1.15rem] font-bold leading-none">
                   {spettacolo.ora}
                 </span>
-                <span className="text-[0.68rem] font-semibold uppercase tracking-[0.1em] text-tenue">
-                  {spettacolo.lingua === 'VO' ? 'VO' : ''}
+                {inPartenza && (
+                  <Icona nome="fuoco" className="size-3 text-accento" aria-hidden />
+                )}
+                <span className="tabellare ml-auto text-[0.7rem] font-semibold text-accento">
+                  {prezzo(da)}
                 </span>
               </span>
 
-              <span className="tabellare text-[0.7rem] text-tenue">
-                fino alle {oraFine(spettacolo.ora, durataFilm, MINUTI_PUBBLICITA)}
-              </span>
-
-              <span className="mt-1.5 flex flex-wrap items-center gap-1.5">
-                {spettacolo.formato !== '2D' && (
-                  <Etichetta tono="viola" className="px-2 py-0.5 text-[0.6rem]">
-                    {spettacolo.formato}
-                  </Etichetta>
-                )}
-                {sala && (
-                  <span className="text-[0.7rem] text-tenue">{sala.nome}</span>
-                )}
-              </span>
-
-              <span className="mt-1 flex items-center justify-between gap-2">
-                <span className="tabellare text-[0.72rem] text-tenue">da {prezzo(da)}</span>
-                {inPartenza && (
-                  <span className="inline-flex items-center gap-1 text-[0.66rem] font-semibold text-attesa">
-                    <Icona nome="fuoco" className="size-3" />
-                    fra poco
-                  </span>
-                )}
+              <span className="flex w-full items-center gap-1 text-[0.66rem] uppercase tracking-[0.06em] text-tenue">
+                {contorno && <span className="font-semibold text-ambra">{contorno}</span>}
+                {sala && <span className="truncate normal-case tracking-normal">{sala.nome}</span>}
               </span>
             </Link>
           </li>

@@ -77,7 +77,7 @@ export function Schede<T extends string>({
             >
               {scheda.etichetta}
               {typeof scheda.conteggio === 'number' && (
-                <span className="ml-2 rounded-full bg-superficie-alt px-2 py-0.5 text-[0.7rem] tabellare">
+                <span className="ml-2 rounded-tenue bg-superficie-alt px-2 py-0.5 text-[0.7rem] tabellare">
                   {scheda.conteggio}
                 </span>
               )}

@@ -255,7 +255,7 @@ export function Gestione<T extends { id: string }>({
             onChange={(evento) => setCerca(evento.target.value)}
             placeholder="Cerca…"
             aria-label={`Cerca fra ${titolo.toLowerCase()}`}
-            className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+            className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
           />
         </div>
 
@@ -266,7 +266,7 @@ export function Gestione<T extends { id: string }>({
         <button
           type="button"
           onClick={() => void carica()}
-          className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-3.5 py-2 text-[0.8rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+          className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-3.5 py-2 text-[0.8rem] text-tenue transition-colors hover:border-accento hover:text-accento"
         >
           <Icona nome="aggiorna" className="size-3.5" />
           Ricarica
@@ -530,7 +530,7 @@ function CampoDinamico({
                     )
                   }
                   className={classi(
-                    'rounded-full border px-3.5 py-2 text-[0.82rem] transition-colors',
+                    'rounded-tenue border px-3.5 py-2 text-[0.82rem] transition-colors',
                     attivo
                       ? 'border-accento bg-accento text-white'
                       : 'border-bordo text-tenue hover:border-accento hover:text-accento',

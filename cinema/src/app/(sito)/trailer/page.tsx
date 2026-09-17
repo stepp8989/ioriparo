@@ -62,7 +62,7 @@ export default async function PaginaTrailer() {
                     <BottonePlay />
                   </div>
                   {voce.trailer && voce.trailer.durataSecondi > 0 && (
-                    <span className="absolute bottom-3 right-3 rounded-full bg-notte/85 px-2.5 py-1 text-[0.7rem] tabellare text-white">
+                    <span className="absolute bottom-3 right-3 rounded-tenue bg-notte/85 px-2.5 py-1 text-[0.7rem] tabellare text-white">
                       {durataBreve(voce.trailer.durataSecondi)}
                     </span>
                   )}

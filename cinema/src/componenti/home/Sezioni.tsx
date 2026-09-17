@@ -8,7 +8,7 @@ import { Fondale } from '@/componenti/ui/Poster'
 import { Etichetta, Sezione, TitoloSezione } from '@/componenti/ui/Sezione'
 import { Rivela } from '@/componenti/animazioni/Rivela'
 import type { Cinema, Film, LivelloLoyalty, PianoAbbonamento, Promozione } from '@/lib/tipi'
-import { dataEstesa, durataBreve, percentuale, prezzo } from '@/lib/utili'
+import { durataBreve, percentuale, prezzo } from '@/lib/utili'
 
 /**
  * Sezioni della home.
@@ -45,9 +45,15 @@ export function InSalaOra({
         }
       />
 
-      <div className="mt-12 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-5">
-        {film.slice(0, 10).map((voce, indice) => (
-          <Rivela key={voce.id} ritardo={Math.min(indice, 4) * 0.05}>
+      {/*
+        * Sette locandine per riga sui monitor larghi, tre sul telefono. La
+        * prima versione ne metteva cinque grandi: mostrava metà catalogo in
+        * due schermate, e su un portale di biglietteria il catalogo è il
+        * prodotto.
+        */}
+      <div className="mt-5 grid grid-cols-3 gap-x-3 gap-y-6 sm:grid-cols-4 lg:grid-cols-6 2xl:grid-cols-7">
+        {film.slice(0, 14).map((voce, indice) => (
+          <Rivela key={voce.id} ritardo={Math.min(indice, 6) * 0.04}>
             <SchedaFilm film={voce} prezzoDa={prezziMinimi.get(voce.id)} />
           </Rivela>
         ))}
@@ -70,49 +76,11 @@ export function Prossimamente({ film }: { film: Film[] }) {
         allineamento="sinistra"
       />
 
-      <Carosello etichetta="Film in arrivo" className="mt-12">
+      <Carosello etichetta="Film in arrivo" className="mt-5">
         {film.map((voce) => (
-          <article
-            key={voce.id}
-            className="group w-[16rem] shrink-0 snap-start sm:w-[19rem]"
-          >
-            <div className="relative aspect-[3/4] overflow-hidden rounded-morbido">
-              <div className="size-full transition-transform duration-700 group-hover:scale-105">
-                <Fondale chiave={voce.id} palette={voce.palette} immagine={voce.backdrop} />
-              </div>
-
-              <div
-                className="absolute inset-0 bg-gradient-to-t from-notte via-notte/40 to-transparent"
-                aria-hidden
-              />
-
-              <div className="absolute inset-x-0 bottom-0 p-5">
-                <Etichetta tono="pieno" className="mb-3">
-                  {dataEstesa(voce.dataUscita)}
-                </Etichetta>
-                <h3 className="font-titolo text-[1.3rem] font-semibold leading-tight text-white">
-                  {voce.titolo}
-                </h3>
-                <p className="mt-1.5 text-[0.85rem] text-white/75">{voce.generi.join(' · ')}</p>
-              </div>
-
-              <div className="absolute right-4 top-4">
-                <LettoreTrailer trailer={voce.trailer} titolo={voce.titolo}>
-                  <BottonePlay className="size-11" />
-                </LettoreTrailer>
-              </div>
-            </div>
-
-            <Bottone
-              href={`/film/${voce.slug}`}
-              variante="tenue"
-              misura="piccola"
-              className="mt-4 w-full"
-            >
-              Scopri il film
-              <Icona nome="freccia" className="size-4" />
-            </Bottone>
-          </article>
+          <div key={voce.id} className="w-[8.5rem] shrink-0 snap-start sm:w-[10.5rem]">
+            <SchedaFilm film={voce} />
+          </div>
         ))}
       </Carosello>
     </Sezione>
@@ -127,7 +95,7 @@ export function VetrinaTrailer({ film }: { film: Film[] }) {
 
   return (
     <Sezione id="trailer" className="relative overflow-hidden bg-notte text-white">
-      <div className="alone-viola pointer-events-none absolute -right-40 top-0 size-[34rem]" aria-hidden />
+      <div className="alone pointer-events-none absolute -right-40 top-0 size-[34rem]" aria-hidden />
 
       <div className="relative">
         <TitoloSezione
@@ -142,7 +110,7 @@ export function VetrinaTrailer({ film }: { film: Film[] }) {
           }
         />
 
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {conTrailer.slice(0, 6).map((voce) => (
             <Rivela key={voce.id}>
               <LettoreTrailer
@@ -159,7 +127,7 @@ export function VetrinaTrailer({ film }: { film: Film[] }) {
                     <BottonePlay />
                   </div>
                   {voce.trailer && (
-                    <span className="absolute bottom-3 right-3 rounded-full bg-notte/80 px-2.5 py-1 text-[0.7rem] tabellare text-white">
+                    <span className="absolute bottom-3 right-3 rounded-tenue bg-notte/80 px-2.5 py-1 text-[0.7rem] tabellare text-white">
                       {durataBreve(voce.trailer.durataSecondi)}
                     </span>
                   )}
@@ -195,19 +163,19 @@ export function VetrinaPromozioni({ promozioni }: { promozioni: Promozione[] }) 
         }
       />
 
-      <div className="mt-12 grid gap-5 md:grid-cols-3">
+      <div className="mt-5 grid gap-3 md:grid-cols-3">
         {promozioni.slice(0, 3).map((promozione, indice) => (
           <Rivela key={promozione.id} ritardo={indice * 0.06}>
             <Link
               href={`/promozioni#${promozione.slug}`}
-              className="group relative flex h-full flex-col overflow-hidden rounded-ampio border border-bordo bg-superficie p-7 transition-all duration-500 hover:-translate-y-1 hover:border-accento/40 hover:shadow-rilievo"
+              className="group relative flex h-full flex-col overflow-hidden rounded-morbido border border-bordo bg-superficie p-5 transition-colors duration-200 hover:border-accento"
             >
               <div className="absolute inset-0 -z-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                 <Fondale chiave={promozione.id} palette={promozione.palette} />
               </div>
 
               <span
-                className="mb-6 inline-flex size-12 items-center justify-center rounded-full"
+                className="mb-4 inline-flex size-10 items-center justify-center rounded-tenue"
                 style={{ backgroundColor: `${promozione.palette[1]}22`, color: promozione.palette[1] }}
               >
                 <Icona
@@ -219,14 +187,14 @@ export function VetrinaPromozioni({ promozioni }: { promozioni: Promozione[] }) 
               <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-accento">
                 {promozione.sottotitolo}
               </p>
-              <h3 className="mt-2 font-titolo text-[1.35rem] font-semibold leading-tight">
+              <h3 className="mt-1.5 font-titolo text-[1.15rem] font-semibold leading-tight">
                 {promozione.titolo}
               </h3>
-              <p className="mt-3 flex-1 text-[0.9rem] leading-relaxed text-tenue">
+              <p className="mt-2 flex-1 text-[0.88rem] leading-relaxed text-tenue">
                 {promozione.descrizione}
               </p>
 
-              <span className="mt-5 inline-flex items-center gap-2 text-[0.85rem] font-semibold text-accento">
+              <span className="mt-4 inline-flex items-center gap-2 text-[0.82rem] font-semibold text-accento">
                 {promozione.codice ? `Codice ${promozione.codice}` : 'Sconto automatico'}
                 <Icona nome="freccia" className="size-4 transition-transform group-hover:translate-x-1" />
               </span>
@@ -255,7 +223,7 @@ export function Club({
 
   return (
     <Sezione className="bg-sfondo-alt">
-      <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+      <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
         <div>
           <TitoloSezione
             soprattitolo={`${nome} CLUB`}
@@ -270,7 +238,7 @@ export function Club({
             allineamento="sinistra"
           />
 
-          <ul className="mt-9 space-y-3">
+          <ul className="mt-6 space-y-2">
             {livelli.map((livello) => (
               <Rivela key={livello.id} da="destra">
                 <li className="flex items-start gap-4 rounded-morbido border border-bordo bg-superficie p-4">
@@ -303,7 +271,7 @@ export function Club({
             ))}
           </ul>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap gap-2">
             <Bottone href="/area-personale">Iscriviti al CLUB</Bottone>
             <Bottone href="/abbonamenti" variante="contorno">
               Vedi gli abbonamenti
@@ -313,18 +281,18 @@ export function Club({
 
         {inEvidenza && (
           <Rivela da="sinistra">
-            <div className="relative overflow-hidden rounded-ampio border border-bordo bg-superficie p-8 shadow-rilievo">
+            <div className="relative overflow-hidden rounded-morbido border border-bordo bg-superficie p-6">
               <div className="alone pointer-events-none absolute -right-20 -top-20 size-64" aria-hidden />
 
               <Etichetta tono="pieno">Il più scelto</Etichetta>
 
-              <h3 className="mt-5 font-titolo text-[2rem] font-semibold">{inEvidenza.nome}</h3>
+              <h3 className="mt-4 font-titolo text-[1.7rem] font-semibold">{inEvidenza.nome}</h3>
               <p className="mt-2 text-[0.95rem] leading-relaxed text-tenue">
                 {inEvidenza.descrizione}
               </p>
 
-              <p className="mt-7 flex items-baseline gap-2">
-                <span className="font-titolo text-[3rem] font-bold leading-none testo-accento">
+              <p className="mt-5 flex items-baseline gap-2">
+                <span className="font-titolo text-[2.6rem] font-bold leading-none text-accento">
                   {prezzo(inEvidenza.prezzo)}
                 </span>
                 <span className="text-[0.9rem] text-tenue">
@@ -332,7 +300,7 @@ export function Club({
                 </span>
               </p>
 
-              <ul className="mt-7 space-y-2.5">
+              <ul className="mt-5 space-y-2">
                 {inEvidenza.vantaggi.slice(0, 5).map((vantaggio) => (
                   <li key={vantaggio} className="flex items-start gap-2.5 text-[0.9rem]">
                     <Icona nome="spunta" className="mt-0.5 size-4 shrink-0 text-ok" />
@@ -341,7 +309,7 @@ export function Club({
                 ))}
               </ul>
 
-              <Bottone href="/abbonamenti" variante="viola" className="mt-8 w-full">
+              <Bottone href="/abbonamenti" variante="ambra" className="mt-6 w-full">
                 Abbonati
               </Bottone>
 
@@ -377,12 +345,12 @@ export function Strutture({ cinema, nome }: { cinema: Cinema[]; nome: string }) 
         }
       />
 
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {cinema.map((struttura, indice) => (
           <Rivela key={struttura.id} ritardo={Math.min(indice, 3) * 0.05}>
             <Link
               href={`/cinema/${struttura.slug}`}
-              className="group relative flex h-full flex-col justify-end overflow-hidden rounded-morbido p-6 transition-transform duration-500 hover:-translate-y-1"
+              className="group relative flex h-full flex-col justify-end overflow-hidden rounded-tenue border border-bordo p-5 transition-colors duration-200 hover:border-accento"
             >
               <div className="absolute inset-0 -z-10">
                 <div className="size-full transition-transform duration-700 group-hover:scale-105">
@@ -391,7 +359,7 @@ export function Strutture({ cinema, nome }: { cinema: Cinema[]; nome: string }) 
                 <div className="absolute inset-0 bg-gradient-to-t from-notte via-notte/55 to-transparent" aria-hidden />
               </div>
 
-              <div className="min-h-[9rem] text-white">
+              <div className="min-h-[7rem] text-white">
                 <h3 className="font-titolo text-[1.25rem] font-semibold">
                   {nome} {struttura.nome}
                 </h3>
@@ -403,7 +371,7 @@ export function Strutture({ cinema, nome }: { cinema: Cinema[]; nome: string }) 
                   {struttura.servizi.slice(0, 4).map((servizio) => (
                     <span
                       key={servizio}
-                      className="rounded-full bg-white/12 px-2.5 py-1 text-[0.68rem] text-white/85"
+                      className="rounded-[3px] bg-white/12 px-2 py-0.5 text-[0.66rem] text-white/85"
                     >
                       {servizio}
                     </span>
@@ -424,18 +392,17 @@ export function Invito({ nome }: { nome: string }) {
   return (
     <Sezione className="relative overflow-hidden bg-notte text-white">
       <div className="alone pointer-events-none absolute left-1/2 top-0 size-[40rem] -translate-x-1/2" aria-hidden />
-      <div className="griglia-tecnica pointer-events-none absolute inset-0" aria-hidden />
 
       <div className="relative mx-auto max-w-2xl text-center">
-        <h2 className="text-balance font-titolo text-[2.2rem] leading-tight sm:text-[3rem]">
+        <h2 className="text-balance font-titolo text-[1.8rem] leading-tight sm:text-[2.4rem]">
           Il posto giusto ti sta aspettando
         </h2>
-        <p className="mx-auto mt-5 max-w-lg text-[1.02rem] leading-relaxed text-white/70">
+        <p className="mx-auto mt-3 max-w-lg text-[0.95rem] leading-relaxed text-white/70">
           Scegli il film, scegli la poltrona, entra con il QR sul telefono. Niente code, niente
           stampe, niente sorprese al momento di pagare.
         </p>
 
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
+        <div className="mt-6 flex flex-wrap justify-center gap-2">
           <Bottone href="/programmazione" misura="grande">
             <Icona nome="calendario" className="size-4" />
             Vedi la programmazione
@@ -446,7 +413,7 @@ export function Invito({ nome }: { nome: string }) {
           </Bottone>
         </div>
 
-        <p className="mt-8 text-[0.8rem] text-white/45">
+        <p className="mt-6 text-[0.8rem] text-white/45">
           {nome} — biglietti, abbonamenti e gift card in un unico posto.
         </p>
       </div>

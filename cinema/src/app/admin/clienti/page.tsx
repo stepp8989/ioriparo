@@ -150,7 +150,7 @@ export default function PaginaClientiAdmin() {
           onChange={(evento) => setCerca(evento.target.value)}
           placeholder="Nome, cognome o email…"
           aria-label="Cerca fra i clienti"
-          className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+          className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
         />
       </div>
 
@@ -207,7 +207,7 @@ export default function PaginaClientiAdmin() {
                       {cliente.ordini} {cliente.ordini === 1 ? 'ordine' : 'ordini'}
                     </span>
                     {cliente.abbonamento && (
-                      <Etichetta tono="viola" className="mt-1 px-2 py-0.5 text-[0.56rem]">
+                      <Etichetta tono="ambra" className="mt-1 px-2 py-0.5 text-[0.56rem]">
                         Abbonato
                       </Etichetta>
                     )}
@@ -224,14 +224,14 @@ export default function PaginaClientiAdmin() {
                       <button
                         type="button"
                         onClick={() => setRettifica(cliente)}
-                        className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                        className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-accento hover:text-accento"
                       >
                         Punti
                       </button>
                       <button
                         type="button"
                         onClick={() => void sospendi(cliente, !cliente.attivo)}
-                        className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-attesa hover:text-attesa"
+                        className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-attesa hover:text-attesa"
                       >
                         {cliente.attivo ? 'Sospendi' : 'Riattiva'}
                       </button>

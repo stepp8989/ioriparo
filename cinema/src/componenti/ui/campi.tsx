@@ -321,7 +321,7 @@ export function Gruppo<T extends string>({
             disabled={voce.disabilitata}
             onClick={() => onCambia(voce.valore)}
             className={classi(
-              'rounded-full border px-4 py-2 text-[0.82rem] font-medium transition-all duration-300',
+              'rounded-tenue border px-4 py-2 text-[0.82rem] font-medium transition-all duration-300',
               'disabled:cursor-not-allowed disabled:opacity-40',
               valore === voce.valore
                 ? 'border-accento bg-accento text-white'

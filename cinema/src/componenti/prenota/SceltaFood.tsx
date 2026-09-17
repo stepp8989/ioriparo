@@ -56,7 +56,7 @@ export function SceltaFood({
       </p>
 
       {totaleArticoli > 0 && (
-        <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-accento/10 px-3.5 py-1.5 text-[0.82rem] text-accento">
+        <p className="mt-3 inline-flex items-center gap-2 rounded-tenue bg-accento/10 px-3.5 py-1.5 text-[0.82rem] text-accento">
           <Icona nome="popcorn" className="size-4" />
           {totaleArticoli} {totaleArticoli === 1 ? 'articolo' : 'articoli'} nel carrello
         </p>

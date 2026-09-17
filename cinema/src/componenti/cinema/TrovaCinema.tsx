@@ -97,7 +97,7 @@ export function TrovaCinema({
             onChange={(evento) => setTesto(evento.target.value)}
             placeholder="Città, CAP o nome del cinema"
             aria-label="Cerca per città, CAP o nome del cinema"
-            className="w-full rounded-full border border-bordo bg-superficie py-3.5 pl-11 pr-4 text-[0.92rem] transition-colors placeholder:text-tenue/70 focus:border-accento focus:outline-none"
+            className="w-full rounded-tenue border border-bordo bg-superficie py-3.5 pl-11 pr-4 text-[0.92rem] transition-colors placeholder:text-tenue/70 focus:border-accento focus:outline-none"
           />
         </div>
 
@@ -119,7 +119,7 @@ export function TrovaCinema({
             onClick={() => setServizio('')}
             aria-pressed={servizio === ''}
             className={classi(
-              'rounded-full border px-3.5 py-1.5 text-[0.8rem] transition-colors',
+              'rounded-tenue border px-3.5 py-1.5 text-[0.8rem] transition-colors',
               servizio === ''
                 ? 'border-accento bg-accento text-white'
                 : 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento',
@@ -134,7 +134,7 @@ export function TrovaCinema({
               onClick={() => setServizio(servizio === voce ? '' : voce)}
               aria-pressed={servizio === voce}
               className={classi(
-                'rounded-full border px-3.5 py-1.5 text-[0.8rem] transition-colors',
+                'rounded-tenue border px-3.5 py-1.5 text-[0.8rem] transition-colors',
                 servizio === voce
                   ? 'border-accento bg-accento text-white'
                   : 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento',
@@ -188,7 +188,7 @@ export function TrovaCinema({
                   <div className="absolute inset-0 bg-gradient-to-t from-notte/90 to-transparent" aria-hidden />
 
                   {distanza !== null && (
-                    <span className="absolute right-3 top-3 rounded-full bg-notte/85 px-3 py-1 text-[0.72rem] tabellare text-white">
+                    <span className="absolute right-3 top-3 rounded-tenue bg-notte/85 px-3 py-1 text-[0.72rem] tabellare text-white">
                       {distanza} km
                     </span>
                   )}
@@ -220,7 +220,7 @@ export function TrovaCinema({
                     {struttura.servizi.map((voce) => (
                       <li
                         key={voce}
-                        className="rounded-full bg-superficie-alt px-2.5 py-1 text-[0.7rem] text-tenue"
+                        className="rounded-tenue bg-superficie-alt px-2.5 py-1 text-[0.7rem] text-tenue"
                       >
                         {voce}
                       </li>
@@ -235,7 +235,7 @@ export function TrovaCinema({
                       href={`https://www.openstreetmap.org/?mlat=${struttura.coordinate.lat}&mlon=${struttura.coordinate.lng}#map=17/${struttura.coordinate.lat}/${struttura.coordinate.lng}`}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-4 py-2 text-[0.8rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                      className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-4 py-2 text-[0.8rem] text-tenue transition-colors hover:border-accento hover:text-accento"
                     >
                       Indicazioni
                       <Icona nome="esterno" className="size-3.5" />

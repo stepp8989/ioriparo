@@ -9,42 +9,45 @@ import { classi } from '@/lib/utili'
  * invito all'azione che porta a un'altra pagina resta un collegamento vero,
  * navigabile da tastiera e apribile in una nuova scheda.
  *
+ * Forma: angoli appena smussati, non pillola. La pillola è la forma dei
+ * prodotti software; un pulsante «Acquista» di un circuito di sale è un
+ * rettangolo netto, e accanto alle locandine — che sono rettangoli — sta meglio.
+ *
  * `className` si aggiunge alle classi di base, non le sostituisce: per
  * mostrare o nascondere il pulsante a certe larghezze agite su un contenitore
  * esterno, perché due utilità `display` sullo stesso elemento si
  * contenderebbero la precedenza in base all'ordine del foglio di stile.
  */
 
-type Variante = 'pieno' | 'contorno' | 'chiaro' | 'vetro' | 'tenue' | 'viola'
+type Variante = 'pieno' | 'contorno' | 'chiaro' | 'vetro' | 'tenue' | 'ambra'
 type Misura = 'piccola' | 'normale' | 'grande'
 
 const BASE =
-  'group relative inline-flex items-center justify-center gap-2.5 font-testo font-semibold ' +
-  'transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] rounded-full overflow-hidden ' +
+  'inline-flex items-center justify-center gap-2 rounded-tenue font-testo font-semibold ' +
+  'tracking-[0.01em] transition-colors duration-200 ' +
   'disabled:pointer-events-none disabled:opacity-45'
 
 const VARIANTI: Record<Variante, string> = {
   // Rosso pieno: l'azione principale, che in questo sito è quasi sempre
   // «acquista». Non va usata due volte nella stessa schermata.
-  pieno:
-    'bg-accento text-white shadow-accento hover:-translate-y-0.5 hover:bg-accento-forte active:translate-y-0',
-  // Viola: azione importante ma non commerciale — abbonati, iscriviti al CLUB.
-  viola: 'bg-viola text-white hover:-translate-y-0.5 hover:bg-viola-forte active:translate-y-0',
+  pieno: 'bg-accento text-white hover:bg-accento-forte',
+  // Ambra: azione importante ma non commerciale — abbonati, iscriviti al CLUB.
+  // Il testo è scuro perché il bianco sull'ambra non arriva a 4,5:1.
+  ambra: 'bg-ambra text-notte hover:bg-ambra-forte',
   // Contorno sottile: azione secondaria accanto a quella principale.
-  contorno:
-    'border border-bordo-forte text-testo hover:border-accento hover:text-accento hover:-translate-y-0.5',
+  contorno: 'border border-bordo-forte text-testo hover:border-accento hover:text-accento',
   // Chiara: pensata per stare sopra i fondali scuri dei film.
-  chiaro: 'bg-white text-notte hover:-translate-y-0.5 hover:bg-white/90',
+  chiaro: 'bg-white text-notte hover:bg-white/88',
   // Vetro: sopra le immagini, quando non deve rubare la scena all'azione principale.
-  vetro: 'vetro-scuro text-white hover:-translate-y-0.5 hover:bg-white/15',
+  vetro: 'vetro-scuro text-white hover:bg-white/15',
   // Tenue: azioni di servizio dentro le schede e nel pannello.
   tenue: 'bg-superficie-alt text-testo border border-bordo hover:border-accento hover:text-accento',
 }
 
 const MISURE: Record<Misura, string> = {
-  piccola: 'px-4 py-2 text-[0.8rem]',
-  normale: 'px-6 py-3 text-[0.875rem]',
-  grande: 'px-8 py-4 text-[0.95rem]',
+  piccola: 'px-3.5 py-1.5 text-[0.78rem]',
+  normale: 'px-5 py-2.5 text-[0.85rem]',
+  grande: 'px-7 py-3.5 text-[0.92rem]',
 }
 
 type Comune = {
@@ -61,29 +64,17 @@ export function Bottone(props: PropsLink | PropsPulsante) {
   const { variante = 'pieno', misura = 'normale', className, children, ...resto } = props
   const stile = classi(BASE, VARIANTI[variante], MISURE[misura], className)
 
-  // Riflesso che attraversa il pulsante al passaggio del puntatore: solo sulle
-  // varianti piene, dove si vede, e sempre fuori dal flusso del contenuto.
-  const riflesso =
-    variante === 'pieno' || variante === 'chiaro' || variante === 'viola' ? (
-      <span
-        aria-hidden
-        className="pointer-events-none absolute inset-y-0 -left-full w-1/3 bg-white/25 blur-md transition-none group-hover:animate-[riflesso_0.9s_ease-out]"
-      />
-    ) : null
-
   if ('href' in resto && resto.href) {
     return (
       <Link {...(resto as PropsLink)} className={stile}>
-        {riflesso}
-        <span className="relative inline-flex items-center gap-2.5">{children}</span>
+        {children}
       </Link>
     )
   }
 
   return (
     <button {...(resto as PropsPulsante)} className={stile}>
-      {riflesso}
-      <span className="relative inline-flex items-center gap-2.5">{children}</span>
+      {children}
     </button>
   )
 }

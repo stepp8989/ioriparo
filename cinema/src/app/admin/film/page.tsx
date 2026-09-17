@@ -29,7 +29,6 @@ const colonne: ColonnaGestione<Film>[] = [
               chiave={film.id}
               palette={film.palette}
               immagine={film.locandina}
-              mostraTitolo={false}
             />
           </span>
         </span>
@@ -65,7 +64,7 @@ const colonne: ColonnaGestione<Film>[] = [
     etichetta: 'Stato',
     resa: (film) => (
       <span className="space-y-1">
-        <Etichetta tono={film.stato === 'in-sala' ? 'verde' : film.stato === 'prossimamente' ? 'viola' : 'neutro'}>
+        <Etichetta tono={film.stato === 'in-sala' ? 'verde' : film.stato === 'prossimamente' ? 'ambra' : 'neutro'}>
           {film.stato === 'in-sala' ? 'In sala' : film.stato === 'prossimamente' ? 'In arrivo' : 'Archivio'}
         </Etichetta>
         <span className="block text-[0.74rem] text-tenue">{film.classificazione}</span>

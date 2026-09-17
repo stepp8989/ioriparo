@@ -139,7 +139,7 @@ export default function PaginaPrenotazioniAdmin() {
             onChange={(evento) => setCerca(evento.target.value)}
             placeholder="Codice, nome o email…"
             aria-label="Cerca fra le prenotazioni"
-            className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+            className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
           />
         </div>
 
@@ -147,7 +147,7 @@ export default function PaginaPrenotazioniAdmin() {
           value={stato}
           onChange={(evento) => setStato(evento.target.value)}
           aria-label="Filtra per stato"
-          className="rounded-full border border-bordo bg-superficie px-4 py-2.5 text-[0.84rem] focus:border-accento focus:outline-none"
+          className="rounded-tenue border border-bordo bg-superficie px-4 py-2.5 text-[0.84rem] focus:border-accento focus:outline-none"
         >
           <option value="">Tutti gli stati</option>
           {STATI_PRENOTAZIONE.map((voce) => (
@@ -161,7 +161,7 @@ export default function PaginaPrenotazioniAdmin() {
           value={cinemaId}
           onChange={(evento) => setCinemaId(evento.target.value)}
           aria-label="Filtra per cinema"
-          className="rounded-full border border-bordo bg-superficie px-4 py-2.5 text-[0.84rem] focus:border-accento focus:outline-none"
+          className="rounded-tenue border border-bordo bg-superficie px-4 py-2.5 text-[0.84rem] focus:border-accento focus:outline-none"
         >
           <option value="">Tutti i cinema</option>
           {cinema.map((voce) => (
@@ -262,7 +262,7 @@ export default function PaginaPrenotazioniAdmin() {
                         <button
                           type="button"
                           onClick={() => setAzione({ prenotazione, tipo: 'incassa' })}
-                          className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-ok hover:text-ok"
+                          className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-ok hover:text-ok"
                         >
                           Incassa
                         </button>
@@ -272,7 +272,7 @@ export default function PaginaPrenotazioniAdmin() {
                           <button
                             type="button"
                             onClick={() => setAzione({ prenotazione, tipo: 'annulla' })}
-                            className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-attesa hover:text-attesa"
+                            className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-attesa hover:text-attesa"
                           >
                             Annulla
                           </button>
@@ -280,7 +280,7 @@ export default function PaginaPrenotazioniAdmin() {
                             <button
                               type="button"
                               onClick={() => setAzione({ prenotazione, tipo: 'rimborsa' })}
-                              className="rounded-full border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-errore hover:text-errore"
+                              className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-errore hover:text-errore"
                             >
                               Rimborsa
                             </button>

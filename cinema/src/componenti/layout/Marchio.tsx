@@ -4,10 +4,16 @@ import { classi } from '@/lib/utili'
 /**
  * Marchio.
  *
- * Il simbolo è un diaframma stilizzato: sei lamelle che si chiudono attorno a
- * un centro luminoso. È l'unico elemento grafico proprietario del progetto,
- * disegnato per questo marchio e non ripreso da nessuno — nessun logo
- * esistente, nessuna catena reale.
+ * Il simbolo è una **piastrella di pellicola**: un quadrato pieno del rosso
+ * d'insegna, con le perforazioni bianche sui due lati corti e un fotogramma
+ * vuoto al centro. Sostituisce il diaframma a sei lamelle della prima versione,
+ * che a sedici pixel diventava una macchia illeggibile e somigliava a un logo
+ * di applicazione più che all'insegna di un circuito di sale. Questo invece
+ * regge il rimpicciolimento — due file di quadratini si riconoscono sempre — e
+ * funziona anche in negativo su un biglietto stampato in bianco e nero.
+ *
+ * È l'unico elemento grafico proprietario del progetto, disegnato per questo
+ * marchio e non ripreso da nessuno: nessun logo esistente, nessuna catena reale.
  *
  * Il nome non è disegnato: è testo, e arriva dalle impostazioni. Cambiare
  * «CINEMAX» in qualcos'altro dal pannello cambia l'intestazione, il piè di
@@ -17,36 +23,21 @@ import { classi } from '@/lib/utili'
 export function Simbolo({ className = 'size-8' }: { className?: string }) {
   return (
     <svg viewBox="0 0 32 32" className={className} aria-hidden focusable="false">
-      <defs>
-        <linearGradient id="marchio-sfumatura" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="var(--accento-1)" />
-          <stop offset="100%" stopColor="var(--accento-2)" />
-        </linearGradient>
-      </defs>
+      <rect width="32" height="32" rx="4" fill="var(--accento)" />
 
-      <circle
-        cx="16"
-        cy="16"
-        r="14"
-        fill="none"
-        stroke="url(#marchio-sfumatura)"
-        strokeWidth="2"
-      />
-
-      {/* Sei lamelle disposte a raggiera: la rotazione è calcolata, non disegnata
-          sei volte a mano, così il simbolo resta simmetrico al pixel. */}
-      <g fill="url(#marchio-sfumatura)" opacity="0.92">
-        {Array.from({ length: 6 }, (_, indice) => (
-          <path
-            key={indice}
-            d="M16 16 L16 3.2 A12.8 12.8 0 0 1 27.1 9.6 Z"
-            transform={`rotate(${indice * 60} 16 16)`}
-            opacity={indice % 2 === 0 ? 0.95 : 0.55}
-          />
+      {/* Quattro perforazioni per lato, generate invece che disegnate otto
+          volte a mano: restano allineate al pixel a qualsiasi dimensione. */}
+      <g fill="#ffffff">
+        {Array.from({ length: 4 }, (_, indice) => (
+          <g key={indice}>
+            <rect x="4" y={4.5 + indice * 6.5} width="4" height="4" rx="1" />
+            <rect x="24" y={4.5 + indice * 6.5} width="4" height="4" rx="1" />
+          </g>
         ))}
       </g>
 
-      <circle cx="16" cy="16" r="3.6" fill="var(--sfondo)" />
+      {/* Fotogramma centrale: vuoto, perché è lì che finisce il nome. */}
+      <rect x="11" y="9" width="10" height="14" rx="1.5" fill="#ffffff" opacity="0.92" />
     </svg>
   )
 }
@@ -67,21 +58,21 @@ export function Marchio({
   return (
     <Link
       href={href}
-      className={classi('group inline-flex items-center gap-3', className)}
+      className={classi('inline-flex items-center gap-2.5', className)}
       aria-label={`${nome}, torna alla pagina iniziale`}
     >
-      <Simbolo className={compatto ? 'size-7' : 'size-9'} />
+      <Simbolo className={compatto ? 'size-7' : 'size-8'} />
       <span className="leading-none">
         <span
           className={classi(
-            'block font-titolo font-bold tracking-[0.2em]',
-            compatto ? 'text-[1rem]' : 'text-[1.15rem]',
+            'block font-titolo font-extrabold uppercase tracking-[-0.01em]',
+            compatto ? 'text-[1.05rem]' : 'text-[1.2rem]',
           )}
         >
           {nome}
         </span>
         {claim && !compatto && (
-          <span className="mt-1 block text-[0.6rem] uppercase tracking-[0.24em] text-tenue">
+          <span className="mt-1 block text-[0.58rem] uppercase tracking-[0.2em] text-tenue">
             {claim}
           </span>
         )}

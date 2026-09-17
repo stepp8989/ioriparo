@@ -99,12 +99,12 @@ export default async function PaginaFood() {
 
                     <div className="mt-3 flex flex-wrap gap-1.5">
                       {prodotto.allergeni.length > 0 && (
-                        <span className="rounded-full bg-attesa/12 px-2.5 py-1 text-[0.68rem] text-attesa">
+                        <span className="rounded-tenue bg-attesa/12 px-2.5 py-1 text-[0.68rem] text-attesa">
                           Allergeni: {prodotto.allergeni.join(', ')}
                         </span>
                       )}
                       {prodotto.cinemaIds.length > 0 && (
-                        <span className="rounded-full bg-superficie-alt px-2.5 py-1 text-[0.68rem] text-tenue">
+                        <span className="rounded-tenue bg-superficie-alt px-2.5 py-1 text-[0.68rem] text-tenue">
                           Solo a{' '}
                           {prodotto.cinemaIds
                             .map((id) => cinemaPerId.get(id)?.citta ?? id)

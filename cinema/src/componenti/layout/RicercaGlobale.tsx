@@ -153,7 +153,7 @@ export function RicercaGlobale({ compatta = false }: { compatta?: boolean }) {
           aria-autocomplete="list"
           aria-activedescendant={evidenziato >= 0 ? `suggerimento-${evidenziato}` : undefined}
           className={classi(
-            'w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem]',
+            'w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem]',
             'transition-colors placeholder:text-tenue/70 focus:border-accento focus:outline-none',
             compatta ? 'max-w-full' : 'max-w-md',
           )}

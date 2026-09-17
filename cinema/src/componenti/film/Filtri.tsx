@@ -72,7 +72,7 @@ export function Filtri({
                 value={valore}
                 onChange={(evento) => aggiorna(filtro.chiave, evento.target.value)}
                 className={classi(
-                  'appearance-none rounded-full border py-2 pl-4 pr-9 text-[0.84rem] transition-colors focus:border-accento focus:outline-none',
+                  'appearance-none rounded-tenue border py-2 pl-4 pr-9 text-[0.84rem] transition-colors focus:border-accento focus:outline-none',
                   valore
                     ? 'border-accento bg-accento/10 text-accento'
                     : 'border-bordo bg-superficie text-tenue hover:border-bordo-forte',
@@ -97,7 +97,7 @@ export function Filtri({
           <button
             type="button"
             onClick={() => router.replace(percorso, { scroll: false })}
-            className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-3.5 py-2 text-[0.8rem] text-tenue transition-colors hover:border-errore hover:text-errore"
+            className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-3.5 py-2 text-[0.8rem] text-tenue transition-colors hover:border-errore hover:text-errore"
           >
             <Icona nome="chiudi" className="size-3.5" />
             Azzera

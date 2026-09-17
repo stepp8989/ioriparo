@@ -68,7 +68,7 @@ export default function PaginaRegistroAdmin() {
           onChange={(evento) => setCerca(evento.target.value)}
           placeholder="Azione, oggetto o autore…"
           aria-label="Cerca nel registro"
-          className="w-full rounded-full border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
+          className="w-full rounded-tenue border border-bordo bg-superficie py-2.5 pl-10 pr-4 text-[0.88rem] focus:border-accento focus:outline-none"
         />
       </div>
 

@@ -80,7 +80,7 @@ export function Statistica({
     <div className={classi(caricamento && 'opacity-60 transition-opacity')}>
       {/* ── Filtri ──────────────────────────────────────────────────────── */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex rounded-full border border-bordo bg-superficie p-1">
+        <div className="flex rounded-tenue border border-bordo bg-superficie p-1">
           {PERIODI.map((voce) => (
             <button
               key={voce.valore}
@@ -88,7 +88,7 @@ export function Statistica({
               onClick={() => setPeriodo(voce.valore)}
               aria-pressed={periodo === voce.valore}
               className={classi(
-                'rounded-full px-3.5 py-1.5 text-[0.82rem] font-medium transition-colors',
+                'rounded-tenue px-3.5 py-1.5 text-[0.82rem] font-medium transition-colors',
                 periodo === voce.valore ? 'bg-accento text-white' : 'text-tenue hover:text-testo',
               )}
             >
@@ -103,7 +103,7 @@ export function Statistica({
             <select
               value={cinemaId}
               onChange={(evento) => setCinemaId(evento.target.value)}
-              className="rounded-full border border-bordo bg-superficie px-4 py-2 text-[0.84rem] focus:border-accento focus:outline-none"
+              className="rounded-tenue border border-bordo bg-superficie px-4 py-2 text-[0.84rem] focus:border-accento focus:outline-none"
             >
               <option value="">Tutta la rete</option>
               {cinema.map((voce) => (

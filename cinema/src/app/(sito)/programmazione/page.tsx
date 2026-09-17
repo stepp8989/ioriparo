@@ -80,7 +80,7 @@ export default async function PaginaProgrammazione({
         <Link
           href={indirizzo('cinema', '')}
           className={classi(
-            'rounded-full border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
+            'rounded-tenue border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
             cinemaScelto
               ? 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento'
               : 'border-accento bg-accento text-white',
@@ -93,7 +93,7 @@ export default async function PaginaProgrammazione({
             key={struttura.id}
             href={indirizzo('cinema', struttura.id)}
             className={classi(
-              'rounded-full border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
+              'rounded-tenue border px-4 py-2 text-[0.84rem] font-medium transition-all duration-300',
               cinemaScelto === struttura.id
                 ? 'border-accento bg-accento text-white'
                 : 'border-bordo bg-superficie text-tenue hover:border-accento hover:text-accento',
@@ -139,7 +139,6 @@ export default async function PaginaProgrammazione({
                       chiave={film.id}
                       palette={film.palette}
                       immagine={film.locandina}
-                      mostraTitolo={false}
                     />
                   </div>
                 </Link>

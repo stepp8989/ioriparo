@@ -30,19 +30,17 @@ export function PiePagina({
   ].filter((rete) => rete.href)
 
   return (
-    <footer className="relative mt-auto overflow-hidden border-t border-bordo bg-sfondo-alt">
-      <div className="alone pointer-events-none absolute -top-40 left-1/2 size-[36rem] -translate-x-1/2" aria-hidden />
-
-      <div className="contenitore relative py-16">
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
+    <footer className="mt-auto border-t border-bordo bg-sfondo-alt">
+      <div className="contenitore py-10">
+        <div className="grid gap-8 lg:grid-cols-[1.2fr_2fr]">
           <div>
             <Marchio nome={marchio.nome} claim={marchio.claim} />
 
-            <p className="mt-5 max-w-sm text-[0.92rem] leading-relaxed text-tenue">
+            <p className="mt-4 max-w-sm text-[0.88rem] leading-relaxed text-tenue">
               {marchio.descrizione}
             </p>
 
-            <div className="mt-6 space-y-2 text-[0.88rem]">
+            <div className="mt-4 space-y-1.5 text-[0.86rem]">
               <a
                 href={`tel:${marchio.telefono.replace(/\s/g, '')}`}
                 className="sottolinea inline-flex items-center gap-2 text-tenue transition-colors hover:text-accento"
@@ -61,14 +59,14 @@ export function PiePagina({
             </div>
 
             {reti.length > 0 && (
-              <ul className="mt-6 flex flex-wrap gap-2">
+              <ul className="mt-4 flex flex-wrap gap-1.5">
                 {reti.map((rete) => (
                   <li key={rete.nome}>
                     <a
                       href={rete.href}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="inline-flex items-center gap-1.5 rounded-full border border-bordo px-3.5 py-2 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+                      className="inline-flex items-center gap-1.5 rounded-tenue border border-bordo px-3 py-1.5 text-[0.76rem] text-tenue transition-colors hover:border-accento hover:text-accento"
                     >
                       {rete.nome}
                       <Icona nome="esterno" className="size-3" />
@@ -79,13 +77,13 @@ export function PiePagina({
             )}
           </div>
 
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {PIEDE.map((colonna) => (
               <div key={colonna.titolo}>
-                <h2 className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-accento">
+                <h2 className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accento">
                   {colonna.titolo}
                 </h2>
-                <ul className="space-y-2.5">
+                <ul className="space-y-1.5">
                   {colonna.voci.map((voce) => (
                     <li key={voce.href}>
                       <Link
@@ -103,11 +101,11 @@ export function PiePagina({
         </div>
 
         {cinema.length > 0 && (
-          <div className="mt-12 border-t border-bordo pt-8">
-            <h2 className="mb-4 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-tenue">
+          <div className="mt-8 border-t border-bordo pt-6">
+            <h2 className="mb-3 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-tenue">
               Le nostre sale
             </h2>
-            <ul className="flex flex-wrap gap-x-6 gap-y-2.5">
+            <ul className="flex flex-wrap gap-x-5 gap-y-2">
               {cinema.map((struttura) => (
                 <li key={struttura.id}>
                   <Link
@@ -123,7 +121,7 @@ export function PiePagina({
           </div>
         )}
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-bordo pt-8 text-[0.8rem] text-tenue sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-3 border-t border-bordo pt-6 text-[0.8rem] text-tenue sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {anno} {marchio.nome}. Tutti i diritti riservati.
           </p>

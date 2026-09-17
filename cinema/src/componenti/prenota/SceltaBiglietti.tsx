@@ -63,7 +63,7 @@ export function SceltaBiglietti({
               key={tipologia.id}
               type="button"
               onClick={() => assegnaATutti(tipologia.id)}
-              className="rounded-full border border-bordo px-3 py-1.5 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
+              className="rounded-tenue border border-bordo px-3 py-1.5 text-[0.78rem] text-tenue transition-colors hover:border-accento hover:text-accento"
             >
               {tipologia.nome}
             </button>
@@ -105,7 +105,7 @@ export function SceltaBiglietti({
                       onClick={() => assegna(chiave, tipologia.id)}
                       aria-pressed={selezionata}
                       className={classi(
-                        'flex items-center gap-2 rounded-full border px-3.5 py-2 text-[0.82rem] transition-all duration-300',
+                        'flex items-center gap-2 rounded-tenue border px-3.5 py-2 text-[0.82rem] transition-all duration-300',
                         selezionata
                           ? 'border-accento bg-accento text-white'
                           : 'border-bordo text-tenue hover:border-accento hover:text-accento',
