@@ -17,6 +17,7 @@ import {
   whatsappCliente,
 } from '@/lib/fedelta'
 import { formatEuro, formatNumero } from '@/lib/format'
+import { PELLICOLA, haDirittoPellicola, pellicolaApplicata } from '@/lib/omaggi'
 import type { Cliente, Riparazione } from '@/types'
 
 function Barra({ avanzamento }: { avanzamento: number }) {
@@ -245,6 +246,48 @@ export function FedeltaRiparazione({ riparazione }: { riparazione: Riparazione }
       <p className="mt-2 text-[11px] text-ink-faint">
         Il buono diventa una voce negativa fra gli interventi. Togliendo la voce i punti tornano sulla tessera.
       </p>
+    </Card>
+  )
+}
+
+/**
+ * Promemoria dell'omaggio nella scheda della riparazione: se il lavoro è un
+ * display Apple o Samsung, la pellicola va applicata e segnata. Diventa una
+ * riga a zero euro, così compare sulla scheda stampata e sulla ricevuta.
+ */
+export function OmaggioRiparazione({ riparazione }: { riparazione: Riparazione }) {
+  const { aggiornaRiparazione } = useGestionale()
+  if (!haDirittoPellicola(riparazione)) return null
+  const applicata = pellicolaApplicata(riparazione)
+
+  return (
+    <Card className="print:hidden">
+      <CardHeader titolo="Omaggio display" />
+      <p className="mt-2 text-sm text-ink-muted">
+        {PELLICOLA.prodotto} in omaggio {PELLICOLA.condizione}.
+      </p>
+      {applicata ? (
+        <p className="mt-3 flex items-center gap-2 text-sm font-medium text-emerald-400">
+          <Gift size={15} />
+          Omaggio segnato sulla scheda
+        </p>
+      ) : (
+        <Button
+          className="mt-3 w-full"
+          variante="successo"
+          onClick={() =>
+            aggiornaRiparazione(riparazione.id, {
+              interventi: [
+                ...riparazione.interventi,
+                { id: nuovoId('int'), descrizione: PELLICOLA.riga, quantita: 1, prezzoUnitario: 0, omaggio: true },
+              ],
+            })
+          }
+        >
+          <Gift size={15} />
+          Aggiungi pellicola in omaggio
+        </Button>
+      )}
     </Card>
   )
 }

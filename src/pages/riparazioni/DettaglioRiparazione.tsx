@@ -19,7 +19,7 @@ import { Tabella, TabellaHead, Td, Th, Tr } from '@/components/ui/Tabella'
 import { AnteprimaStampa } from '@/components/stampa/AnteprimaStampa'
 import { DocumentoScheda } from '@/components/stampa/DocumentoScheda'
 import { useIntestazione } from '@/components/layout/intestazione'
-import { FedeltaRiparazione } from '@/components/fedelta/TesseraCliente'
+import { FedeltaRiparazione, OmaggioRiparazione } from '@/components/fedelta/TesseraCliente'
 import { useGestionale, nuovoId } from '@/data/store'
 import { imponibile, saldoRiparazione, scorporoIva, totaleRiparazione } from '@/lib/calcoli'
 import { formatData, formatEuro, oggiISO } from '@/lib/format'
@@ -414,6 +414,7 @@ export function DettaglioRiparazione() {
             )}
           </Card>
 
+          <OmaggioRiparazione riparazione={riparazione} />
           <FedeltaRiparazione riparazione={riparazione} />
 
           {riparazione.foto && riparazione.foto.length > 0 && (
