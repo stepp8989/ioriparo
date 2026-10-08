@@ -1,10 +1,15 @@
 # IO RIPARO — Sito web e gestionale
 
-> **Nota.** Questo repository ospita anche un secondo progetto, indipendente da IO RIPARO:
-> [`ristorante/`](ristorante/) contiene il sito e il pannello di gestione di **Ristorante Aurea**
-> (Next.js 16 + Tailwind 4 + Framer Motion). Le due applicazioni non condividono codice,
-> dipendenze né dati: si compilano e si pubblicano separatamente. Chi pubblica il ristorante
-> deve impostare la **Root Directory** su `ristorante`, altrimenti viene compilato IO RIPARO.
+> **Nota.** Questo repository ospita anche altri progetti, indipendenti da IO RIPARO.
+> Ognuno è un'applicazione Next.js 16 a sé: non condividono codice, dipendenze né dati con
+> IO RIPARO e si compilano e si pubblicano separatamente, impostando la **Root Directory**
+> sulla rispettiva cartella — altrimenti viene compilato IO RIPARO.
+>
+> | Progetto | Cartella | Cos'è |
+> | --- | --- | --- |
+> | **Ristorante Aurea** | [`ristorante/`](ristorante/) | Sito e pannello di gestione di un ristorante |
+> | **Aurora Motori** | [`concessionaria/`](concessionaria/) | Sito, catalogo e noleggio di una concessionaria |
+> | **CINEMAX** | [`cinema/`](cinema/) | Biglietteria cinematografica: vendita posti, biglietti con QR, fedeltà, abbonamenti e pannello di gestione |
 
 Progetto unico che contiene due applicazioni con lo stesso archivio dati:
 
