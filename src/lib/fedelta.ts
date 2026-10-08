@@ -22,7 +22,7 @@ import type { Cliente, RegoleFedelta, Riparazione } from '@/types'
 export const REGOLE_PREDEFINITE: RegoleFedelta = {
   attivo: true,
   euroPerPunto: 1,
-  puntiPremio: 200,
+  puntiPremio: 100,
   valorePremio: 10,
   scontoAmico: 10,
   puntiPresentatore: 100,
