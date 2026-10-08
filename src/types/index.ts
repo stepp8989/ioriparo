@@ -71,6 +71,8 @@ export interface RigaIntervento {
   puntiUsati?: number
   /** Sconto di benvenuto di chi è arrivato con un codice invito. */
   scontoAmico?: boolean
+  /** Prodotto dato in omaggio (prezzo zero), es. la pellicola col display. */
+  omaggio?: boolean
 }
 
 export interface Riparazione {
