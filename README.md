@@ -98,7 +98,7 @@ spiega il passaggio «Condividi → Aggiungi alla schermata Home». Logica in
 `src/lib/app.ts`; il service worker si registra solo nella build pubblicata.
 
 **Tessera fedeltà e «Porta un amico».** Regole in `/gestionale/impostazioni`
-(predefinite: 1 punto per euro, 200 punti = buono da 10 €, 10 € di sconto
+(predefinite: 1 punto per euro, 100 punti = buono da 10 €, 10 € di sconto
 all'amico invitato, 100 punti a chi lo invita).
 
 - Il saldo non è salvato da nessuna parte: si calcola dalle riparazioni
