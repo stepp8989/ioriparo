@@ -35,6 +35,27 @@ const MESI = [
 
 export const dataEstesa = (d: Date) => `${GIORNI[d.getDay()]} ${d.getDate()} ${MESI[d.getMonth()]}`
 
+/** Quanti giorni di calendario separano due date, ignorando l'ora. */
+const giorniDiStacco = (da: Date, a: Date) => {
+  const mezzanotte = (d: Date) => new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime()
+  return Math.round((mezzanotte(a) - mezzanotte(da)) / 86_400_000)
+}
+
+/**
+ * Quando si riapre, detto come lo direbbe una persona: «oggi alle 16:00»,
+ * «domani alle 09:00», «lunedì alle 09:00».
+ *
+ * Oltre la settimana il nome del giorno non basta più — «lunedì» quale? — e
+ * allora si scrive la data per esteso.
+ */
+export const quandoRiapriamo = (giorno: Date, ora: string, adesso = new Date()) => {
+  const stacco = giorniDiStacco(adesso, giorno)
+  if (stacco <= 0) return `oggi alle ${ora}`
+  if (stacco === 1) return `domani alle ${ora}`
+  if (stacco < 7) return `${GIORNI[giorno.getDay()]} alle ${ora}`
+  return `${dataEstesa(giorno)} alle ${ora}`
+}
+
 /** Periodo di chiusura in forma breve: «13 – 15 agosto», «23 dic – 27 dic». */
 export const periodo = (dal: string, al: string) => {
   const a = new Date(dal)

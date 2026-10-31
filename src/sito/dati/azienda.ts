@@ -168,6 +168,45 @@ export function prossimaApertura(adesso = new Date()): Date | null {
   return null
 }
 
+/** Un'ora decimale (16.5) nella forma scritta sul cartello: «16:30». */
+function comeOrario(decimale: number): string {
+  const ore = Math.floor(decimale)
+  const minuti = Math.round((decimale - ore) * 60)
+  return `${String(ore).padStart(2, '0')}:${String(minuti).padStart(2, '0')}`
+}
+
+/**
+ * Il primo momento in cui si riapre davvero, compreso il pomeriggio di oggi.
+ *
+ * `prossimaApertura` qui sopra guarda solo i giorni successivi, perché nasce
+ * per le ferie. Usata per il messaggio dell'apertura faceva dire due bugie:
+ * di sabato sera annunciava «domani mattina», che è domenica a saracinesca
+ * chiusa, e un martedì alle due del pomeriggio diceva lo stesso, quando
+ * invece si riapre alle 16.
+ */
+export function prossimaFinestra(adesso = new Date()): { giorno: Date; ora: string } | null {
+  /** L'apertura successiva di quel giorno dopo un certo orario, se c'è. */
+  const apertura = (giorno: Date, dopo: number): number | null => {
+    if (chiusuraDi(giorno)) return null
+    const fasce = ORARI.find((o) => o.indice === giorno.getDay())?.fasce ?? []
+    const prossima = fasce.find(([da]) => da > dopo)
+    return prossima ? prossima[0] : null
+  }
+
+  const oraCorrente = adesso.getHours() + adesso.getMinutes() / 60
+  const piuTardi = apertura(adesso, oraCorrente)
+  if (piuTardi !== null) return { giorno: new Date(adesso), ora: comeOrario(piuTardi) }
+
+  const giorno = new Date(adesso)
+  // Un anno di margine: oltre, vuol dire che gli orari sono tutti vuoti.
+  for (let i = 0; i < 365; i++) {
+    giorno.setDate(giorno.getDate() + 1)
+    const apre = apertura(giorno, -1)
+    if (apre !== null) return { giorno: new Date(giorno), ora: comeOrario(apre) }
+  }
+  return null
+}
+
 /** Vero se l'attività è aperta nell'istante indicato. */
 export function apertoOra(adesso = new Date()): boolean {
   if (chiusuraDi(adesso)) return false
@@ -185,7 +224,5 @@ export function chiusuraOdierna(adesso = new Date()): string | null {
   const ora = adesso.getHours() + adesso.getMinutes() / 60
   const fascia = oggi.fasce.find(([, a]) => ora < a)
   if (!fascia) return null
-  const ore = Math.floor(fascia[1])
-  const minuti = Math.round((fascia[1] - ore) * 60)
-  return `${String(ore).padStart(2, '0')}:${String(minuti).padStart(2, '0')}`
+  return comeOrario(fascia[1])
 }

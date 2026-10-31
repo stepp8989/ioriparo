@@ -14,6 +14,7 @@ import {
   GOOGLE,
   apertoOra,
   auguriDiOggi,
+  prossimaFinestra,
   chiusuraDi,
   chiusuraOdierna,
   prossimaApertura,
@@ -22,7 +23,7 @@ import { NUMERI } from '../dati/contenuti'
 import { useRegoleFedelta } from '../lib/fedelta'
 import { useContatore, useRivela } from '../lib/hook'
 import { useSeo } from '../lib/seo'
-import { dataEstesa, euroBreve, numero } from '../lib/utili'
+import { dataEstesa, euroBreve, numero, quandoRiapriamo } from '../lib/utili'
 
 
 const GARANZIE = [
@@ -66,6 +67,10 @@ export function Home() {
   // Durante le ferie il sito lo dice, invece di lasciar credere di essere aperto.
   const ferie = chiusuraDi()
   const riapertura = ferie ? prossimaApertura() : null
+  // Quando si riapre davvero: puo' essere il pomeriggio di oggi dopo la
+  // pausa, oppure lunedi' se oggi e' sabato sera. Prima il sito diceva
+  // sempre «domani mattina», anche di sabato — cioe' di domenica.
+  const riapre = aperto || ferie ? null : prossimaFinestra()
   // Auguri della giornata: durano un giorno e poi spariscono da soli.
   const auguri = auguriDiOggi()
 
@@ -94,7 +99,9 @@ export function Home() {
                     ? `${ferie.motivo}${riapertura ? ` · riapriamo ${dataEstesa(riapertura)}` : ''}`
                     : aperto && chiusura
                       ? `Aperti oggi fino alle ${chiusura}`
-                      : 'Scrivici: rispondiamo domani mattina'}
+                      : riapre
+                        ? `Scrivici: rispondiamo ${quandoRiapriamo(riapre.giorno, riapre.ora)}`
+                        : 'Scrivici: ti rispondiamo appena riapriamo'}
                 </Chip>
                 <Chip>
                   <Icona nome="star" dimensione={13} pieno /> {GOOGLE.media.toString().replace('.', ',')}/5 su{' '}

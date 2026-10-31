@@ -6,7 +6,8 @@ import { CATEGORIE_PREVENTIVO, GUASTI_PREVENTIVO, STIME_PREVENTIVO, SERVIZI } fr
 import { useRivela } from '../lib/hook'
 import { briciole, useSeo } from '../lib/seo'
 import { inviaModulo, propsEsca, sospetto } from '../lib/moduli'
-import { cn, emailValida, euro, telefonoValido } from '../lib/utili'
+import { apertoOra, prossimaFinestra } from '../dati/azienda'
+import { cn, emailValida, euro, quandoRiapriamo, telefonoValido } from '../lib/utili'
 import { PromoPellicola } from '../componenti/PromoPellicola'
 
 type Urgenza = 'standard' | 'express' | 'programmato'
@@ -147,10 +148,20 @@ export function Preventivo() {
     }
     setErroreInvio(null)
 
+    // Quando rispondiamo davvero: lo decidono gli orari e le ferie, non
+    // l'ora del giorno. Prima, di sabato pomeriggio, questo messaggio
+    // prometteva una risposta «domani mattina», cioe' di domenica.
+    const riapre = apertoOra() ? null : prossimaFinestra()
+    const quando = apertoOra()
+      ? 'entro oggi'
+      : riapre
+        ? quandoRiapriamo(riapre.giorno, riapre.ora)
+        : 'appena riapriamo'
+
     setInviato(
       esito.via === 'posta'
-        ? `Abbiamo aperto il tuo programma di posta con la richiesta già compilata: invia il messaggio e ti rispondiamo ${new Date().getHours() < 17 ? 'entro oggi' : 'domani mattina'}.`
-        : `Richiesta inviata. Ti ricontattiamo ${new Date().getHours() < 17 ? 'entro oggi' : 'domani mattina'} con il preventivo definitivo.`,
+        ? `Abbiamo aperto il tuo programma di posta con la richiesta già compilata: invia il messaggio e ti rispondiamo ${quando}.`
+        : `Richiesta inviata. Ti ricontattiamo ${quando} con il preventivo definitivo.`,
     )
     notifica('Richiesta di preventivo inviata.')
   }
