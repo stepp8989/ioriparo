@@ -1,4 +1,4 @@
-import { eGiorniRagnatele, eNatale, stagioneDi } from '../lib/stagione'
+import { eGiorniRagnatele, eGiornoDellaZucca, eNatale, stagioneDi } from '../lib/stagione'
 
 /**
  * Dettaglio decorativo dell'apertura, diverso a ogni stagione.
@@ -298,6 +298,43 @@ function Sfondo() {
   )
 }
 
+
+/* ── La zucca di Halloween ────────────────────────────────────────────────
+   Una sera sola. I colori stanno scritti qui come quelli della slitta: una
+   zucca e' arancione sia in tema chiaro sia in tema scuro, non segue il
+   tema del sito. L'alone caldo dietro fa il lume che trema. */
+
+const BUCCIA = '#d9731f'
+const BUCCIA_CHIARA = '#e8893a'
+const INTAGLIO = '#3a1a05'
+const PICCIOLO = '#5f7a3c'
+const LUME = '#ffb340'
+
+function Zucca() {
+  return (
+    <div className="stagione stagione--zucca" aria-hidden="true">
+      <span className="stagione__zucca">
+        <svg viewBox="0 0 64 64" fill="none">
+          {/* L'alone sta sotto a tutto: e' la luce della candela che esce. */}
+          <circle className="stagione__lume" cx="32" cy="40" r="27" fill={LUME} />
+
+          <path d="M32 21c0-6 3-9 8-10" stroke={PICCIOLO} strokeWidth="4" strokeLinecap="round" />
+          <ellipse cx="32" cy="40" rx="24" ry="20" fill={BUCCIA} />
+          {/* Due spicchi piu' chiari: senza, la zucca e' un ovale e basta. */}
+          <ellipse cx="21" cy="40" rx="10" ry="19.5" fill={BUCCIA_CHIARA} opacity=".5" />
+          <ellipse cx="43" cy="40" rx="10" ry="19.5" fill={BUCCIA_CHIARA} opacity=".5" />
+
+          {/* Occhi, naso e bocca intagliati. */}
+          <path d="M19 32h9l-4.5 8z" fill={INTAGLIO} />
+          <path d="M36 32h9l-4.5 8z" fill={INTAGLIO} />
+          <path d="M32 37l3 5h-6z" fill={INTAGLIO} />
+          <path d="M19 46h6l2 4 3-4h4l3 4 2-4h6l-3 8H22z" fill={INTAGLIO} />
+        </svg>
+      </span>
+    </div>
+  )
+}
+
 /**
  * La stagione, più le decorazioni a tempo che ci si aggiungono sopra.
  * Si sommano invece di sostituirsi: ad agosto restano sole e onde, e le
@@ -308,6 +345,7 @@ export function Stagione() {
     <>
       <Sfondo />
       {eGiorniRagnatele() && <Ragnatele />}
+      {eGiornoDellaZucca() && <Zucca />}
     </>
   )
 }

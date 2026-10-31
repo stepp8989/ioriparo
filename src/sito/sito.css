@@ -405,6 +405,41 @@ body[data-sito]{
   .stagione__ragno{animation:none !important; transform:translateY(40px)}
 }
 
+/* ── La zucca di Halloween ──────────────────────────────────────────────
+   Una sera sola, appoggiata nel margine sinistro dell'apertura: li' non
+   passa ne' il titolo ne' i distintivi. A colori propri, come la slitta di
+   Natale: una zucca e' arancione in tutti e due i temi. */
+.stagione__zucca{
+  /* Nel margine sinistro, all'altezza dell'ultima riga del sommario: piu'
+     in basso finiva sotto al bordo dello schermo e non la vedeva nessuno
+     senza scorrere. La larghezza e' tarata sul margine piu' stretto (1280
+     px, dove la colonna di testo comincia a 62 px). */
+  position:absolute; left:.6%; bottom:36%;
+  width:clamp(40px,3.4vw,64px);
+}
+.stagione__zucca svg{
+  /* `.stagione svg` mette posizione assoluta e contorno blu su tutte le
+     sagome: qui i colori stanno sui singoli tratti e il contorno azzurrava
+     il picciolo. */
+  position:static; width:100%; height:auto; stroke:none;
+  opacity:.92;
+}
+/* Trema solo l'alone, non la zucca: se tremasse tutta sembrerebbe un errore
+   di disegno invece della candela dentro. */
+.stagione__lume{
+  opacity:.2;
+  transform-origin:32px 40px;
+  animation:candela 3.4s ease-in-out infinite;
+}
+@keyframes candela{
+  0%,100%{opacity:.16; transform:scale(.97)}
+  40%{opacity:.3; transform:scale(1.04)}
+  62%{opacity:.21; transform:scale(1)}
+}
+@media (prefers-reduced-motion: reduce){
+  .stagione__lume{animation:none !important}
+}
+
 /* Su schermi stretti tutto resta un accenno: lo spazio serve al testo. */
 @media (max-width: 760px){
   /* Una tela sola: in due si toccano al centro e sembrano una fascia.
@@ -415,6 +450,11 @@ body[data-sito]{
   .stagione__tela{opacity:.16}
   /* A sinistra finiva sopra ai distintivi: a destra la fascia e' libera. */
   .stagione__ragno{left:auto; right:8%; width:17px}
+  /* Sul telefono il margine sinistro non esiste e l'apertura e' il doppio
+     piu' alta dello schermo: la zucca va in alto a destra, nello spazio che
+     resta a destra dell'ultima riga del titolo. Piu' in basso finiva
+     appoggiata sopra al sommario. */
+  .stagione__zucca{left:auto; right:6%; bottom:auto; top:17.5%; width:40px}
   .stagione__sole{width:130px; opacity:.14}
   .stagione__onde{opacity:.1}
   .stagione__cade,.stagione__sale{width:16px; opacity:.18}

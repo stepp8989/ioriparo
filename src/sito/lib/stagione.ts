@@ -33,10 +33,25 @@ export function eNatale(adesso = new Date()): boolean {
 export const GIORNI_RAGNATELE = { dal: '2026-10-31', al: '2026-11-02' }
 
 export function eGiorniRagnatele(adesso = new Date()): boolean {
-  const g = `${adesso.getFullYear()}-${String(adesso.getMonth() + 1).padStart(2, '0')}-${String(
+  return giornoDi(adesso) >= GIORNI_RAGNATELE.dal && giornoDi(adesso) <= GIORNI_RAGNATELE.al
+}
+
+/**
+ * La zucca: un giorno solo, la sera di Halloween. Le ragnatele restano anche
+ * nei due giorni dopo, lei no — una zucca intagliata il 3 novembre è una
+ * decorazione dimenticata.
+ */
+export const GIORNO_ZUCCA = '2026-10-31'
+
+export function eGiornoDellaZucca(adesso = new Date()): boolean {
+  return giornoDi(adesso) === GIORNO_ZUCCA
+}
+
+/** La data in formato AAAA-MM-GG, come sono scritte le finestre qui sopra. */
+function giornoDi(adesso: Date): string {
+  return `${adesso.getFullYear()}-${String(adesso.getMonth() + 1).padStart(2, '0')}-${String(
     adesso.getDate(),
   ).padStart(2, '0')}`
-  return g >= GIORNI_RAGNATELE.dal && g <= GIORNI_RAGNATELE.al
 }
 
 export function stagioneDi(adesso = new Date()): Stagione {
