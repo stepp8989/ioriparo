@@ -17,8 +17,12 @@ export function eNatale(adesso = new Date()): boolean {
 }
 
 /**
- * Settimana della ragnatela: una decorazione a tempo, che si aggiunge alla
+ * Giorni delle ragnatele: una decorazione a tempo, che si aggiunge alla
  * stagione invece di sostituirla.
+ *
+ * Nata ad agosto per la settimana del film del ragno, qui torna dove stava
+ * bene fin dall'inizio: Halloween. È lo stesso disegno, cambia solo la
+ * finestra di date.
  *
  * La data di fine è scritta qui dentro apposta: passata quella sparisce da
  * sola. Se dipendesse da qualcuno che si ricorda di toglierla resterebbe su
@@ -26,13 +30,13 @@ export function eNatale(adesso = new Date()): boolean {
  *
  * Estremi compresi, in formato AAAA-MM-GG.
  */
-export const SETTIMANA_RAGNO = { dal: '2026-08-01', al: '2026-08-08' }
+export const GIORNI_RAGNATELE = { dal: '2026-10-31', al: '2026-11-02' }
 
-export function eSettimanaRagno(adesso = new Date()): boolean {
+export function eGiorniRagnatele(adesso = new Date()): boolean {
   const g = `${adesso.getFullYear()}-${String(adesso.getMonth() + 1).padStart(2, '0')}-${String(
     adesso.getDate(),
   ).padStart(2, '0')}`
-  return g >= SETTIMANA_RAGNO.dal && g <= SETTIMANA_RAGNO.al
+  return g >= GIORNI_RAGNATELE.dal && g <= GIORNI_RAGNATELE.al
 }
 
 export function stagioneDi(adesso = new Date()): Stagione {

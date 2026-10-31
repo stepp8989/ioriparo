@@ -1,4 +1,4 @@
-import { eNatale, eSettimanaRagno, stagioneDi } from '../lib/stagione'
+import { eGiorniRagnatele, eNatale, stagioneDi } from '../lib/stagione'
 
 /**
  * Dettaglio decorativo dell'apertura, diverso a ogni stagione.
@@ -84,7 +84,7 @@ const CUOIO = '#b08a55'
 const PERGAMENA = '#f4e9cf'
 const INCHIOSTRO = '#94764a'
 
-/* ── Settimana della ragnatela ────────────────────────────────────────────
+/* ── Giorni delle ragnatele ───────────────────────────────────────────────
    Ragnatele negli angoli in alto e un ragno appeso al filo. Sono forme
    generiche — ragno e ragnatela non sono di nessuno — e restano nel blu del
    sito: niente rosso e blu da costume, niente maschera, nessun nome. Quella
@@ -307,7 +307,7 @@ export function Stagione() {
   return (
     <>
       <Sfondo />
-      {eSettimanaRagno() && <Ragnatele />}
+      {eGiorniRagnatele() && <Ragnatele />}
     </>
   )
 }
