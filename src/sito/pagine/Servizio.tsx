@@ -11,6 +11,7 @@ import { LISTINO, SERVIZI } from '../dati/servizi'
 import { useRivela } from '../lib/hook'
 import { SITO_URL, briciole, useSeo } from '../lib/seo'
 import { euro } from '../lib/utili'
+import { PromoPellicola } from '../componenti/PromoPellicola'
 
 /** Voci di listino che riguardano il servizio mostrato. */
 function listinoDelServizio(id: string) {
@@ -96,6 +97,12 @@ export function Servizio() {
               <BottoneChiama />
               <BottoneWhatsapp testo={`Buongiorno, avrei bisogno di: ${servizio.titolo}.`} />
             </div>
+
+            {servizio.id === 'riparazione-smartphone' && (
+              <div style={{ marginTop: 22 }}>
+                <PromoPellicola />
+              </div>
+            )}
           </div>
 
           <div className="reveal">

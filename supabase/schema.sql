@@ -195,3 +195,72 @@ create policy "il sito deposita visite" on visite
     and scorrimento between 0 and 100
     and coalesce(array_length(azioni, 1), 0) <= 20
   );
+
+-- ── Tessera fedeltà e «Porta un amico» ───────────────────────
+-- Il saldo punti non sta in nessuna tabella: si ricava dalle riparazioni,
+-- con la stessa regola del gestionale (`src/lib/fedelta.ts`). Questa
+-- funzione restituisce solo i tre totali da cui si calcola, a chi conosce un
+-- codice pratica del cliente: niente nome, niente recapiti, niente elenco
+-- delle riparazioni.
+
+create or replace function tessera_fedelta(codice_cercato text)
+returns table (
+  cliente_id  text,
+  speso       numeric,
+  punti_usati numeric,
+  amici       int
+)
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  with titolare as (
+    select r.cliente_id as id
+    from riparazioni r
+    where r.cliente_id is not null
+      and regexp_replace(upper(r.codice), '[^0-9A-Z]', '', 'g')
+        = regexp_replace(upper(codice_cercato), '[^0-9A-Z]', '', 'g')
+    limit 1
+  ),
+  totali as (
+    select r.id,
+           r.dati->>'stato' = 'consegnato' as consegnata,
+           coalesce(sum(coalesce((i->>'quantita')::numeric, 1)
+                        * coalesce((i->>'prezzoUnitario')::numeric, 0)), 0) as totale,
+           coalesce(sum(coalesce((i->>'puntiUsati')::numeric, 0)), 0) as punti
+    from riparazioni r
+    join titolare t on r.cliente_id = t.id
+    left join lateral jsonb_array_elements(coalesce(r.dati->'interventi', '[]'::jsonb)) i on true
+    group by r.id, r.dati
+  )
+  select t.id,
+         -- Una riparazione con sconti maggiori del lavoro non toglie punti.
+         coalesce((select sum(greatest(totale, 0)) from totali where consegnata), 0),
+         coalesce((select sum(punti) from totali), 0),
+         (select count(*)::int
+            from clienti c
+           where c.dati->>'invitatoDa' = t.id
+             and exists (select 1 from riparazioni r
+                          where r.cliente_id = c.id
+                            and r.dati->>'stato' = 'consegnato'))
+  from titolare t;
+$$;
+
+revoke all on function tessera_fedelta(text) from public;
+grant execute on function tessera_fedelta(text) to anon, authenticated;
+
+-- Le regole del programma, perché il sito mostri gli stessi importi che il
+-- laboratorio ha impostato nel gestionale.
+create or replace function regole_fedelta()
+returns jsonb
+language sql
+security definer
+set search_path = public
+stable
+as $$
+  select coalesce(azienda->'fedelta', '{}'::jsonb) from impostazioni where id = 1;
+$$;
+
+revoke all on function regole_fedelta() from public;
+grant execute on function regole_fedelta() to anon, authenticated;

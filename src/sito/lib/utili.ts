@@ -3,6 +3,14 @@
 export const euro = (n: number) =>
   n.toLocaleString('it-IT', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 })
 
+/** Importo senza decimali quando sono zero: «10 €», «7,50 €». */
+export const euroBreve = (n: number) =>
+  n.toLocaleString('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+    minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+  })
+
 export const numero = (n: number) => n.toLocaleString('it-IT')
 
 export const emailValida = (v: string) => /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(v.trim())

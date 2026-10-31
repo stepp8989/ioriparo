@@ -16,6 +16,7 @@ const PAGINE: VoceIndice[] = [
   { titolo: 'Stato riparazione', nota: 'Traccia la pratica con il codice', percorso: '/stato-riparazione', icona: 'search', chiavi: 'tracking codice pratica dove riparazione avanzamento' },
   { titolo: 'Preventivo online', nota: 'Stima immediata in tre passaggi', percorso: '/preventivo', icona: 'euro', chiavi: 'costo prezzo quanto costa stima' },
   { titolo: 'Prenota un appuntamento', nota: 'Scegli giorno e orario', percorso: '/prenota', icona: 'calendar', chiavi: 'appuntamento prenotazione ritiro' },
+  { titolo: 'Tessera fedeltà', nota: 'Punti, buoni sconto e Porta un amico', percorso: '/tessera', icona: 'star', chiavi: 'punti fedelta sconto buono premio amico invito codice app' },
   { titolo: 'Area clienti', nota: 'Pratiche, preventivi e documenti', percorso: '/area-clienti', icona: 'user', chiavi: 'login accesso fatture garanzia documenti' },
   { titolo: 'Contatti e orari', nota: 'Telefono, WhatsApp, indirizzo', percorso: '/contatti', icona: 'pin', chiavi: 'dove siamo orari telefono mappa email whatsapp' },
   { titolo: 'Chi siamo', nota: 'Storia, valori e team', percorso: '/chi-siamo', icona: 'shield', chiavi: 'azienda storia missione laboratorio' },

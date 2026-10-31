@@ -5,6 +5,7 @@ import {
   CalendarClock,
   DatabaseBackup,
   FileText,
+  Gift,
   Globe,
   Inbox,
   LayoutDashboard,
@@ -50,6 +51,7 @@ export const GRUPPI_MENU: GruppoMenu[] = [
     voci: [
       { etichetta: 'Riparazioni', percorso: '/gestionale/riparazioni', icona: Smartphone },
       { etichetta: 'Clienti', percorso: '/gestionale/clienti', icona: Users },
+      { etichetta: 'Fedeltà e inviti', percorso: '/gestionale/fedelta', icona: Gift },
       { etichetta: 'Scadenze e promemoria', percorso: '/gestionale/scadenze', icona: CalendarClock },
       { etichetta: 'Impianti e installazioni', percorso: '/gestionale/impianti', icona: Wrench },
     ],

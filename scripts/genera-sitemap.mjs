@@ -21,6 +21,7 @@ const PAGINE = [
   { percorso: '/galleria', priorita: '0.7', frequenza: 'monthly' },
   { percorso: '/stato-riparazione', priorita: '0.7', frequenza: 'monthly' },
   { percorso: '/prenota', priorita: '0.7', frequenza: 'monthly' },
+  { percorso: '/tessera', priorita: '0.6', frequenza: 'monthly' },
   { percorso: '/blog', priorita: '0.7', frequenza: 'weekly' },
   { percorso: '/mappa-del-sito', priorita: '0.3', frequenza: 'yearly' },
   { percorso: '/privacy', priorita: '0.3', frequenza: 'yearly' },

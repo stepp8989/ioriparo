@@ -15,13 +15,9 @@ export const VOCI_NAVIGAZIONE = [
 ]
 
 export function Testata({
-  tema,
-  onCambiaTema,
   onApriRicerca,
   onApriMenu,
 }: {
-  tema: string
-  onCambiaTema: () => void
   onApriRicerca: () => void
   onApriMenu: () => void
 }) {
@@ -56,14 +52,6 @@ export function Testata({
         <div className="hdr__tools">
           <button className="iconbtn" onClick={onApriRicerca} aria-label="Cerca nel sito" title="Cerca (Ctrl K)">
             <Icona nome="search" />
-          </button>
-          <button
-            className="iconbtn"
-            onClick={onCambiaTema}
-            aria-label={tema === 'dark' ? 'Passa al tema chiaro' : 'Passa al tema scuro'}
-            title="Tema chiaro/scuro"
-          >
-            <Icona nome={tema === 'dark' ? 'sun' : 'moon'} />
           </button>
           <NavLink className="iconbtn hdr__user" to="/area-clienti" aria-label="Area clienti" title="Area clienti">
             <Icona nome="user" />

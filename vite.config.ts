@@ -67,7 +67,8 @@ function pluginSoloGestionale(): Plugin {
       // Il marchio e le foto dei lavori sono di Io Riparo: sul dominio di un
       // altro non ci devono nemmeno arrivare. Il gestionale non li usa — il
       // logo dell'attività sta nel suo archivio, non in questi file.
-      for (const via of ['marchio', 'foto', 'sitemap.xml', 'site.webmanifest']) {
+      // Anche il service worker: e' quello dell'app di Io Riparo.
+      for (const via of ['marchio', 'foto', 'sitemap.xml', 'site.webmanifest', 'sw.js']) {
         fs.rmSync(path.join(uscita, via), { recursive: true, force: true })
       }
 

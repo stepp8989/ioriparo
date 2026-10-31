@@ -70,6 +70,7 @@ richieste di terze parti e non installa cookie non necessari.
 | `/prenota` | Prenotazione appuntamenti con giorni e fasce orarie disponibili |
 | `/stato-riparazione` | Ricerca della pratica per codice e avanzamento in tempo reale |
 | `/area-clienti` | Accesso cliente: pratiche, approvazione preventivi, documenti |
+| `/tessera`, `/invito/:codice` | Tessera punti del cliente e pagina d'arrivo dei link d'invito |
 | `/contatti` | Recapiti, orari con stato "aperto ora", mappa disegnata e modulo |
 | `/privacy`, `/cookie-policy` | Informative GDPR |
 | `/mappa-del-sito` | Elenco di tutte le pagine (in XML su `/sitemap.xml`) |
@@ -85,6 +86,35 @@ sono l'unica fonte da cui derivano pagine, ricerca interna, sitemap e dati strut
 
 Ogni pagina imposta titolo, descrizione, canonical, Open Graph, Twitter Card e JSON-LD
 (`LocalBusiness`, `Service`, `FAQPage`, `Article`, `BreadcrumbList`) tramite `useSeo`.
+
+## App installabile e tessera fedeltà
+
+**App.** Il sito si installa sul telefono come un'app, senza App Store:
+`public/site.webmanifest` (con scorciatoie a Stato riparazione, Tessera, Prenota,
+Preventivo) e `public/sw.js`, che lo fa aprire anche senza rete. L'invito a
+installarla compare dalla terza pagina visitata (chi lo chiude non lo rivede per
+30 giorni), sulla tessera e dopo aver trovato la propria pratica. Su iPhone
+spiega il passaggio «Condividi → Aggiungi alla schermata Home». Logica in
+`src/lib/app.ts`; il service worker si registra solo nella build pubblicata.
+
+**Tessera fedeltà e «Porta un amico».** Regole in `/gestionale/impostazioni`
+(predefinite: 1 punto per euro, 100 punti = buono da 10 €, 10 € di sconto
+all'amico invitato, 100 punti a chi lo invita).
+
+- Il saldo non è salvato da nessuna parte: si calcola dalle riparazioni
+  consegnate e dalle righe «buono» già usate (`src/lib/fedelta.ts`). Togliendo
+  la riga del buono, i punti tornano.
+- Il cliente apre `/tessera` con il codice di una qualsiasi sua pratica e
+  condivide il suo codice invito (`IR-XXXXX`), che porta a `/invito/IR-XXXXX`.
+  Il codice resta sul dispositivo dell'amico e viaggia con il suo primo
+  preventivo o appuntamento.
+- Nel gestionale: tessera e collegamento del codice nella scheda cliente,
+  pulsanti «Usa buono» e «Sconto amico» nella scheda riparazione, e la pagina
+  `/gestionale/fedelta` con i clienti che hanno un buono da usare e un pulsante
+  WhatsApp per richiamarli.
+- Con l'archivio online servono le funzioni `tessera_fedelta` e
+  `regole_fedelta`: rieseguire `supabase/schema.sql` (è idempotente). Restituiscono
+  solo totali, mai nomi o recapiti.
 
 ## Gestionale
 

@@ -2,11 +2,12 @@ import { useRef, useState } from 'react'
 import { Check, Save, Trash2, Upload } from 'lucide-react'
 import { Card, CardHeader } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { Campo, Input } from '@/components/ui/Form'
+import { Checkbox, Campo, Input } from '@/components/ui/Form'
 import { useIntestazione } from '@/components/layout/intestazione'
 import { useGestionale } from '@/data/store'
+import { regoleFedelta } from '@/lib/fedelta'
 import { ImmagineNonValida, marchioRidotto } from '@/lib/immagine'
-import type { Azienda } from '@/types'
+import type { Azienda, RegoleFedelta } from '@/types'
 
 /**
  * Caricamento del marchio.
@@ -117,9 +118,22 @@ export function Impostazioni() {
   const [form, setForm] = useState<Azienda>(db.azienda)
   const [salvato, setSalvato] = useState(false)
 
+  const fedelta = regoleFedelta(form.fedelta)
+  const cambiaFedelta = (modifiche: Partial<RegoleFedelta>) =>
+    setForm({ ...form, fedelta: { ...fedelta, ...modifiche } })
+
   function salva() {
     aggiornaAzienda({
       ...form,
+      fedelta: {
+        ...fedelta,
+        // Zero o vuoto non hanno senso come divisori: si torna a 1.
+        euroPerPunto: Number(fedelta.euroPerPunto) > 0 ? Number(fedelta.euroPerPunto) : 1,
+        puntiPremio: Number(fedelta.puntiPremio) > 0 ? Math.round(Number(fedelta.puntiPremio)) : 1,
+        valorePremio: Math.max(0, Number(fedelta.valorePremio) || 0),
+        scontoAmico: Math.max(0, Number(fedelta.scontoAmico) || 0),
+        puntiPresentatore: Math.max(0, Math.round(Number(fedelta.puntiPresentatore) || 0)),
+      },
       ivaPredefinita: Number(form.ivaPredefinita) || 0,
       giorniValiditaPreventivo: Number(form.giorniValiditaPreventivo) || 0,
     })
@@ -239,6 +253,74 @@ export function Impostazioni() {
                 />
               </Campo>
             </div>
+          </Card>
+
+          <Card>
+            <CardHeader
+              titolo="Tessera fedeltà e «Porta un amico»"
+              sottotitolo="Valgono per tutti i clienti: i saldi si ricalcolano con le regole in vigore"
+            />
+            <div className="mt-4">
+              <Checkbox
+                etichetta="Programma attivo sul sito e nel gestionale"
+                checked={fedelta.attivo}
+                onChange={(e) => cambiaFedelta({ attivo: e.target.checked })}
+              />
+            </div>
+            <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <Campo etichetta="Euro spesi per 1 punto" aiuto="Sulle riparazioni consegnate">
+                <Input
+                  type="number"
+                  min={0.01}
+                  step="any"
+                  value={fedelta.euroPerPunto}
+                  onChange={(e) => cambiaFedelta({ euroPerPunto: Number(e.target.value) })}
+                />
+              </Campo>
+              <Campo etichetta="Punti per un buono">
+                <Input
+                  type="number"
+                  min={1}
+                  value={fedelta.puntiPremio}
+                  onChange={(e) => cambiaFedelta({ puntiPremio: Number(e.target.value) })}
+                />
+              </Campo>
+              <Campo etichetta="Valore del buono (€)">
+                <Input
+                  type="number"
+                  min={0}
+                  step="any"
+                  value={fedelta.valorePremio}
+                  onChange={(e) => cambiaFedelta({ valorePremio: Number(e.target.value) })}
+                />
+              </Campo>
+              <Campo etichetta="Sconto all’amico invitato (€)" aiuto="Sulla sua prima riparazione">
+                <Input
+                  type="number"
+                  min={0}
+                  step="any"
+                  value={fedelta.scontoAmico}
+                  onChange={(e) => cambiaFedelta({ scontoAmico: Number(e.target.value) })}
+                />
+              </Campo>
+              <Campo
+                etichetta="Punti a chi invita"
+                aiuto="Quando l’amico ritira la sua prima riparazione"
+                className="sm:col-span-2"
+              >
+                <Input
+                  type="number"
+                  min={0}
+                  value={fedelta.puntiPresentatore}
+                  onChange={(e) => cambiaFedelta({ puntiPresentatore: Number(e.target.value) })}
+                />
+              </Campo>
+            </div>
+            <p className="mt-3 text-xs text-ink-faint">
+              Con queste regole il cliente recupera il{' '}
+              {((fedelta.valorePremio / Math.max(1, fedelta.puntiPremio * (fedelta.euroPerPunto || 1))) * 100).toLocaleString('it-IT', { maximumFractionDigits: 1 })}
+              % di quanto spende.
+            </p>
           </Card>
         </div>
       </div>

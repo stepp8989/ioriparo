@@ -1,5 +1,6 @@
 import { depositaRichiesta } from '@/lib/supabase'
 import { AZIENDA } from '../dati/azienda'
+import { invitoRicordato } from './fedelta'
 
 /**
  * Invio dei moduli del sito: Contatti, Preventivo, Prenotazione e Newsletter.
@@ -141,6 +142,13 @@ function apriPosta(modulo: Modulo, dati: DatiModulo): Esito {
  * il sito utilizzabile ma richiede al visitatore di premere "Invia".
  */
 export async function inviaModulo(modulo: Modulo, dati: DatiModulo): Promise<Esito> {
+  // Chi è arrivato con il link di un amico porta con sé il codice invito: il
+  // laboratorio lo trova nella richiesta e applica lo sconto di benvenuto.
+  const invito = invitoRicordato()
+  if (invito && (modulo === 'preventivo' || modulo === 'appuntamento')) {
+    dati = { ...dati, campi: { ...dati.campi, 'Codice invito': invito } }
+  }
+
   annotaNelGestionale(modulo, dati)
 
   if (!ENDPOINT) return apriPosta(modulo, dati)

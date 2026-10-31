@@ -49,6 +49,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://ioriparotortoli.it/tessera</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://ioriparotortoli.it/blog</loc>
     <lastmod>2026-10-31</lastmod>
     <changefreq>weekly</changefreq>

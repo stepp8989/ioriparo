@@ -92,3 +92,39 @@ export async function depositaRichiesta(
   })
   return !error
 }
+
+/** Totali della tessera fedeltà restituiti dal database. */
+export type EsitoTessera =
+  | { trovata: true; clienteId: string; speso: number; puntiUsati: number; amici: number }
+  | { trovata: false; motivo: 'inesistente' | 'non-collegato' | 'errore' }
+
+/**
+ * Tessera fedeltà del cliente che ha la pratica `codice`.
+ *
+ * Passa dalla funzione `tessera_fedelta`, che restituisce i soli totali:
+ * il saldo punti si calcola qui con le regole del programma.
+ */
+export async function cercaTessera(codice: string): Promise<EsitoTessera> {
+  if (!supabase) return { trovata: false, motivo: 'non-collegato' }
+  const { data, error } = await supabase.rpc('tessera_fedelta', { codice_cercato: codice.trim() })
+  if (error) return { trovata: false, motivo: 'errore' }
+  const riga = (
+    data as { cliente_id: string; speso: number | string; punti_usati: number | string; amici: number }[] | null
+  )?.[0]
+  if (!riga) return { trovata: false, motivo: 'inesistente' }
+  return {
+    trovata: true,
+    clienteId: riga.cliente_id,
+    speso: Number(riga.speso) || 0,
+    puntiUsati: Number(riga.punti_usati) || 0,
+    amici: riga.amici ?? 0,
+  }
+}
+
+/** Regole del programma fedeltà impostate nel gestionale, se l'archivio è online. */
+export async function leggiRegoleFedelta(): Promise<Record<string, unknown> | null> {
+  if (!supabase) return null
+  const { data, error } = await supabase.rpc('regole_fedelta')
+  if (error || !data || typeof data !== 'object') return null
+  return data as Record<string, unknown>
+}

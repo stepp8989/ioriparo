@@ -40,6 +40,11 @@ export interface Cliente {
   codiceFiscale?: string
   note?: string
   creatoIl: string
+  /**
+   * Chi ha portato questo cliente con il programma «Porta un amico»: l'`id`
+   * del cliente presentatore. Assente per chi è arrivato da solo.
+   */
+  invitatoDa?: string
 }
 
 export interface AccessoriConsegnati {
@@ -58,6 +63,16 @@ export interface RigaIntervento {
   prezzoUnitario: number
   /** Articolo di magazzino eventualmente scalato */
   articoloId?: string
+  /**
+   * Buono fedeltà riscattato: la riga ha prezzo negativo e qui stanno i punti
+   * spesi per ottenerlo. Il saldo della tessera si ricava da queste righe,
+   * quindi non esiste un registro dei punti separato da tenere allineato.
+   */
+  puntiUsati?: number
+  /** Sconto di benvenuto di chi è arrivato con un codice invito. */
+  scontoAmico?: boolean
+  /** Prodotto dato in omaggio (prezzo zero), es. la pellicola col display. */
+  omaggio?: boolean
 }
 
 export interface Riparazione {
@@ -223,6 +238,26 @@ export interface Azienda {
   ivaPredefinita: number
   giorniValiditaPreventivo: number
   prefissoCodice: string
+  /** Regole della tessera fedeltà e del «Porta un amico». */
+  fedelta?: RegoleFedelta
+}
+
+/**
+ * Regole del programma fedeltà. Valgono per tutti i clienti e si cambiano
+ * dalle Impostazioni: il saldo di ognuno viene ricalcolato con quelle in vigore.
+ */
+export interface RegoleFedelta {
+  attivo: boolean
+  /** Euro spesi per guadagnare un punto. */
+  euroPerPunto: number
+  /** Punti necessari per un buono. */
+  puntiPremio: number
+  /** Valore del buono, in euro IVA inclusa. */
+  valorePremio: number
+  /** Sconto sulla prima riparazione di chi arriva con un codice invito. */
+  scontoAmico: number
+  /** Punti a chi ha invitato, quando l'amico ritira la prima riparazione. */
+  puntiPresentatore: number
 }
 
 /**

@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/Button'
 import { Badge } from '@/components/ui/Badge'
 import { useIntestazione } from '@/components/layout/intestazione'
 import { useGestionale } from '@/data/store'
+import { clienteDaInvito } from '@/lib/fedelta'
 import {
   eliminaRichiesta,
   leggiRichieste,
@@ -107,7 +108,13 @@ export function Richieste() {
 
   /** Crea la scheda cliente con i dati già ricevuti dal sito. */
   function creaCliente(r: Richiesta) {
+    // Arrivato con il link di un amico: il collegamento si fa qui, così lo
+    // sconto di benvenuto è già pronto nella scheda della riparazione.
+    const presentatore = r.dati['Codice invito']
+      ? clienteDaInvito(db.clienti, r.dati['Codice invito'])
+      : undefined
     const nuovo = aggiungiCliente({
+      ...(presentatore ? { invitatoDa: presentatore.id } : {}),
       nome: r.nome || 'Senza nome',
       tipo: 'privato',
       telefono: r.telefono,

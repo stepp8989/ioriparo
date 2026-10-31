@@ -4,8 +4,9 @@ import { archivioOnline, cercaPratica, type StatoPubblico } from '@/lib/supabase
 import type { Riparazione, StatoRiparazione as Stato, TipoDispositivo } from '@/types'
 import { BottoneChiama } from '../componenti/Contatto'
 import { useNotifica } from '../componenti/Notifiche'
+import { RiquadroApp } from '../componenti/InstallaApp'
 import { SchedaPratica } from '../componenti/SchedaPratica'
-import { Avviso, Bottone, Intestazione, Sezione } from '../componenti/base'
+import { Avviso, Bottone, Intestazione, LinkBottone, Sezione } from '../componenti/base'
 import { AZIENDA } from '../dati/azienda'
 import { useRivela } from '../lib/hook'
 import { briciole, useSeo } from '../lib/seo'
@@ -151,6 +152,12 @@ export function StatoRiparazione() {
                   >
                     Ricevi aggiornamenti
                   </Bottone>
+                  <LinkBottone a={`/tessera?codice=${encodeURIComponent(risultato.codice)}`} variante="ghost" piccolo>
+                    I tuoi punti fedeltà
+                  </LinkBottone>
+                </div>
+                <div style={{ marginTop: 16 }}>
+                  <RiquadroApp testo="Installa l’app: la prossima volta controlli lo stato con un tocco." />
                 </div>
               </>
             )}

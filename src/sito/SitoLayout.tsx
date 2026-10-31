@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import './sito.css'
 import { Chat } from './componenti/Chat'
+import { InvitoApp } from './componenti/InstallaApp'
 import { Icona, SpriteIcone } from './componenti/Icona'
 import { SpriteIllustrazioni } from './componenti/Illustrazione'
 import { ProviderNotifiche, useNotifica } from './componenti/Notifiche'
@@ -17,12 +18,7 @@ function Contenuto() {
   const posizione = useLocation()
   const notifica = useNotifica()
 
-  const [tema, setTema] = useMemoria('ioriparo_theme', '')
   const [consenso, setConsenso] = useMemoria('ioriparo_consent', '')
-  const [temaSistema] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark',
-  )
-  const temaAttivo = tema || temaSistema
   const [menu, setMenu] = useState(false)
   const [ricerca, setRicerca] = useState(false)
   const [chat, setChat] = useState(false)
@@ -31,11 +27,15 @@ function Contenuto() {
   const [inAlto, setInAlto] = useState(true)
   const primaVisita = useRef(true)
 
-  /* Tema: preferenza salvata, altrimenti quella del sistema. */
+  /*
+   * Il sito è solo scuro: è l'identità di Io Riparo, e non segue più il tema
+   * del telefono né offre il cambio. `data-theme` fissato a `dark` vince sulle
+   * regole `prefers-color-scheme: light` del foglio di stile.
+   */
   useEffect(() => {
-    document.documentElement.dataset.theme = temaAttivo
-    document.documentElement.style.colorScheme = temaAttivo
-  }, [temaAttivo])
+    document.documentElement.dataset.theme = 'dark'
+    document.documentElement.style.colorScheme = 'dark'
+  }, [])
 
   /* Gli stili del sito valgono solo qui: il gestionale mantiene il suo tema. */
   useEffect(() => {
@@ -128,8 +128,6 @@ function Contenuto() {
 
       <div id="app">
         <Testata
-          tema={temaAttivo}
-          onCambiaTema={() => setTema(temaAttivo === 'dark' ? 'light' : 'dark')}
           onApriRicerca={() => setRicerca(true)}
           onApriMenu={() => setMenu(true)}
         />
@@ -171,6 +169,8 @@ function Contenuto() {
         <Ricerca aperta={ricerca} onChiudi={() => setRicerca(false)} />
         <Chat aperta={chat} onChiudi={() => setChat(false)} />
         <BannerCookie visibile={cookie} onSalva={salvaConsenso} apertoDaPreferenze={preferenze} />
+        {/* Mai insieme al banner dei cookie: due riquadri in fondo allo schermo sono troppi. */}
+        {!cookie && <InvitoApp />}
       </div>
     </>
   )

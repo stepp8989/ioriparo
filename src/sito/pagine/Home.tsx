@@ -19,9 +19,10 @@ import {
   prossimaApertura,
 } from '../dati/azienda'
 import { NUMERI } from '../dati/contenuti'
+import { useRegoleFedelta } from '../lib/fedelta'
 import { useContatore, useRivela } from '../lib/hook'
 import { useSeo } from '../lib/seo'
-import { dataEstesa, numero } from '../lib/utili'
+import { dataEstesa, euroBreve, numero } from '../lib/utili'
 
 
 const GARANZIE = [
@@ -203,6 +204,9 @@ export function Home() {
         </div>
       </Sezione>
 
+      {/* ── Fedeltà ── */}
+      <Fedelta />
+
       {/* ── Invito finale ── */}
       <Sezione>
         <div
@@ -232,5 +236,37 @@ export function Home() {
         </div>
       </Sezione>
     </div>
+  )
+}
+
+/** Tessera punti e «Porta un amico»: chi è già cliente torna e ne porta altri. */
+function Fedelta() {
+  const regole = useRegoleFedelta()
+  if (!regole.attivo) return null
+  return (
+    <Sezione>
+      <Intestazione
+        occhiello="Tessera fedeltà"
+        titolo="Ripari, accumuli, risparmi."
+        testo={`Ogni riparazione ti dà punti: a ${numero(regole.puntiPremio)} c'è un buono da ${euroBreve(regole.valorePremio)}. E ogni amico che porti riceve ${euroBreve(regole.scontoAmico)} di sconto.`}
+      />
+      <div className="why-grid">
+        {[
+          { icona: 'star' as const, titolo: 'Punti a ogni riparazione', testo: 'Li registriamo noi alla consegna: niente carte da portare, niente app obbligatorie.' },
+          { icona: 'euro' as const, titolo: `Buoni da ${euroBreve(regole.valorePremio)}`, testo: 'Si scalano dalla riparazione successiva, su qualsiasi dispositivo.' },
+          { icona: 'user' as const, titolo: `${euroBreve(regole.scontoAmico)} per i tuoi amici`, testo: `Condividi il tuo codice invito: loro risparmiano, tu ricevi ${numero(regole.puntiPresentatore)} punti.` },
+          { icona: 'phone' as const, titolo: 'Sempre con te', testo: 'Installa l’app Io Riparo: tessera e stato riparazione a un tocco, anche offline.' },
+        ].map((v) => (
+          <div key={v.titolo} className="why reveal">
+            <Icona nome={v.icona} dimensione={22} />
+            <h3 style={{ marginTop: 12 }}>{v.titolo}</h3>
+            <p>{v.testo}</p>
+          </div>
+        ))}
+      </div>
+      <div className="row reveal" style={{ marginTop: 22 }}>
+        <LinkBottone a="/tessera">Apri la tua tessera</LinkBottone>
+      </div>
+    </Sezione>
   )
 }

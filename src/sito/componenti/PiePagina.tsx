@@ -23,6 +23,7 @@ const AZIENDA_PIEDE = [
   ['Blog', '/blog'],
   ['Stato riparazione', '/stato-riparazione'],
   ['Area clienti', '/area-clienti'],
+  ['Tessera fedeltà', '/tessera'],
   ['Prenota appuntamento', '/prenota'],
 ]
 

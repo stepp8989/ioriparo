@@ -24,7 +24,7 @@ import { supabase } from '@/lib/supabase'
  */
 
 /** Azioni che contano davvero per il negozio. */
-export type Azione = 'telefono' | 'whatsapp' | 'email' | 'modulo' | 'preventivo' | 'mappa'
+export type Azione = 'telefono' | 'whatsapp' | 'email' | 'modulo' | 'preventivo' | 'mappa' | 'app' | 'invito'
 
 interface Pagina {
   pagina: string

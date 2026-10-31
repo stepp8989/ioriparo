@@ -7,6 +7,7 @@ import { Button, LinkButton } from '@/components/ui/Button'
 import { DeviceIcon } from '@/components/ui/DeviceIcon'
 import { Tabella, TabellaHead, Td, Th, Tr, StatoVuoto } from '@/components/ui/Tabella'
 import { useIntestazione } from '@/components/layout/intestazione'
+import { TesseraCliente } from '@/components/fedelta/TesseraCliente'
 import { useGestionale } from '@/data/store'
 import { totaleFattura, totaleRiparazione } from '@/lib/calcoli'
 import { formatData, formatEuro, iniziali } from '@/lib/format'
@@ -62,70 +63,74 @@ export function DettaglioCliente() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-3">
-        <Card>
-          <div className="flex items-center gap-3">
-            <span className="flex size-14 items-center justify-center rounded-full bg-surface-3 text-lg font-bold text-ink-muted">
-              {iniziali(cliente.nome)}
-            </span>
-            <div className="min-w-0">
-              <h2 className="truncate text-lg font-bold text-ink">{cliente.nome}</h2>
-              <p className="text-xs text-ink-faint capitalize">
-                {cliente.tipo} · cliente dal {formatData(cliente.creatoIl)}
+        <div className="space-y-4">
+          <Card>
+            <div className="flex items-center gap-3">
+              <span className="flex size-14 items-center justify-center rounded-full bg-surface-3 text-lg font-bold text-ink-muted">
+                {iniziali(cliente.nome)}
+              </span>
+              <div className="min-w-0">
+                <h2 className="truncate text-lg font-bold text-ink">{cliente.nome}</h2>
+                <p className="text-xs text-ink-faint capitalize">
+                  {cliente.tipo} · cliente dal {formatData(cliente.creatoIl)}
+                </p>
+              </div>
+            </div>
+
+            <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
+              <div className="flex justify-between gap-3">
+                <dt className="text-ink-faint">Telefono</dt>
+                <dd className="text-ink">{cliente.telefono}</dd>
+              </div>
+              {cliente.email && (
+                <div className="flex justify-between gap-3">
+                  <dt className="text-ink-faint">Email</dt>
+                  <dd className="truncate text-ink">{cliente.email}</dd>
+                </div>
+              )}
+              {cliente.indirizzo && (
+                <div className="flex justify-between gap-3">
+                  <dt className="text-ink-faint">Indirizzo</dt>
+                  <dd className="text-right text-ink">
+                    {cliente.indirizzo}
+                    <br />
+                    {cliente.cap} {cliente.citta}
+                  </dd>
+                </div>
+              )}
+              {cliente.partitaIva && (
+                <div className="flex justify-between gap-3">
+                  <dt className="text-ink-faint">Partita IVA</dt>
+                  <dd className="text-ink">{cliente.partitaIva}</dd>
+                </div>
+              )}
+              {cliente.codiceFiscale && (
+                <div className="flex justify-between gap-3">
+                  <dt className="text-ink-faint">Codice fiscale</dt>
+                  <dd className="text-ink">{cliente.codiceFiscale}</dd>
+                </div>
+              )}
+            </dl>
+
+            {cliente.note && (
+              <p className="mt-4 rounded-lg border border-line bg-surface-2 p-3 text-xs text-ink-muted">
+                {cliente.note}
               </p>
-            </div>
-          </div>
+            )}
 
-          <dl className="mt-5 space-y-3 border-t border-line pt-4 text-sm">
-            <div className="flex justify-between gap-3">
-              <dt className="text-ink-faint">Telefono</dt>
-              <dd className="text-ink">{cliente.telefono}</dd>
-            </div>
-            {cliente.email && (
-              <div className="flex justify-between gap-3">
-                <dt className="text-ink-faint">Email</dt>
-                <dd className="truncate text-ink">{cliente.email}</dd>
-              </div>
-            )}
-            {cliente.indirizzo && (
-              <div className="flex justify-between gap-3">
-                <dt className="text-ink-faint">Indirizzo</dt>
-                <dd className="text-right text-ink">
-                  {cliente.indirizzo}
-                  <br />
-                  {cliente.cap} {cliente.citta}
-                </dd>
-              </div>
-            )}
-            {cliente.partitaIva && (
-              <div className="flex justify-between gap-3">
-                <dt className="text-ink-faint">Partita IVA</dt>
-                <dd className="text-ink">{cliente.partitaIva}</dd>
-              </div>
-            )}
-            {cliente.codiceFiscale && (
-              <div className="flex justify-between gap-3">
-                <dt className="text-ink-faint">Codice fiscale</dt>
-                <dd className="text-ink">{cliente.codiceFiscale}</dd>
-              </div>
-            )}
-          </dl>
+            <a
+              href={`https://wa.me/39${cliente.telefono.replace(/\D/g, '')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/12 text-sm font-medium text-emerald-300 transition-colors hover:bg-emerald-500/20"
+            >
+              <MessageCircle size={16} />
+              Scrivi su WhatsApp
+            </a>
+          </Card>
 
-          {cliente.note && (
-            <p className="mt-4 rounded-lg border border-line bg-surface-2 p-3 text-xs text-ink-muted">
-              {cliente.note}
-            </p>
-          )}
-
-          <a
-            href={`https://wa.me/39${cliente.telefono.replace(/\D/g, '')}`}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/12 text-sm font-medium text-emerald-300 transition-colors hover:bg-emerald-500/20"
-          >
-            <MessageCircle size={16} />
-            Scrivi su WhatsApp
-          </a>
-        </Card>
+          <TesseraCliente cliente={cliente} />
+        </div>
 
         <div className="space-y-4 xl:col-span-2">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">

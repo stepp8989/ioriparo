@@ -7,6 +7,7 @@ import { useRivela } from '../lib/hook'
 import { briciole, useSeo } from '../lib/seo'
 import { inviaModulo, propsEsca, sospetto } from '../lib/moduli'
 import { cn, emailValida, euro, telefonoValido } from '../lib/utili'
+import { PromoPellicola } from '../componenti/PromoPellicola'
 
 type Urgenza = 'standard' | 'express' | 'programmato'
 
@@ -101,6 +102,11 @@ export function Preventivo() {
         <p className="faint" style={{ fontSize: '.78rem', marginTop: 10 }}>
           {stima.nota}.
         </p>
+      )}
+      {categoria === 'smartphone' && guasto === 'display' && (
+        <div style={{ marginTop: 12 }}>
+          <PromoPellicola compatto />
+        </div>
       )}
     </div>
   )
